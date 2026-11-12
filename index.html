@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e9a6bb">
+<title>Daily Fashion AF — دوره ۴۵ روزه</title>
+<meta name="description" content="Daily Fashion AF — دوره آموزشی ۴۵ روزه با ۱۲ درس ویدیویی رایگان در زمینه آرایش، زیبایی و فشن.">
+<link rel="icon" href="assets/images/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* §1 TOKENS */
+:root{
+  --ink:#141418; --ink-2:#3a3a45; --muted:#7a7a86;
+  --pink:#e9a6bb; --pink-deep:#c76e8c; --pink-rose:#a84a6b;
+  --pink-light:#fdeef3; --pink-line:#f3d4df;
+  --beige:#faf6f1; --gray:#f4f4f6; --white:#fff;
+  --radius:26px; --radius-sm:16px; --radius-xs:12px;
+  --shadow-xs:0 1px 2px rgba(20,20,24,.06);
+  --shadow-sm:0 6px 18px -6px rgba(20,20,24,.10);
+  --shadow-md:0 22px 46px -20px rgba(168,74,107,.32);
+  --shadow-lg:0 38px 80px -34px rgba(168,74,107,.48);
+  --container:1200px; --header-h:78px;
+  --ease:cubic-bezier(.2,.7,.3,1);
+  --reel-min:220px; --reel-ratio:9/14; --logo-size:48px;
+}
+/* §2 RESET */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font-family:'Vazirmatn',system-ui,sans-serif;color:var(--ink);background:var(--white);line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html[lang="en"] body{line-height:1.7;font-family:'Inter','Vazirmatn',sans-serif}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.2;letter-spacing:-.02em;font-weight:800}
+html[lang="en"] h1,html[lang="en"] h2,html[lang="en"] h3,html[lang="en"] .brand-name{font-family:'Playfair Display',serif;font-weight:600;letter-spacing:-.01em}
+p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--pink-rose);outline-offset:3px;border-radius:8px}
+::selection{background:var(--pink);color:#fff}
+.container{width:min(100% - 2.5rem,var(--container));margin-inline:auto}
+.ico{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.ico svg{width:1em;height:1em;display:block}
+html[dir="rtl"] .play-fab .ico,html[dir="rtl"] .card-link .ico,html[dir="rtl"] .back-link .ico{transform:scaleX(-1)}
+/* §3 HEADER + ROUND LOGO */
+.site-header{position:sticky;top:0;z-index:80;background:rgba(255,255,255,.85);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid #f3e7ec}
+.nav-wrap{display:flex;align-items:center;gap:1rem;height:var(--header-h)}
+.brand{display:flex;align-items:center;gap:.75rem;flex:0 0 auto;perspective:600px}
+.logo-holder{position:relative;width:var(--logo-size);height:var(--logo-size);display:grid;place-items:center;flex:0 0 auto;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--pink-light),#fff);border:2px solid #fff;box-shadow:0 8px 24px -10px rgba(168,74,107,.45), inset 0 0 0 1px rgba(243,212,223,.9);transition:transform .6s var(--ease), box-shadow .4s}
+.brand:hover .logo-holder{transform:rotateY(18deg) rotateX(-10deg) scale(1.07)}
+.logo-holder .logo-3d{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.logo-fb-icon{display:none;width:100%;height:100%;background:linear-gradient(135deg,var(--pink),var(--pink-deep));border-radius:50%;color:#fff;font-weight:800;font-size:.85rem;place-items:center;letter-spacing:.02em}
+.logo-holder.logo-fb .logo-3d{display:none}
+.logo-holder.logo-fb .logo-fb-icon{display:grid}
+.brand-text{display:flex;flex-direction:column;line-height:1.12}
+.brand-name{font-size:1.06rem;font-weight:800;color:var(--ink)}
+.brand-name em{font-style:normal;color:var(--pink-deep)}
+.brand-sub{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:2px}
+html[lang="fa"] .brand-sub{letter-spacing:.02em;text-transform:none;font-size:.72rem}
+.main-nav{display:flex;align-items:center;gap:.15rem;margin-inline:auto}
+.main-nav a{padding:.55rem 1rem;border-radius:999px;font-size:.9rem;font-weight:500;color:var(--ink-2);transition:.25s;position:relative;white-space:nowrap}
+.main-nav a:hover,.main-nav a.active{background:var(--pink-light);color:var(--pink-deep)}
+.main-nav a.active{font-weight:700}
+.nav-actions{display:flex;align-items:center;gap:.55rem}
+.lang-switch{display:flex;background:var(--gray);border-radius:999px;padding:4px;gap:2px;border:1px solid #ececf0}
+.lang-switch button{padding:.34rem .78rem;border-radius:999px;font-size:.78rem;font-weight:700;color:var(--muted);transition:.25s}
+.lang-switch button:hover{color:var(--pink-deep)}
+.lang-switch button.active{background:#fff;color:var(--pink-deep);box-shadow:0 2px 8px rgba(0,0,0,.09)}
+.burger{display:none;width:44px;height:44px;border-radius:13px;background:var(--gray);place-items:center;color:var(--ink);transition:.25s}
+.burger:hover{background:var(--pink-light);color:var(--pink-deep)}
+/* §4 BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.9rem 1.8rem;border-radius:999px;font-weight:700;font-size:.92rem;transition:transform .3s var(--ease),box-shadow .3s,background .3s,color .3s,border-color .3s;border:1px solid transparent;line-height:1.2;white-space:nowrap}
+.btn .ico{font-size:1.1em}
+.btn-primary{background:linear-gradient(135deg,var(--pink) 0%,var(--pink-deep) 100%);color:#fff;box-shadow:0 14px 28px -12px rgba(168,74,107,.85), inset 0 1px 0 rgba(255,255,255,.5)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 22px 40px -16px rgba(168,74,107,1)}
+.btn-ghost{background:#fff;color:var(--ink);border-color:var(--pink-line);box-shadow:var(--shadow-xs)}
+.btn-ghost:hover{border-color:var(--pink);color:var(--pink-deep);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+.btn-dark{background:linear-gradient(135deg,#2a2a33,#141418);color:#fff;box-shadow:0 14px 28px -14px rgba(20,20,24,.7)}
+.btn-dark:hover{transform:translateY(-3px);box-shadow:0 20px 36px -16px rgba(20,20,24,.85)}
+.btn-sm{padding:.62rem 1.15rem;font-size:.82rem}
+.pill{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:1px solid var(--pink-line);color:var(--pink-deep);font-size:.76rem;font-weight:700;padding:.45rem 1.05rem;border-radius:999px;box-shadow:var(--shadow-xs)}
+/* §5 HERO */
+.hero{position:relative;background:var(--beige);overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 30%;transform:scale(1.04);z-index:-2;background-image:url("https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1920&q=80")}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to right,rgba(255,255,255,.98) 0%,rgba(255,255,255,.92) 42%,rgba(255,255,255,.30) 100%)}
+html[dir="rtl"] .hero::before{transform:scaleX(-1)}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none;z-index:-1;animation:floaty 9s ease-in-out infinite}
+.orb-a{width:340px;height:340px;background:radial-gradient(circle,rgba(233,166,187,.9),transparent 70%);top:-120px;inset-inline-start:-80px}
+.orb-b{width:260px;height:260px;background:radial-gradient(circle,rgba(168,74,107,.55),transparent 70%);bottom:-100px;inset-inline-end:8%;animation-delay:-3s}
+.orb-c{width:180px;height:180px;background:radial-gradient(circle,rgba(255,220,232,.9),transparent 70%);top:38%;inset-inline-end:26%;animation-delay:-6s}
+@keyframes floaty{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-22px) scale(1.06)}}
+.hero-inner{position:relative;z-index:2;max-width:680px;padding-block:clamp(3.5rem,8vw,6.8rem)}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.14;margin:1.1rem 0 1rem;letter-spacing:-.025em}
+.hero .lead{color:var(--ink-2);font-size:clamp(.96rem,1.55vw,1.1rem);max-width:58ch;line-height:1.85}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2rem}
+.hero-stats{display:flex;flex-wrap:wrap;gap:clamp(1rem,3.5vw,2.6rem);margin-top:2.8rem;padding:1.3rem 1.5rem;background:rgba(255,255,255,.72);border:1px solid rgba(243,212,223,.9);border-radius:var(--radius);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 20px 44px -24px rgba(168,74,107,.4), inset 0 1px 0 rgba(255,255,255,.9);width:fit-content;max-width:100%}
+.hero-stats>div{display:flex;flex-direction:column;gap:.1rem}
+.hero-stats strong{font-size:1.7rem;font-weight:800;line-height:1.05;letter-spacing:-.02em;background:linear-gradient(135deg,var(--pink-rose),var(--pink-deep));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-stats span{font-size:.78rem;color:var(--muted);font-weight:500}
+/* §6 SECTIONS */
+.section{padding-block:clamp(3rem,7vw,5.5rem)}
+.section-alt{background:var(--beige)}
+.section-head{text-align:center;max-width:680px;margin:0 auto clamp(2rem,4vw,3.2rem)}
+.eyebrow{display:inline-block;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pink-deep);font-weight:800;margin-bottom:.65rem}
+html[lang="fa"] .eyebrow{letter-spacing:.02em;text-transform:none;font-size:.82rem}
+.section-head h2{font-size:clamp(1.65rem,3.8vw,2.5rem);margin-bottom:.7rem}
+.section-head p{color:var(--muted);font-size:1rem;line-height:1.8}
+/* §7 REELS GRID */
+.reels-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(var(--reel-min), 1fr));gap:1.6rem}
+.reel-card{background:#fff;border:1px solid #f3e8ec;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.reel-card:hover{box-shadow:var(--shadow-md)}
+.reel-thumb{position:relative;aspect-ratio:var(--reel-ratio, 9/14);background-color:var(--pink-light);background-size:cover;background-position:center;overflow:hidden;background:linear-gradient(135deg, #fdeef3 0%, #e9a6bb 50%, #c76e8c 100%);display:flex;align-items:center;justify-content:center}
+.reel-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,20,24,.55),rgba(20,20,24,0) 55%)}
+.reel-thumb .play-fab{width:56px;height:56px;background:rgba(255,255,255,.98);color:var(--pink-deep)}
+.reel-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;font-weight:900;color:rgba(255,255,255,.9);text-shadow:0 4px 20px rgba(0,0,0,.4);z-index:1;pointer-events:none}
+html[dir="rtl"] .reel-num{transform:translate(50%,-50%)}
+.reel-badge{position:absolute;top:.85rem;inset-inline-start:.85rem;z-index:2;background:rgba(255,255,255,.96);color:var(--pink-deep);font-size:.68rem;font-weight:800;padding:.25rem .7rem;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.reel-body{padding:1.05rem 1.15rem 1.2rem;display:flex;flex-direction:column;gap:.45rem;flex:1}
+.reel-body h3{font-size:1rem;line-height:1.35}
+.reel-body p{color:var(--muted);font-size:.82rem;flex:1;line-height:1.7}
+.reel-actions{display:flex;gap:.5rem;margin-top:.6rem}
+.reel-actions .btn{flex:1;padding:.55rem .6rem;font-size:.78rem}
+.play-fab{position:absolute;bottom:1rem;inset-inline-end:1rem;z-index:2;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.96);display:grid;place-items:center;color:var(--pink-deep);font-size:1.05rem;box-shadow:0 10px 24px -8px rgba(0,0,0,.45);transition:transform .35s,background .3s,color .3s}
+.reel-card:hover .play-fab{background:var(--pink-deep);color:#fff;transform:scale(1.12)}
+/* §8 PAGE HEADER */
+.page-head{padding-block:clamp(2.4rem,5vw,3.6rem) 1rem;text-align:center;background:var(--beige);border-bottom:1px solid #f3e8ec;position:relative;overflow:hidden}
+.page-head::before{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(233,166,187,.25),transparent 70%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
+.page-head h1{font-size:clamp(1.8rem,4.2vw,2.8rem);margin-bottom:.6rem;position:relative}
+.page-head p{color:var(--muted);max-width:60ch;margin-inline:auto;font-size:1rem;position:relative}
+/* §9 LIFESTYLE */
+.lifestyle-block{margin-bottom:clamp(3rem,6vw,4.5rem)}
+.lifestyle-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap}
+.lifestyle-head h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+.lifestyle-head .accent{display:inline-flex;align-items:center;gap:.5rem;background:var(--pink-light);color:var(--pink-deep);font-size:.76rem;font-weight:800;padding:.4rem .95rem;border-radius:999px;border:1px solid var(--pink-line)}
+.lifestyle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+.life-card{background:#fff;border:1px solid #f3e8ec;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column}
+.life-img{aspect-ratio:4/3;background-size:cover;background-position:center;position:relative}
+.life-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,20,24,.32),transparent 55%)}
+.life-body{padding:1.2rem 1.3rem 1.4rem;display:flex;flex-direction:column;gap:.45rem;flex:1}
+.life-body h3{font-size:1.08rem}
+.life-body p{color:var(--muted);font-size:.87rem;flex:1;line-height:1.75}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem}
+.tag{font-size:.7rem;font-weight:700;color:var(--pink-deep);background:var(--pink-light);padding:.22rem .65rem;border-radius:999px;border:1px solid var(--pink-line)}
+/* §10 ABOUT */
+.about-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:2rem;align-items:center;margin-bottom:clamp(2.5rem,5vw,3.5rem)}
+.about-hero-img{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;background-size:cover;background-position:center;box-shadow:var(--shadow-lg);border:1px solid #f3e8ec}
+.about-hero-text h2{font-size:clamp(1.5rem,3.4vw,2.1rem);margin-bottom:.8rem}
+.about-hero-text p{color:var(--ink-2);font-size:1.02rem;line-height:1.9}
+.afghan-lifestyle{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:2rem;align-items:center;background:linear-gradient(160deg,var(--pink-light),#fff 60%);border:1px solid var(--pink-line);border-radius:var(--radius);padding:clamp(1.5rem,3.5vw,2.6rem);box-shadow:var(--shadow-md)}
+.afghan-lifestyle-img{border-radius:var(--radius-sm);overflow:hidden;aspect-ratio:4/3;background-size:cover;background-position:center;box-shadow:0 20px 40px -22px rgba(168,74,107,.6)}
+.afghan-lifestyle h2{font-size:clamp(1.3rem,3vw,1.85rem);margin-bottom:.7rem}
+.afghan-lifestyle p{color:var(--ink-2);font-size:.98rem;line-height:1.9;margin-bottom:.8rem}
+.afghan-lifestyle p:last-child{margin-bottom:0}
+.channel-card{background:linear-gradient(150deg,#eafaf0 0%,#fff 60%);border:1px solid #c9efd8;border-radius:var(--radius);padding:clamp(1.5rem,3.2vw,2.4rem);display:flex;flex-direction:column;align-items:flex-start;gap:.8rem;box-shadow:var(--shadow-sm)}
+.channel-icon{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:#25D366;color:#fff;font-size:1.6rem;box-shadow:0 16px 30px -14px rgba(37,211,102,.9)}
+.channel-card h3{font-size:1.22rem}
+.channel-card p{color:var(--ink-2);font-size:.94rem;line-height:1.75}
+.channel-card .btn{margin-top:.6rem}
+/* §11 CONTACT */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.contact-card{background:#fff;border:1px solid #f3e8ec;border-radius:var(--radius);padding:1.7rem;display:flex;flex-direction:column;gap:.7rem;box-shadow:var(--shadow-sm)}
+.contact-icon{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:var(--pink-light);color:var(--pink-deep);font-size:1.4rem}
+.contact-icon.green{background:#e6f9ee;color:#1eb955}
+.contact-icon.dark{background:#eeeef2;color:#22222a}
+.contact-card .label{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink-deep);font-weight:800;margin-top:.3rem}
+html[lang="fa"] .contact-card .label{letter-spacing:.02em;text-transform:none;font-size:.8rem}
+.contact-card .value{font-size:1.05rem;font-weight:700;word-break:break-word;direction:ltr;text-align:start;color:var(--ink)}
+html[dir="rtl"] .contact-card .value{text-align:right}
+.contact-card .hint{font-size:.85rem;color:var(--muted);line-height:1.7}
+.contact-card .btn{align-self:flex-start;margin-top:.5rem}
+/* §12 SHOP */
+.shop-wrap{display:grid;place-items:center;min-height:min(64vh,540px);text-align:center;position:relative}
+.shop-card{background:#fff;border:1px solid #f3e8ec;border-radius:36px;padding:clamp(2.2rem,6vw,3.8rem) clamp(1.5rem,5vw,3.2rem);max-width:640px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.bag-circle{width:104px;height:104px;border-radius:50%;margin:0 auto 1.5rem;display:grid;place-items:center;font-size:2.6rem;color:var(--pink-deep);background:linear-gradient(140deg,var(--pink-light),#fff);border:1px solid var(--pink-line);box-shadow:0 24px 46px -22px rgba(168,74,107,.75);animation:floaty 5s ease-in-out infinite}
+.shop-card h1{font-size:clamp(1.5rem,4.2vw,2.15rem);margin:1rem 0 .8rem}
+.shop-card p{color:var(--muted);font-size:1rem;max-width:46ch;margin-inline:auto;line-height:1.85}
+.shop-card .btn{margin-top:1.8rem}
+/* §13 MODAL (portrait for reels) */
+.modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:1.2rem}
+.modal.open{display:flex;animation:modalIn .28s var(--ease)}
+@keyframes modalIn{from{opacity:0}to{opacity:1}}
+.modal-backdrop{position:absolute;inset:0;background:rgba(12,10,14,.72);backdrop-filter:blur(8px)}
+.modal-box{position:relative;background:#fff;border-radius:var(--radius);overflow:hidden;max-width:min(480px, calc(100vw - 2rem));width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 40px 90px -30px rgba(0,0,0,.7);animation:modalUp .35s var(--ease)}
+@keyframes modalUp{from{transform:translateY(30px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.modal-close{position:absolute;top:.9rem;inset-inline-end:.9rem;z-index:3;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;font-size:1.2rem;color:var(--ink);box-shadow:0 6px 16px rgba(0,0,0,.2);transition:.25s}
+.modal-close:hover{background:var(--pink-deep);color:#fff;transform:rotate(90deg)}
+.modal-video{position:relative;background:#000;width:100%;height:min(60vh, 600px);flex-shrink:0}
+.modal-video video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:contain;background:#000}
+.modal-info{padding:1.4rem 1.6rem 1.7rem;overflow-y:auto}
+.modal-info h3{font-size:1.2rem;margin-bottom:.5rem}
+.modal-info p{color:var(--muted);font-size:.92rem;line-height:1.75;margin-bottom:1.1rem}
+.modal-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+/* §14 TOAST */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translate(-50%,140%);background:#141418;color:#fff;padding:.85rem 1.4rem;border-radius:999px;font-size:.88rem;font-weight:600;z-index:300;box-shadow:0 20px 40px -14px rgba(0,0,0,.6);transition:transform .45s var(--ease);display:flex;align-items:center;gap:.6rem;max-width:calc(100vw - 2rem);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+.toast .ico{color:var(--pink);font-size:1.1rem}
+/* §15 FOOTER */
+.site-footer{background:linear-gradient(180deg,var(--beige) 0%,#f6ede4 100%);border-top:1px solid #f3e8ec;padding-top:clamp(2.5rem,5vw,3.8rem);position:relative;overflow:hidden}
+.footer-grid{display:grid;grid-template-columns:1.7fr 1fr 1.3fr;gap:2.4rem;padding-bottom:2.6rem;position:relative}
+.footer-brand p{color:var(--muted);font-size:.9rem;margin-top:1.1rem;max-width:36ch;line-height:1.75}
+.footer-col{display:flex;flex-direction:column;gap:.6rem}
+.footer-col h4{font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink-deep);margin-bottom:.4rem}
+html[lang="fa"] .footer-col h4{letter-spacing:.02em;text-transform:none;font-size:.9rem}
+.footer-col a{font-size:.9rem;color:var(--ink-2);display:inline-flex;align-items:center;gap:.55rem;transition:color .25s;width:fit-content;word-break:break-word}
+.footer-col a:hover{color:var(--pink-deep)}
+.footer-bottom{border-top:1px solid #eee3e8;padding-block:1.4rem;text-align:center;color:var(--muted);font-size:.84rem;position:relative}
+/* §16 RESPONSIVE */
+@media (max-width:960px){
+  .burger{display:grid}
+  .main-nav{position:absolute;top:calc(var(--header-h) + 8px);inset-inline:1rem;flex-direction:column;align-items:stretch;gap:.25rem;margin:0;background:#fff;border:1px solid #f3e8ec;border-radius:22px;padding:.7rem;box-shadow:var(--shadow-lg);display:none;max-height:calc(100vh - var(--header-h) - 24px);overflow-y:auto}
+  .main-nav.open{display:flex}
+  .main-nav a{padding:.85rem 1rem;border-radius:14px;text-align:center;font-size:.95rem}
+  .brand-sub{display:none}
+  .about-hero,.afghan-lifestyle{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:1.9rem}
+  .footer-brand{grid-column:1/-1}
+}
+@media (max-width:600px){
+  :root{--radius:20px;--header-h:70px;--logo-size:42px;--reel-min:160px}
+  .container{width:calc(100% - 1.8rem)}
+  .hero-inner{padding-block:2.8rem 3.4rem}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .hero-stats{gap:1.3rem;padding:1.1rem 1.2rem;width:100%;justify-content:space-around}
+  .hero-stats strong{font-size:1.35rem}
+  .brand-name{font-size:.96rem}
+  .lang-switch button{padding:.3rem .58rem;font-size:.74rem}
+  .reels-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
+  .reel-body{padding:.85rem .9rem 1rem}
+  .reel-body h3{font-size:.9rem}
+  .reel-body p{font-size:.76rem}
+  .reel-actions{flex-direction:column}
+  .reel-num{font-size:2.4rem}
+  .footer-grid{grid-template-columns:1fr}
+  .contact-card .value{font-size:.96rem}
+  .modal-box{max-height:94vh}
+  .modal-video{height:min(65vh, 500px)}
+  .modal-info{padding:1.1rem 1.2rem 1.4rem}
+  .modal-actions{flex-direction:column}
+  .modal-actions .btn{width:100%}
+  .lifestyle-grid{grid-template-columns:1fr}
+}
+@media (max-width:380px){.reels-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="#/home" aria-label="Daily Fashion AF">
+      <span class="logo-holder">
+        <img src="assets/images/logo.svg" alt="Daily Fashion AF" class="logo-3d" onerror="this.parentElement.classList.add('logo-fb')">
+        <span class="logo-fb-icon">DF</span>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">Daily Fashion <em>AF</em></span>
+        <span class="brand-sub" data-i18n="brand.sub"></span>
+      </span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#/home"      data-nav="home"      data-i18n="nav.home"></a>
+      <a href="#/videos"    data-nav="videos"    data-i18n="nav.videos"></a>
+      <a href="#/lifestyle" data-nav="lifestyle" data-i18n="nav.lifestyle"></a>
+      <a href="#/about"     data-nav="about"     data-i18n="nav.about"></a>
+      <a href="#/shop"      data-nav="shop"      data-i18n="nav.shop"></a>
+      <a href="#/contact"   data-nav="contact"   data-i18n="nav.contact"></a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="lang-switch">
+        <button type="button" data-lang="fa" aria-pressed="true">دری</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+        <span class="ico" style="font-size:1.3rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-box">
+    <button class="modal-close" data-close aria-label="Close">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+    </button>
+    <div class="modal-video" id="modalVideo"></div>
+    <div class="modal-info">
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+      <div class="modal-actions">
+        <button id="modalDownload" class="btn btn-primary" type="button">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span>
+          <span data-i18n="reels.download"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="#/home">
+        <span class="logo-holder">
+          <img src="assets/images/logo.svg" alt="Daily Fashion AF" class="logo-3d" onerror="this.parentElement.classList.add('logo-fb')">
+          <span class="logo-fb-icon">DF</span>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">Daily Fashion <em>AF</em></span>
+          <span class="brand-sub" data-i18n="brand.sub"></span>
+        </span>
+      </a>
+      <p data-i18n="footer.tagline"></p>
+    </div>
+
+    <nav class="footer-col">
+      <h4 data-i18n="footer.links"></h4>
+      <a href="#/home"      data-i18n="nav.home"></a>
+      <a href="#/videos"    data-i18n="nav.videos"></a>
+      <a href="#/lifestyle" data-i18n="nav.lifestyle"></a>
+      <a href="#/about"     data-i18n="nav.about"></a>
+      <a href="#/shop"      data-i18n="nav.shop"></a>
+      <a href="#/contact"   data-i18n="nav.contact"></a>
+    </nav>
+
+    <div class="footer-col">
+      <h4 data-i18n="footer.contact"></h4>
+      <a href="mailto:Dailyfashion@gmail.com">
+        <span class="ico" style="font-size:1.05rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 7 9 6 9-6"/></svg></span>
+        Dailyfashion@gmail.com
+      </a>
+      <a href="https://wa.me/93796791538" target="_blank" rel="noopener noreferrer">
+        <span class="ico" style="font-size:1.05rem"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.33-1.19l-.31-.18-3.12.82.83-3.04-.2-.32a8.22 8.22 0 0 1-1.26-4.33c0-4.54 3.7-8.24 8.24-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.54-3.7 8.24-8.24 8.24Z"/><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z"/></svg></span>
+        0796791538
+      </a>
+      <a href="https://whatsapp.com/channel/0029VbDukxNIXnllve5j9p18" target="_blank" rel="noopener noreferrer" data-i18n="footer.channel"></a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p data-i18n="footer.rights"></p></div>
+</footer>
+
+<script>
+"use strict";
+
+/* ═══════ §1 CONFIG ═══════ */
+const CONFIG = {
+  contact: {
+    email       : "Dailyfashion@gmail.com",
+    adminPhone  : "0796791538",
+    adminWaLink : "https://wa.me/93796791538",
+    channel     : "https://whatsapp.com/channel/0029VbDukxNIXnllve5j9p18"
+  },
+  paths: {
+    videos : "videos/",
+    images : "assets/images/"
+  },
+  size: {
+    reelMinWidth  : 220,
+    reelAspectRatio : "9/14"
+  }
+};
+(function(){
+  const s = document.documentElement.style;
+  s.setProperty('--reel-min', CONFIG.size.reelMinWidth + 'px');
+  s.setProperty('--reel-ratio', CONFIG.size.reelAspectRatio);
+})();
+const V = name => CONFIG.paths.videos + name;
+
+/* ═══════ §2 REELS — ۱۲ درس دوره ۴۵ روزه ═══════ */
+const REELS = (() => {
+  const faOrd = ["اول","دوم","سوم","چهارم","پنجم","ششم","هفتم","هشتم","نهم","دهم","یازدهم","دوازدهم"];
+  const faNum = ["۱","۲","۳","۴","۵","۶","۷","۸","۹","۱۰","۱۱","۱۲"];
+  return Array.from({ length: 12 }, (_, i) => ({
+    id: String(i + 1),
+    src: V(`${i + 1}.mp4`),
+    category: "course",
+    title: { fa: `دوره ${faOrd[i]}`, en: `Course ${i + 1}` },
+    desc: {
+      fa: `درس ${faNum[i]} از دوره ۴۵ روزه دیلی فشن — آموزش گام به گام`,
+      en: `Lesson ${i + 1} of the Daily Fashion 45-day course — step-by-step`
+    }
+  }));
+})();
+
+/* ═══════ §3 IMAGES ═══════ */
+const IMG = {
+  women     : "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80",
+  men       : "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80",
+  afghan    : "https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&w=900&q=80",
+  aboutHero : "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80"
+};
+
+/* ═══════ §4 LIFESTYLE ═══════ */
+const LIFESTYLE = {
+  women: [
+    { img: IMG.women, title: { fa: "شیک روزمره", en: "Everyday Elegant" }, desc: { fa: "ترکیب رنگ‌های خنثی و برش‌های ساده برای استایل روزمره؛ راحت و شیک.", en: "Neutral tones and simple cuts for a comfortable, polished everyday look." }, tags: { fa: ["مینیمال", "روزمره", "راحت"], en: ["Minimal", "Everyday", "Comfort"] } },
+    { img: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80", title: { fa: "آرایش مجلسی", en: "Party Glam" }, desc: { fa: "آرایش چشم‌های درخشان و لب‌های برجسته برای شب‌های خاص.", en: "Glowing eyes and statement lips for special evenings." }, tags: { fa: ["مجلسی", "درخشان", "شب"], en: ["Party", "Glam", "Night"] } },
+    { img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=80", title: { fa: "حجاب شیک", en: "Modest Chic" }, desc: { fa: "استایل پوشیده و شیک با پارچه‌های نرم و رنگ‌های ملایم.", en: "Covered, elegant styling with soft fabrics and gentle colours." }, tags: { fa: ["پوشیده", "شیک", "ملایم"], en: ["Modest", "Chic", "Soft"] } },
+    { img: IMG.women, title: { fa: "زیبایی طبیعی", en: "Natural Beauty" }, desc: { fa: "مراقبت پوست و آرایش سبک که زیبایی طبیعی شما را برجسته می‌کند.", en: "Skin care and light makeup that highlights your natural beauty." }, tags: { fa: ["طبیعی", "پوست", "سبک"], en: ["Natural", "Skin", "Light"] } }
+  ],
+  men: [
+    { img: IMG.men, title: { fa: "شیک راحت", en: "Smart Casual" }, desc: { fa: "ترکیب پیراهن، شلوار پارچه‌ای و کفش ساده برای هر روز.", en: "Shirt, tailored trousers and simple shoes — ready for any day." }, tags: { fa: ["روزمره", "شیک", "راحت"], en: ["Everyday", "Smart", "Relaxed"] } },
+    { img: IMG.afghan, title: { fa: "لباس سنتی افغانی", en: "Traditional Afghan Wear" }, desc: { fa: "پیراهن‌تنبان، چپن و کلاه — ترکیب سنت با شکوه مدرن.", en: "Perahan-tunban, chapan and hat — combining tradition with modern flair." }, tags: { fa: ["سنتی", "افغانی", "شکوه"], en: ["Traditional", "Afghan", "Elegant"] } },
+    { img: IMG.men, title: { fa: "کاری مدرن", en: "Modern Business" }, desc: { fa: "کت و شلوار یا بلِیزِر ساده برای محیط کار و جلسات.", en: "A suit or simple blazer for the office and meetings." }, tags: { fa: ["کاری", "رسمی", "مدرن"], en: ["Business", "Formal", "Modern"] } },
+    { img: "https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=900&q=80", title: { fa: "استایل خیابانی", en: "Street Style" }, desc: { fa: "کفش ورزشی، جین و هودی — راحت و پرانرژی برای بیرون.", en: "Sneakers, jeans and a hoodie — comfortable and energetic for the street." }, tags: { fa: ["خیابانی", "جوان", "پرانرژی"], en: ["Street", "Youth", "Energetic"] } }
+  ]
+};
+
+/* ═══════ §5 I18N ═══════ */
+const I18N = {
+  fa: {
+    "brand.sub": "زیبایی · مد · آموزش",
+    "nav.home": "خانه", "nav.videos": "دوره ۴۵ روزه", "nav.lifestyle": "سبک زندگی",
+    "nav.about": "درباره ما", "nav.shop": "فروشگاه", "nav.contact": "تماس",
+    "hero.badge": "دوره آموزشی ۴۵ روزه · ۱۲ درس",
+    "hero.title": "بیاموزید، خلاقیت به خرج دهید و بدرخشید",
+    "hero.lead": "دیلی فشن دوره آموزشی ۴۵ روزه را با ۱۲ درس ویدیویی رایگان ارائه می‌دهد — از آرایش و زیبایی تا فشن و سبک زندگی. همین امروز یادگیری را آغاز کنید.",
+    "hero.cta": "شروع دوره ۴۵ روزه", "hero.cta2": "درباره ما",
+    "hero.stat1": "درس ویدیویی", "hero.stat2": "روز برنامه",
+    "hero.stat3": "دسترسی آسان", "hero.stat3val": "۲۴/۷",
+    "course45.eyebrow": "دوره ۴۵ روزه",
+    "course45.title": "دوره آموزشی ۴۵ روزه",
+    "course45.sub": "۱۲ درس ویدیویی گام به گام — از آرایش و زیبایی تا استایل و سبک زندگی. هر درس را تماشا کنید یا دانلود کنید.",
+    "course45.page.title": "دوره ۴۵ روزه",
+    "course45.page.sub": "همه ۱۲ درس دوره ۴۵ روزه دیلی فشن — با دکمه دانلود برای هر درس.",
+    "reels.download": "دانلود", "reels.watch": "تماشا",
+    "reels.catCourse": "دوره",
+    "reels.downloaded": "دانلود آغاز شد", "reels.downloadHint": "فایل اطلاعات ویدیو دانلود شد",
+    "life.eyebrow": "سبک زندگی", "life.title": "سبک‌های زندگی",
+    "life.sub": "ایده‌های استایل برای خانم‌ها و آقایان — از روزمره تا مجلسی.",
+    "life.women": "برای خانم‌ها", "life.men": "برای آقایان",
+    "life.womenTag": "استایل زنانه", "life.menTag": "استایل مردانه",
+    "about.eyebrow": "درباره ما", "about.title": "درباره دیلی فیشن افغانستان",
+    "about.body": "دیلی فیشن یک پلتفرم آنلاین آموزشی و سرگرمی است که با هدف فراهم‌سازی فرصت‌های رایگان یادگیری، آموزش آرایش و زیبایی، مد و فیشن و محتوای خلاقانه فعالیت می‌کند. هدف ما فراهم‌سازی فرصت آموزش و رشد برای همه است.",
+    "about.afghanTitle": "سبک زندگی افغان‌ها",
+    "about.afghanP1": "سبک زندگی افغان‌ها ترکیبی زیبا از سنت و مدرنیته است. از لباس‌های سنتی مانند پیراهن‌تنبان، چپن و لباس‌های رنگارنگ محلی تا استایل‌های مدرن امروزی، مردم افغانستان همواره به زیبایی و وقار اهمیت داده‌اند.",
+    "about.afghanP2": "آرایش و مراقبت پوست در فرهنگ افغانی جایگاه ویژه‌ای دارد؛ از روغن‌های طبیعی و گیاهان محلی گرفته تا تکنیک‌های مدرن آرایش. ما در دیلی فیشن افتخار می‌کنیم که این زیبایی را با جهان به اشتراک بگذاریم.",
+    "about.afghanP3": "مهمان‌نوازی، رنگ‌های شاد و توجه به جزئیات، بخشی از هویت افغان است — و ما همین روحیه را در دوره‌های خود منعکس می‌کنیم.",
+    "about.channelTitle": "کانال واتس‌اپ ما",
+    "about.channelBody": "برای دریافت ویدیوهای تازه، نکته‌های آموزشی و اطلاع از دوره‌های جدید عضو کانال واتس‌اپ ما شوید.",
+    "about.join": "عضویت در کانال ما",
+    "shop.eyebrow": "فروشگاه", "shop.badge": "به‌زودی",
+    "shop.title": "فروشگاه ما به‌زودی افتتاح می‌شود",
+    "shop.body": "ما در حال آماده‌سازی مجموعه‌ای منتخب از محصولات زیبایی و فیشن هستیم. به‌زودی برای خرید به ما سر بزنید.",
+    "shop.note": "برای اطلاع از زمان افتتاح، عضو کانال واتس‌اپ ما شوید.",
+    "shop.cta": "عضویت در کانال واتس‌اپ",
+    "contact.eyebrow": "تماس", "contact.title": "با ما در تماس باشید",
+    "contact.sub": "برای همکاری، پیشنهاد یا پرسش‌ها از راه‌های زیر با ما در تماس شوید.",
+    "contact.emailLabel": "ایمیل", "contact.emailHint": "پاسخ در اسرع وقت",
+    "contact.emailBtn": "ارسال ایمیل",
+    "contact.channelLabel": "کانال واتس‌اپ", "contact.channelHint": "ویدیوها و اطلاعیه‌های تازه",
+    "contact.channelBtn": "عضویت در کانال",
+    "contact.waLabel": "واتس‌اپ مدیر", "contact.waHint": "پرسش‌ها و همکاری",
+    "contact.waBtn": "پیام در واتس‌اپ",
+    "footer.tagline": "دوره آموزشی ۴۵ روزه — آموزش رایگان آرایش، زیبایی و فیشن برای همه.",
+    "footer.links": "دسترسی سریع", "footer.contact": "تماس",
+    "footer.channel": "کانال واتس‌اپ",
+    "footer.rights": "© ۲۰۲۶ دیلی فیشن افغانستان. تمام حقوق محفوظ است."
+  },
+  en: {
+    "brand.sub": "Beauty · Fashion · Education",
+    "nav.home": "Home", "nav.videos": "45-Day Course", "nav.lifestyle": "Lifestyle",
+    "nav.about": "About", "nav.shop": "Shop", "nav.contact": "Contact",
+    "hero.badge": "45-Day Course · 12 Lessons",
+    "hero.title": "Learn, Create & Shine with Daily Fashion AF",
+    "hero.lead": "Daily Fashion AF offers a 45-day training course with 12 free video lessons — from beauty and makeup to fashion and lifestyle. Start learning today.",
+    "hero.cta": "Start 45-Day Course", "hero.cta2": "About Us",
+    "hero.stat1": "Video lessons", "hero.stat2": "Day program",
+    "hero.stat3": "Easy access", "hero.stat3val": "24/7",
+    "course45.eyebrow": "45-Day Course",
+    "course45.title": "The 45-Day Training Course",
+    "course45.sub": "12 step-by-step video lessons — from beauty and makeup to style and lifestyle. Watch or download each lesson.",
+    "course45.page.title": "45-Day Course",
+    "course45.page.sub": "All 12 lessons of the Daily Fashion 45-day course — each with a download button.",
+    "reels.download": "Download", "reels.watch": "Watch",
+    "reels.catCourse": "Course",
+    "reels.downloaded": "Download started", "reels.downloadHint": "Video info file downloaded",
+    "life.eyebrow": "Lifestyle", "life.title": "Lifestyle Styles",
+    "life.sub": "Style ideas for women and men — from everyday to party.",
+    "life.women": "For Women", "life.men": "For Men",
+    "life.womenTag": "Women's style", "life.menTag": "Men's style",
+    "about.eyebrow": "About us", "about.title": "About Daily Fashion AF",
+    "about.body": "Daily Fashion AF is an online educational and entertainment platform dedicated to providing free learning opportunities, beauty tutorials, fashion education and creative content. Our goal is to help everyone learn new skills and grow through accessible online education.",
+    "about.afghanTitle": "Afghan Lifestyle",
+    "about.afghanP1": "Afghan lifestyle is a beautiful blend of tradition and modernity. From traditional garments like the perahan-tunban, chapan and colourful regional dress to modern everyday styles, Afghans have always valued beauty and dignity.",
+    "about.afghanP2": "Beauty and skin care hold a special place in Afghan culture — from natural oils and local herbs to modern makeup techniques. At Daily Fashion AF we are proud to share this beauty with the world.",
+    "about.afghanP3": "Hospitality, joyful colours and attention to detail are part of Afghan identity — and we reflect that spirit in every course we make.",
+    "about.channelTitle": "Our WhatsApp Channel",
+    "about.channelBody": "Join our WhatsApp channel for new videos, practical beauty tips and updates about upcoming courses.",
+    "about.join": "Join Our Channel",
+    "shop.eyebrow": "Shop", "shop.badge": "Coming soon",
+    "shop.title": "Our Shop Is Coming Soon",
+    "shop.body": "We are carefully preparing a curated collection of beauty and fashion products. Please check back soon.",
+    "shop.note": "Join our WhatsApp channel to be the first to know when we open.",
+    "shop.cta": "Join Our WhatsApp Channel",
+    "contact.eyebrow": "Contact", "contact.title": "Get in Touch",
+    "contact.sub": "For collaborations, suggestions or questions, reach us through any of the channels below.",
+    "contact.emailLabel": "Email", "contact.emailHint": "We reply as soon as possible",
+    "contact.emailBtn": "Send Email",
+    "contact.channelLabel": "WhatsApp Channel", "contact.channelHint": "New videos and announcements",
+    "contact.channelBtn": "Join Channel",
+    "contact.waLabel": "WhatsApp Admin", "contact.waHint": "Questions and collaborations",
+    "contact.waBtn": "Message on WhatsApp",
+    "footer.tagline": "45-Day Training Course — free beauty, makeup and fashion education for everyone.",
+    "footer.links": "Quick links", "footer.contact": "Contact",
+    "footer.channel": "WhatsApp Channel",
+    "footer.rights": "© 2026 Daily Fashion AF. All Rights Reserved."
+  }
+};
+
+/* ═══════ §6 ICONS ═══════ */
+const ICONS = {
+  play    : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></svg>',
+  pause   : '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1.3"/><rect x="14" y="4" width="4" height="16" rx="1.3"/></svg>',
+  back    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>',
+  arrow   : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
+  download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
+  clock   : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  mail    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 7 9 6 9-6"/></svg>',
+  whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.33-1.19l-.31-.18-3.12.82.83-3.04-.2-.32a8.22 8.22 0 0 1-1.26-4.33c0-4.54 3.7-8.24 8.24-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.54-3.7 8.24-8.24 8.24Z"/><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z"/></svg>',
+  bag     : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.2 12.2a1.8 1.8 0 0 1-1.8 2H6.6a1.8 1.8 0 0 1-1.8-2L6 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg>',
+  check   : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  sparkle : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14 9l7 2-7 2-2 7-2-7-7-2 7-2 2-7Z"/></svg>'
+};
+const ico = name => `<span class="ico" aria-hidden="true">${ICONS[name] || ""}</span>`;
+
+/* ═══════ §7 STATE + HELPERS ═══════ */
+const app = document.getElementById("app");
+const FA_DIGITS = ["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"];
+const state = { lang: (localStorage.getItem("df-lang") === "en") ? "en" : "fa" };
+
+const t  = key => { const d = I18N[state.lang] || I18N.fa; return d[key] !== undefined ? d[key] : (I18N.fa[key] || key); };
+const tf = (key, vars) => { let s = t(key); Object.keys(vars||{}).forEach(k => s = s.replace("{"+k+"}", vars[k])); return s; };
+const num = n => state.lang === "fa" ? String(n).replace(/\d/g, d => FA_DIGITS[+d]) : String(n);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const capitalize = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
+function applyLanguage(){
+  document.documentElement.lang = state.lang;
+  document.documentElement.dir  = state.lang === "fa" ? "rtl" : "ltr";
+  localStorage.setItem("df-lang", state.lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const v = t(el.dataset.i18n);
+    if(v !== el.dataset.i18n) el.textContent = v;
+  });
+  document.querySelectorAll(".lang-switch button").forEach(b => {
+    const a = b.dataset.lang === state.lang;
+    b.classList.toggle("active", a);
+    b.setAttribute("aria-pressed", a ? "true" : "false");
+  });
+}
+function setLanguage(lang){
+  if(lang === state.lang || (lang !== "fa" && lang !== "en")) return;
+  state.lang = lang;
+  applyLanguage();
+  render({ scroll: false });
+}
+
+/* ═══════ §8 ROUTER ═══════ */
+function parseHash(){
+  const raw = location.hash.replace(/^#\/?/, "") || "home";
+  const p = raw.split("/").filter(Boolean);
+  return { name: p[0] || "home" };
+}
+function render(opts){
+  const o = opts || {};
+  const r = parseHash();
+
+  if(r.name === "videos")          pages.videos();
+  else if(r.name === "lifestyle")  pages.lifestyle();
+  else if(r.name === "about")      pages.about();
+  else if(r.name === "shop")       pages.shop();
+  else if(r.name === "contact")    pages.contact();
+  else                             pages.home();
+
+  document.querySelectorAll("[data-nav]").forEach(a => a.classList.toggle("active", a.dataset.nav === r.name));
+  if(o.scroll !== false) window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+/* ═══════ §9 TOAST + DOWNLOAD ═══════ */
+let toastTimer = 0;
+function toast(msg){
+  const el = document.getElementById("toast");
+  el.innerHTML = ico("check") + "<span>" + esc(msg) + "</span>";
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
+}
+function downloadInfo(item){
+  const lines = [
+    "Daily Fashion AF — " + CONFIG.contact.email,
+    "─────────────────────────────────────────────",
+    "",
+    "FA: " + item.title.fa,
+    "EN: " + item.title.en,
+    "",
+    "FA: " + item.desc.fa,
+    "EN: " + item.desc.en,
+    "",
+    "File / فایل: " + (item.src || "—"),
+    "",
+    "Channel / کانال: " + CONFIG.contact.channel,
+    "Admin / مدیر: " + CONFIG.contact.adminPhone,
+    "",
+    "© 2026 Daily Fashion AF"
+  ].join("\n");
+  const safe = (item.title.en || "video").replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").slice(0, 40);
+  const blob = new Blob([lines], { type: "text/plain;charset=utf-8" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href = url;
+  a.download = "DailyFashion-" + safe + ".txt";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  toast(t("reels.downloaded") + " — " + t("reels.downloadHint"));
+}
+
+/* ═══════ §10 MODAL (Reels) ═══════ */
+function openReel(index){
+  const reel = REELS[index];
+  if(!reel) return;
+
+  document.getElementById("modalTitle").textContent = reel.title[state.lang];
+  document.getElementById("modalDesc").textContent  = reel.desc[state.lang];
+
+  const videoBox = document.getElementById("modalVideo");
+  videoBox.innerHTML = "";
+  const video = document.createElement("video");
+  video.src = reel.src;
+  video.controls = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.setAttribute("aria-label", reel.title[state.lang]);
+  videoBox.appendChild(video);
+
+  document.getElementById("modalDownload").onclick = () => downloadInfo(reel);
+
+  const modal = document.getElementById("modal");
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+function closeReel(){
+  const modal = document.getElementById("modal");
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.getElementById("modalVideo").innerHTML = "";
+  document.body.style.overflow = "";
+}
+
+/* ═══════ §11 REEL CARD ═══════ */
+function reelCardHTML(reel, i){
+  const numFa = ["۱","۲","۳","۴","۵","۶","۷","۸","۹","۱۰","۱۱","۱۲"];
+  const numText = state.lang === "fa" ? numFa[i] : String(i + 1);
+  return `
+    <article class="reel-card">
+      <button type="button" class="reel-thumb" data-reel="${i}" aria-label="${esc(reel.title[state.lang])}">
+        <span class="reel-num">${numText}</span>
+        <span class="reel-badge">${esc(t("reels.catCourse"))}</span>
+        <span class="play-fab">${ico("play")}</span>
+      </button>
+      <div class="reel-body">
+        <h3>${esc(reel.title[state.lang])}</h3>
+        <p>${esc(reel.desc[state.lang])}</p>
+        <div class="reel-actions">
+          <button type="button" class="btn btn-ghost btn-sm" data-reel="${i}">${ico("play")} ${t("reels.watch")}</button>
+          <button type="button" class="btn btn-primary btn-sm" data-download="${i}">${ico("download")} ${t("reels.download")}</button>
+        </div>
+      </div>
+    </article>`;
+}
+function lifeCardHTML(item){
+  return `
+    <article class="life-card">
+      <div class="life-img" style="background-image:url('${item.img}')"></div>
+      <div class="life-body">
+        <h3>${esc(item.title[state.lang])}</h3>
+        <p>${esc(item.desc[state.lang])}</p>
+        <div class="tags">${item.tags[state.lang].map(tag => `<span class="tag">${esc(tag)}</span>`).join("")}</div>
+      </div>
+    </article>`;
+}
+function bindReelButtons(){
+  document.querySelectorAll("[data-reel]").forEach(btn => {
+    if(btn._bound) return;
+    btn._bound = true;
+    btn.addEventListener("click", () => openReel(parseInt(btn.dataset.reel, 10)));
+  });
+  document.querySelectorAll("[data-download]").forEach(btn => {
+    if(btn._bound) return;
+    btn._bound = true;
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const reel = REELS[parseInt(btn.dataset.download, 10)];
+      if(reel) downloadInfo(reel);
+    });
+  });
+}
+
+/* ═══════ §12 PAGES ═══════ */
+const pages = {
+
+  home(){
+    document.title = "Daily Fashion AF — " + t("course45.title");
+    app.innerHTML = `
+      <section class="hero">
+        <div class="hero-bg"></div>
+        <span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span>
+        <div class="container">
+          <div class="hero-inner">
+            <span class="pill">${ico("sparkle")} ${esc(t("hero.badge"))}</span>
+            <h1>${esc(t("hero.title"))}</h1>
+            <p class="lead">${esc(t("hero.lead"))}</p>
+            <div class="hero-actions">
+              <button type="button" class="btn btn-primary" data-scroll="reels">${ico("play")} ${esc(t("hero.cta"))}</button>
+              <a class="btn btn-ghost" href="#/about">${esc(t("hero.cta2"))}</a>
+            </div>
+            <div class="hero-stats">
+              <div><strong>${num(REELS.length)}</strong><span>${esc(t("hero.stat1"))}</span></div>
+              <div><strong>${num(45)}</strong><span>${esc(t("hero.stat2"))}</span></div>
+              <div><strong>${esc(t("hero.stat3val"))}</strong><span>${esc(t("hero.stat3"))}</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reels">
+        <div class="container">
+          <header class="section-head">
+            <span class="eyebrow">${esc(t("course45.eyebrow"))}</span>
+            <h2>${esc(t("course45.title"))}</h2>
+            <p>${esc(t("course45.sub"))}</p>
+          </header>
+          <div class="reels-grid">${REELS.map(reelCardHTML).join("")}</div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <header class="section-head">
+            <span class="eyebrow">${esc(t("life.eyebrow"))}</span>
+            <h2>${esc(t("life.title"))}</h2>
+            <p>${esc(t("life.sub"))}</p>
+          </header>
+          <div class="lifestyle-block">
+            <div class="lifestyle-head">
+              <h2>${esc(t("life.women"))}</h2>
+              <span class="accent">${ico("sparkle")} ${esc(t("life.womenTag"))}</span>
+            </div>
+            <div class="lifestyle-grid">${LIFESTYLE.women.slice(0,2).map(lifeCardHTML).join("")}</div>
+          </div>
+          <div class="lifestyle-block" style="margin-bottom:0">
+            <div class="lifestyle-head">
+              <h2>${esc(t("life.men"))}</h2>
+              <span class="accent">${ico("sparkle")} ${esc(t("life.menTag"))}</span>
+            </div>
+            <div class="lifestyle-grid">${LIFESTYLE.men.slice(0,2).map(lifeCardHTML).join("")}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="channel-card">
+            <div class="channel-icon">${ico("whatsapp")}</div>
+            <h3>${esc(t("about.channelTitle"))}</h3>
+            <p>${esc(t("about.channelBody"))}</p>
+            <a class="btn btn-primary" href="${CONFIG.contact.channel}" target="_blank" rel="noopener noreferrer">${ico("whatsapp")} ${esc(t("about.join"))}</a>
+          </div>
+        </div>
+      </section>
+    `;
+    app.querySelectorAll("[data-scroll]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const el = document.getElementById(btn.dataset.scroll);
+        if(el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+    bindReelButtons();
+  },
+
+  videos(){
+    document.title = "Daily Fashion AF — " + t("course45.page.title");
+    app.innerHTML = `
+      <header class="page-head">
+        <div class="container">
+          <span class="eyebrow">${esc(t("course45.eyebrow"))}</span>
+          <h1>${esc(t("course45.page.title"))}</h1>
+          <p>${esc(t("course45.page.sub"))}</p>
+        </div>
+      </header>
+      <section class="section">
+        <div class="container"><div class="reels-grid">${REELS.map(reelCardHTML).join("")}</div></div>
+      </section>
+    `;
+    bindReelButtons();
+  },
+
+  lifestyle(){
+    document.title = "Daily Fashion AF — " + t("life.title");
+    app.innerHTML = `
+      <header class="page-head">
+        <div class="container">
+          <span class="eyebrow">${esc(t("life.eyebrow"))}</span>
+          <h1>${esc(t("life.title"))}</h1>
+          <p>${esc(t("life.sub"))}</p>
+        </div>
+      </header>
+      <section class="section">
+        <div class="container">
+          <div class="lifestyle-block">
+            <div class="lifestyle-head">
+              <h2>${esc(t("life.women"))}</h2>
+              <span class="accent">${ico("sparkle")} ${esc(t("life.womenTag"))}</span>
+            </div>
+            <div class="lifestyle-grid">${LIFESTYLE.women.map(lifeCardHTML).join("")}</div>
+          </div>
+          <div class="lifestyle-block" style="margin-bottom:0">
+            <div class="lifestyle-head">
+              <h2>${esc(t("life.men"))}</h2>
+              <span class="accent">${ico("sparkle")} ${esc(t("life.menTag"))}</span>
+            </div>
+            <div class="lifestyle-grid">${LIFESTYLE.men.map(lifeCardHTML).join("")}</div>
+          </div>
+        </div>
+      </section>
+    `;
+  },
+
+  about(){
+    document.title = "Daily Fashion AF — " + t("about.title");
+    app.innerHTML = `
+      <header class="page-head">
+        <div class="container">
+          <span class="eyebrow">${esc(t("about.eyebrow"))}</span>
+          <h1>${esc(t("about.title"))}</h1>
+        </div>
+      </header>
+      <section class="section">
+        <div class="container">
+          <div class="about-hero">
+            <div class="about-hero-text">
+              <h2>${esc(t("about.title"))}</h2>
+              <p>${esc(t("about.body"))}</p>
+            </div>
+            <div class="about-hero-img" style="background-image:url('${IMG.aboutHero}')"></div>
+          </div>
+          <div class="afghan-lifestyle" style="margin-bottom:clamp(2.5rem,5vw,3.5rem)">
+            <div class="afghan-lifestyle-img" style="background-image:url('${IMG.afghan}')"></div>
+            <div>
+              <span class="eyebrow">${esc(t("life.eyebrow"))}</span>
+              <h2>${esc(t("about.afghanTitle"))}</h2>
+              <p>${esc(t("about.afghanP1"))}</p>
+              <p>${esc(t("about.afghanP2"))}</p>
+              <p>${esc(t("about.afghanP3"))}</p>
+            </div>
+          </div>
+          <div class="channel-card">
+            <div class="channel-icon">${ico("whatsapp")}</div>
+            <h3>${esc(t("about.channelTitle"))}</h3>
+            <p>${esc(t("about.channelBody"))}</p>
+            <a class="btn btn-primary" href="${CONFIG.contact.channel}" target="_blank" rel="noopener noreferrer">${ico("whatsapp")} ${esc(t("about.join"))}</a>
+          </div>
+        </div>
+      </section>
+    `;
+  },
+
+  shop(){
+    document.title = "Daily Fashion AF — " + t("shop.title");
+    app.innerHTML = `
+      <section class="section">
+        <div class="container">
+          <div class="shop-wrap">
+            <div class="shop-card">
+              <span class="pill" style="margin-bottom:.4rem">${esc(t("shop.badge"))}</span>
+              <div class="bag-circle">${ico("bag")}</div>
+              <h1>${esc(t("shop.title"))}</h1>
+              <p>${esc(t("shop.body"))}</p>
+              <a class="btn btn-primary" href="${CONFIG.contact.channel}" target="_blank" rel="noopener noreferrer">${ico("whatsapp")} ${esc(t("shop.cta"))}</a>
+              <p style="font-size:.85rem;margin-top:1.1rem">${esc(t("shop.note"))}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  },
+
+  contact(){
+    document.title = "Daily Fashion AF — " + t("contact.title");
+    app.innerHTML = `
+      <header class="page-head">
+        <div class="container">
+          <span class="eyebrow">${esc(t("contact.eyebrow"))}</span>
+          <h1>${esc(t("contact.title"))}</h1>
+          <p>${esc(t("contact.sub"))}</p>
+        </div>
+      </header>
+      <section class="section">
+        <div class="container">
+          <div class="contact-grid">
+            <div class="contact-card">
+              <div class="contact-icon">${ico("mail")}</div>
+              <span class="label">${esc(t("contact.emailLabel"))}</span>
+              <span class="value">${esc(CONFIG.contact.email)}</span>
+              <span class="hint">${esc(t("contact.emailHint"))}</span>
+              <a class="btn btn-ghost btn-sm" href="mailto:${esc(CONFIG.contact.email)}?subject=Daily%20Fashion%20AF">${ico("mail")} ${esc(t("contact.emailBtn"))}</a>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon green">${ico("whatsapp")}</div>
+              <span class="label">${esc(t("contact.channelLabel"))}</span>
+              <span class="value" style="font-size:.92rem;direction:ltr">WhatsApp Channel</span>
+              <span class="hint">${esc(t("contact.channelHint"))}</span>
+              <a class="btn btn-primary btn-sm" href="${CONFIG.contact.channel}" target="_blank" rel="noopener noreferrer">${ico("whatsapp")} ${esc(t("contact.channelBtn"))}</a>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon dark">${ico("whatsapp")}</div>
+              <span class="label">${esc(t("contact.waLabel"))}</span>
+              <span class="value">${esc(CONFIG.contact.adminPhone)}</span>
+              <span class="hint">${esc(t("contact.waHint"))}</span>
+              <a class="btn btn-dark btn-sm" href="${CONFIG.contact.adminWaLink}" target="_blank" rel="noopener noreferrer">${ico("whatsapp")} ${esc(t("contact.waBtn"))}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+};
+
+/* ═══════ §13 INIT ═══════ */
+(function init(){
+  applyLanguage();
+
+  document.querySelectorAll(".lang-switch button").forEach(btn =>
+    btn.addEventListener("click", () => setLanguage(btn.dataset.lang)));
+
+  const burger = document.getElementById("burger");
+  const nav    = document.getElementById("mainNav");
+  burger.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.innerHTML = open
+      ? '<span class="ico" style="font-size:1.3rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>'
+      : '<span class="ico" style="font-size:1.3rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>';
+  });
+  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+    nav.classList.remove("open");
+    burger.setAttribute("aria-expanded", "false");
+  }));
+
+  document.querySelectorAll("#modal [data-close]").forEach(el => el.addEventListener("click", closeReel));
+  document.addEventListener("keydown", e => {
+    if(e.key === "Escape" && document.getElementById("modal").classList.contains("open")) closeReel();
+  });
+
+  window.addEventListener("hashchange", () => render());
+  if(!location.hash) location.hash = "#/home";
+  render();
+})();
+</script>
+</body>
+</html>
