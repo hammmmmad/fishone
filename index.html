@@ -477,7 +477,7 @@ const V = name => CONFIG.paths.videos + name;
 const REELS = (() => {
   const faOrd = ["اول","دوم","سوم","چهارم","پنجم","ششم","هفتم","هشتم","نهم","دهم","یازدهم","دوازدهم"];
   const faNum = ["۱","۲","۳","۴","۵","۶","۷","۸","۹","۱۰","۱۱","۱۲"];
-  return Array.from({ length: 12 }, (_, i) => ({
+  return Array.from({ length: 45 }, (_, i) => ({
     id: String(i + 1),
     src: V(`${i + 1}.mp4`),
     category: "course",
@@ -534,9 +534,9 @@ const I18N = {
     "hero.stat3": "دسترسی آسان", "hero.stat3val": "۲۴/۷",
     "course45.eyebrow": "دوره ۴۵ روزه",
     "course45.title": "دوره آموزشی ۴۵ روزه",
-    "course45.sub": "۱۲ درس ویدیویی گام به گام — از آرایش و زیبایی تا استایل و سبک زندگی. هر درس را تماشا کنید یا دانلود کنید.",
+    "course45.sub": "۴۵ درس ویدیویی گام به گام — از آرایش و زیبایی تا استایل و سبک زندگی. هر درس را تماشا کنید یا دانلود کنید.",
     "course45.page.title": "دوره ۴۵ روزه",
-    "course45.page.sub": "همه ۱۲ درس دوره ۴۵ روزه دیلی فشن — با دکمه دانلود برای هر درس.",
+    "course45.page.sub": "همه ۴۵ درس دوره ۴۵ روزه دیلی فشن — با دکمه دانلود برای هر درس.",
     "reels.download": "دانلود", "reels.watch": "تماشا",
     "reels.catCourse": "دوره",
     "reels.downloaded": "دانلود آغاز شد", "reels.downloadHint": "فایل اطلاعات ویدیو دانلود شد",
@@ -578,9 +578,9 @@ const I18N = {
     "brand.sub": "Beauty · Fashion · Education",
     "nav.home": "Home", "nav.videos": "45-Day Course", "nav.lifestyle": "Lifestyle",
     "nav.about": "About", "nav.shop": "Shop", "nav.contact": "Contact",
-    "hero.badge": "45-Day Course · 12 Lessons",
+    "hero.badge": "45-Day Course · 45 Lessons",
     "hero.title": "Learn, Create & Shine with Daily Fashion AF",
-    "hero.lead": "Daily Fashion AF offers a 45-day training course with 12 free video lessons — from beauty and makeup to fashion and lifestyle. Start learning today.",
+    "hero.lead": "Daily Fashion AF offers a 45-day training course with 45 free video lessons — from beauty and makeup to fashion and lifestyle. Start learning today.",
     "hero.cta": "Start 45-Day Course", "hero.cta2": "About Us",
     "hero.stat1": "Video lessons", "hero.stat2": "Day program",
     "hero.stat3": "Easy access", "hero.stat3val": "24/7",
@@ -588,7 +588,7 @@ const I18N = {
     "course45.title": "The 45-Day Training Course",
     "course45.sub": "12 step-by-step video lessons — from beauty and makeup to style and lifestyle. Watch or download each lesson.",
     "course45.page.title": "45-Day Course",
-    "course45.page.sub": "All 12 lessons of the Daily Fashion 45-day course — each with a download button.",
+    "course45.page.sub": "All 45 lessons of the Daily Fashion 45-day course — each with a download button.",
     "reels.download": "Download", "reels.watch": "Watch",
     "reels.catCourse": "Course",
     "reels.downloaded": "Download started", "reels.downloadHint": "Video info file downloaded",
