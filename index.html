@@ -374,10 +374,10 @@ html[lang="fa"] .footer-col h4{letter-spacing:.02em;text-transform:none;font-siz
       <h3 id="modalTitle"></h3>
       <p id="modalDesc"></p>
       <div class="modal-actions">
-        <button id="modalDownload" class="btn btn-primary" type="button">
+        <a id="modalDownload" class="btn btn-primary" href="#" download>
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span>
           <span data-i18n="reels.download"></span>
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -479,7 +479,6 @@ async function loadVideosFromDB() {
 
   // ۳. تبدیل به لیست و مرتب‌سازی بر اساس شماره
   REELS = Object.values(availableVideos).sort((a, b) => a.id - b.id);
-  console.log("تعداد کل ویدیوهای آماده نمایش:", REELS.length);
 }
 
 /* ═══════════ §3 CONFIG & DATA ═══════════ */
@@ -721,10 +720,10 @@ function openReel(index){
   document.getElementById("modalDesc").textContent = reel.desc[state.lang];
 
   const dlBtn = document.getElementById("modalDownload");
-  dlBtn.onclick = function(e) {
-    e.preventDefault();
-    downloadVideo(reel.src, `DailyFashion-Lesson-${reel.id}.mp4`);
-  };
+  // استفاده از پارامتر ?download برای دانلود مستقیم
+  const dlUrl = reel.src.includes('?') ? reel.src + '&download' : reel.src + '?download';
+  dlBtn.href = dlUrl;
+  dlBtn.setAttribute("download", `DailyFashion-Lesson-${reel.id}.mp4`);
 
   const videoBox = document.getElementById("modalVideo");
   videoBox.innerHTML = "";
@@ -760,29 +759,11 @@ function bindReelButtons(){
   });
 }
 
-// تابع دانلود اجباری ویدیو (حل مشکل باز شدن در تب جدید)
-async function downloadVideo(url, filename) {
-  try {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    const blobUrl = window.URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = blobUrl;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    window.URL.revokeObjectURL(blobUrl);
-  } catch (error) {
-    console.error("Download failed:", error);
-    window.open(url, '_blank');
-  }
-}
-
 /* ═══════════ §8 CARD TEMPLATES ═══════════ */
 function reelCardHTML(reel, i){
   const numText = state.lang === "fa" ? (reel.id).toLocaleString('fa-IR') : String(reel.id);
+  // استفاده از پارامتر ?download برای دانلود مستقیم
+  const dlUrl = reel.src.includes('?') ? reel.src + '&download' : reel.src + '?download';
 
   return `
     <article class="reel-card">
@@ -797,7 +778,7 @@ function reelCardHTML(reel, i){
         <p>${esc(reel.desc[state.lang])}</p>
         <div class="reel-actions">
           <button type="button" class="btn btn-ghost btn-sm" data-reel="${i}">${ico("play")} ${t("reels.watch")}</button>
-          <button type="button" class="btn btn-primary btn-sm" onclick="downloadVideo('${reel.src}', 'DailyFashion-Lesson-${reel.id}.mp4')">${ico("download")} ${t("reels.download")}</button>
+          <a href="${dlUrl}" download="DailyFashion-Lesson-${reel.id}.mp4" class="btn btn-primary btn-sm">${ico("download")} ${t("reels.download")}</a>
         </div>
       </div>
     </article>`;
@@ -1207,4 +1188,4 @@ window.addEventListener("hashchange", () => render());
 })();
 </script>
 </body>
-  </html>
+</html>
