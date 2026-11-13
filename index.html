@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#e9a6bb">
 <title>Daily Fashion AF — دوره ۴۵ روزه</title>
-<meta name="relly Fashion AF — دوره ۴۵ روزه با ۴۵ درس ویدیویی رایگان.">
-<img src/image/logo.jpg">
+<meta name="description" content="Daily Fashion AF — دوره ۴۵ روزه با ۴۵ درس ویدیویی رایگان.">
+<link rel="icon" href="image/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- ═══════════ INIT THEME (بدون پرش صفحه) ═══════════ -->
+<!-- ═══════════ INIT THEME ═══════════ -->
 <script>
 (function(){
   var t = localStorage.getItem('df-theme') || 'light';
@@ -23,9 +23,7 @@
 </script>
 
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   §1  TOKENS & DARK MODE
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §1 TOKENS & DARK MODE ═══════════ */
 :root{
   --ink:#141418; --ink-2:#3a3a45; --muted:#7a7a86;
   --pink:#e9a6bb; --pink-deep:#c76e8c; --pink-rose:#a84a6b;
@@ -40,7 +38,6 @@
   --ease:cubic-bezier(.2,.7,.3,1);
   --reel-min:220px; --reel-ratio:9/14; --logo-size:48px;
 }
-
 [data-theme="dark"]{
   --ink:#f0f0f4; --ink-2:#c4c4cc; --muted:#8e8e98;
   --pink-light:#2a1a20; --pink-line:#4a2b36;
@@ -70,7 +67,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .ico svg{width:1em;height:1em;display:block}
 html[dir="rtl"] .play-fab .ico,html[dir="rtl"] .card-link .ico,html[dir="rtl"] .back-link .ico{transform:scaleX(-1)}
 
-/* ═══════════ §3 HEADER (With Round Logo) ═══════════ */
+/* ═══════════ §3 HEADER ═══════════ */
 .site-header{position:sticky;top:0;z-index:80;background:rgba(255,255,255,.85);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid #f3e7ec;transition:background-color .3s, border-color .3s}
 [data-theme="dark"] .site-header{background:rgba(20,20,24,.85);border-bottom-color:#2a2a33}
 .nav-wrap{display:flex;align-items:center;gap:1rem;height:var(--header-h)}
@@ -92,8 +89,6 @@ html[lang="fa"] .brand-sub{letter-spacing:.02em;text-transform:none;font-size:.7
 .main-nav a:hover,.main-nav a.active{background:var(--pink-light);color:var(--pink-deep)}
 .main-nav a.active{font-weight:700}
 .nav-actions{display:flex;align-items:center;gap:.55rem}
-
-/* ═══════════ Theme Toggle & Lang ═══════════ */
 .icon-btn{width:38px;height:38px;border-radius:12px;background:var(--gray);display:grid;place-items:center;color:var(--ink-2);transition:background .25s,color .25s,transform .25s}
 .icon-btn:hover{background:var(--pink-light);color:var(--pink-deep);transform:scale(1.05)}
 .icon-btn svg{width:20px;height:20px;transition:transform .3s}
@@ -148,13 +143,11 @@ html[lang="fa"] .eyebrow{letter-spacing:.02em;text-transform:none;font-size:.82r
 .section-head h2{font-size:clamp(1.65rem,3.8vw,2.5rem);margin-bottom:.7rem}
 .section-head p{color:var(--muted);font-size:1rem;line-height:1.8}
 
-/* ═══════════ §7 REELS GRID (با کاور ویدیو) ═══════════ */
+/* ═══════════ §7 REELS GRID ═══════════ */
 .reels-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(var(--reel-min), 1fr));gap:1.6rem}
 .reel-card{background:var(--white);border:1px solid #f3e8ec;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .3s,background-color .3s}
 [data-theme="dark"] .reel-card{border-color:#2a2a33}
 .reel-card:hover{box-shadow:var(--shadow-md)}
-
-/* ویدیو پیش‌نمایش به عنوان کاور */
 .reel-thumb{position:relative;aspect-ratio:var(--reel-ratio, 9/14);background-color:#222;overflow:hidden;display:flex;align-items:center;justify-content:center;width:100%;padding:0;border:0;cursor:pointer}
 .reel-thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
 .reel-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,20,24,.7),rgba(20,20,24,0) 55%);z-index:1;pointer-events:none}
@@ -199,37 +192,20 @@ html[dir="rtl"] .reel-num{transform:translate(50%,-50%)}
 [data-theme="dark"] .about-hero-img{border-color:#2a2a33}
 .about-hero-text h2{font-size:clamp(1.5rem,3.4vw,2.1rem);margin-bottom:.8rem}
 .about-hero-text p{color:var(--ink-2);font-size:1.02rem;line-height:1.9}
-
-/* بخش معرفی عرش نیکزاد */
-.founder-card{
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:2rem;align-items:center;
-  background:linear-gradient(160deg,var(--pink-light),var(--white) 60%);
-  border:1px solid var(--pink-line);border-radius:var(--radius);
-  padding:clamp(1.5rem,3.5vw,2.6rem);box-shadow:var(--shadow-md);
-  margin-bottom:clamp(2.5rem,5vw,3.5rem);position:relative;overflow:hidden;
-  transition:background .3s,border-color .3s;
-}
+.founder-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:2rem;align-items:center;background:linear-gradient(160deg,var(--pink-light),var(--white) 60%);border:1px solid var(--pink-line);border-radius:var(--radius);padding:clamp(1.5rem,3.5vw,2.6rem);box-shadow:var(--shadow-md);margin-bottom:clamp(2.5rem,5vw,3.5rem);position:relative;overflow:hidden;transition:background .3s,border-color .3s}
 [data-theme="dark"] .founder-card{background:linear-gradient(160deg,#2a1a20,#1c1c21 60%);border-color:#4a2b36}
-.founder-img{
-  border-radius:var(--radius-sm);overflow:hidden;aspect-ratio:4/5;
-  background-size:cover;background-position:center;
-  box-shadow:0 20px 40px -22px rgba(168,74,107,.6);
-  border:3px solid var(--white);
-}
+.founder-img{border-radius:var(--radius-sm);overflow:hidden;aspect-ratio:4/5;background-size:cover;background-position:center;box-shadow:0 20px 40px -22px rgba(168,74,107,.6);border:3px solid var(--white)}
 [data-theme="dark"] .founder-img{border-color:#2a2a33}
 .founder-text h2{font-size:clamp(1.4rem,3.5vw,2rem);margin-bottom:.4rem;color:var(--ink)}
 .founder-text .role{display:inline-block;background:var(--pink-deep);color:#fff;font-size:.8rem;font-weight:700;padding:.25rem .8rem;border-radius:999px;margin-bottom:1rem}
 .founder-text p{color:var(--ink-2);font-size:1rem;line-height:1.9;margin-bottom:1rem;font-style:italic;position:relative;padding-inline-start:1rem;border-inline-start:3px solid var(--pink)}
 .founder-text .signature{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--pink-deep);font-weight:700;margin-top:1rem}
-
-/* بخش افغانستان */
 .afghan-lifestyle{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:2rem;align-items:center;background:var(--gray);border:1px solid #f3e8ec;border-radius:var(--radius);padding:clamp(1.5rem,3.5vw,2.6rem);box-shadow:var(--shadow-sm);transition:background .3s,border-color .3s}
 [data-theme="dark"] .afghan-lifestyle{border-color:#2a2a33}
 .afghan-lifestyle-img{border-radius:var(--radius-sm);overflow:hidden;aspect-ratio:4/3;background-size:cover;background-position:center;box-shadow:0 20px 40px -22px rgba(0,0,0,.3)}
 .afghan-lifestyle h2{font-size:clamp(1.3rem,3vw,1.85rem);margin-bottom:.7rem}
 .afghan-lifestyle p{color:var(--ink-2);font-size:.98rem;line-height:1.9;margin-bottom:.8rem}
 .afghan-lifestyle p:last-child{margin-bottom:0}
-
 .channel-card{background:linear-gradient(150deg,#eafaf0 0%,var(--white) 60%);border:1px solid #c9efd8;border-radius:var(--radius);padding:clamp(1.5rem,3.2vw,2.4rem);display:flex;flex-direction:column;align-items:flex-start;gap:.8rem;box-shadow:var(--shadow-sm);transition:background .3s,border-color .3s}
 [data-theme="dark"] .channel-card{background:linear-gradient(150deg,#16291e 0%,#1c1c21 60%);border-color:#1e5c35}
 .channel-icon{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:#25D366;color:#fff;font-size:1.6rem;box-shadow:0 16px 30px -14px rgba(37,211,102,.9)}
@@ -290,7 +266,17 @@ html[lang="fa"] .footer-col h4{letter-spacing:.02em;text-transform:none;font-siz
 .footer-bottom{border-top:1px solid #eee3e8;padding-block:1.4rem;text-align:center;color:var(--muted);font-size:.84rem;position:relative}
 [data-theme="dark"] .footer-bottom{border-top-color:#2a2a33}
 
-/* ═══════════ §15 RESPONSIVE ═══════════ */
+/* ═══════════ §15 ADMIN PANEL ═══════════ */
+.admin-wrap{min-height:70vh;display:grid;place-items:center;padding-block:2rem}
+.admin-card{background:var(--white);border:1px solid #f3e8ec;border-radius:var(--radius);padding:2.5rem;max-width:500px;width:100%;box-shadow:var(--shadow-lg);text-align:center}
+[data-theme="dark"] .admin-card{border-color:#2a2a33}
+.admin-card h2{color:var(--pink-deep);margin-bottom:1.5rem}
+.admin-input{width:100%;padding:.9rem 1.2rem;border-radius:12px;border:1px solid #ddd;margin-bottom:1rem;font-family:inherit;background:var(--gray);color:var(--ink)}
+[data-theme="dark"] .admin-input{border-color:#444}
+.admin-input:focus{outline:none;border-color:var(--pink-deep)}
+.admin-status{margin-top:1rem;font-weight:bold;font-size:.9rem;min-height:1.5rem}
+
+/* ═══════════ §16 RESPONSIVE ═══════════ */
 @media (max-width:960px){
   .burger{display:grid}
   .main-nav{position:absolute;top:calc(var(--header-h) + 8px);inset-inline:1rem;flex-direction:column;align-items:stretch;gap:.25rem;margin:0;background:var(--white);border:1px solid #f3e8ec;border-radius:22px;padding:.7rem;box-shadow:var(--shadow-lg);display:none;max-height:calc(100vh - var(--header-h) - 24px);overflow-y:auto}
@@ -359,7 +345,6 @@ html[lang="fa"] .footer-col h4{letter-spacing:.02em;text-transform:none;font-siz
     </nav>
 
     <div class="nav-actions">
-      <!-- دکمه دارک مود -->
       <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
@@ -442,12 +427,35 @@ html[lang="fa"] .footer-col h4{letter-spacing:.02em;text-transform:none;font-siz
   <div class="footer-bottom"><p data-i18n="footer.rights"></p></div>
 </footer>
 
+<!-- ═══════════════════════════════════════════════════════════════
+   اسکریپت‌های Supabase
+   ═══════════════════════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 "use strict";
 
-/* ═══════════════════════════════════════════════════════════════
-   §1 CONFIG
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §1 SUPABASE CONFIG ═══════════ */
+const SUPABASE_URL = "https://ftorrprlveukbqhkwtgk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_klxW4W61vXPqwEqRrm8jGQ_omkppRPq";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// دیتابیس محلی برای نگهداری لینک ویدیوها
+let dbVideos = {};
+
+async function loadVideosFromDB() {
+  try {
+    const { data, error } = await supabaseClient.from('videos').select('*');
+    if (error) throw error;
+    dbVideos = {};
+    if (data) {
+      data.forEach(v => { dbVideos[v.lesson_number] = v.video_url; });
+    }
+  } catch (err) {
+    console.warn("خطا در خواندن دیتابیس، از ویدیوهای محلی استفاده می‌شود.", err);
+  }
+}
+
+/* ═══════════ §2 CONFIG & DATA ═══════════ */
 const CONFIG = {
   contact: {
     email       : "Dailyfashion@gmail.com",
@@ -455,54 +463,36 @@ const CONFIG = {
     adminWaLink : "https://wa.me/93796791538",
     channel     : "https://whatsapp.com/channel/0029VbDukxNIXnllve5j9p18"
   },
-  paths: {
-    videos : "videos/",
-    images : "assets/images/"
-  },
-  size: {
-    reelMinWidth  : 220,
-    reelAspectRatio : "9/14"
-  }
+  paths: { videos: "videos/", images: "image/" },
+  size: { reelMinWidth: 220, reelAspectRatio: "9/14" }
 };
+
 (function(){
   const s = document.documentElement.style;
   s.setProperty('--reel-min', CONFIG.size.reelMinWidth + 'px');
   s.setProperty('--reel-ratio', CONFIG.size.reelAspectRatio);
 })();
-const V = name => CONFIG.paths.videos + name;
 
-/* ═══════════════════════════════════════════════════════════════
-   §2 REELS DATA (12 Lessons)
-   ═══════════════════════════════════════════════════════════════ */
-const REELS = (() => {
-  const faOrd = ["اول","دوم","سوم","چهارم","پنجم","ششم","هفتم","هشتم","نهم","دهم","یازدهم","دوازدهم"];
-  const faNum = ["۱","۲","۳","۴","۵","۶","۷","۸","۹","۱۰","۱۱","۱۲"];
-  return Array.from({ length: 45 }, (_, i) => ({
-    id: String(i + 1),
-    src: V(`${i + 1}.mp4`),
+// ساخت ۴۵ دوره
+const REELS = Array.from({ length: 45 }, (_, i) => {
+  const num = i + 1;
+  return {
+    id: String(num),
+    src: CONFIG.paths.videos + `${num}.mp4`,
     category: "course",
-    title: { fa: `دوره ${faOrd[i]}`, en: `Course ${i + 1}` },
-    desc: {
-      fa: `درس ${faNum[i]} از دوره ۴۵ روزه دیلی فشن — آموزش گام به گام`,
-      en: `Lesson ${i + 1} of the Daily Fashion 45-day course — step-by-step`
-    }
-  }));
-})();
+    title: { fa: `دوره ${num}`, en: `Course ${num}` },
+    desc: { fa: `درس ${num} از دوره ۴۵ روزه دیلی فشن — آموزش گام به گام`, en: `Lesson ${num} of the Daily Fashion 45-day course — step-by-step` }
+  };
+});
 
-/* ═══════════════════════════════════════════════════════════════
-   §3 IMAGES
-   ═══════════════════════════════════════════════════════════════ */
 const IMG = {
   women     : "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80",
   men       : "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80",
   afghan    : "https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&w=900&q=80",
   aboutHero : "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80",
-  founder   : "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=600&q=80" // عکس پیش‌فرض برای عرش نیکزاد
+  founder   : "image/founder.jpg" // تغییر به لوکال، اگر عکس ندارید از لینک استفاده کنید
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   §4 LIFESTYLE DATA
-   ═══════════════════════════════════════════════════════════════ */
 const LIFESTYLE = {
   women: [
     { img: IMG.women, title: { fa: "شیک روزمره", en: "Everyday Elegant" }, desc: { fa: "ترکیب رنگ‌های خنثی و برش‌های ساده برای استایل روزمره؛ راحت و شیک.", en: "Neutral tones and simple cuts for a comfortable, polished everyday look." }, tags: { fa: ["مینیمال", "روزمره", "راحت"], en: ["Minimal", "Everyday", "Comfort"] } },
@@ -518,9 +508,7 @@ const LIFESTYLE = {
   ]
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   §5 I18N (Translations)
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §3 TRANSLATIONS ═══════════ */
 const I18N = {
   fa: {
     "brand.sub": "زیبایی · مد · آموزش",
@@ -572,7 +560,13 @@ const I18N = {
     "footer.tagline": "دوره آموزشی ۴۵ روزه — آموزش رایگان آرایش، زیبایی و فیشن برای همه.",
     "footer.links": "دسترسی سریع", "footer.contact": "تماس",
     "footer.channel": "کانال واتس‌اپ",
-    "footer.rights": "© ۲۰۲۶ دیلی فیشن افغانستان. تمام حقوق محفوظ است."
+    "footer.rights": "© ۲۰۲۶ دیلی فیشن افغانستان. تمام حقوق محفوظ است.",
+    "admin.title": "پنل مدیریت", "admin.passPlaceholder": "رمز عبور را وارد کنید",
+    "admin.loginBtn": "ورود", "admin.logoutBtn": "خروج",
+    "admin.uploadTitle": "آپلود ویدیو جدید", "admin.selectLesson": "شماره دوره (۱ تا ۴۵):",
+    "admin.selectFile": "انتخاب فایل ویدیو:", "admin.uploadBtn": "شروع آپلود",
+    "admin.wrongPass": "رمز عبور اشتباه است!", "admin.success": "ویدیو با موفقیت آپلود و در سایت قرار گرفت!",
+    "admin.uploading": "در حال آپلود... لطفاً صبر کنید", "admin.error": "خطا: "
   },
   en: {
     "brand.sub": "Beauty · Fashion · Education",
@@ -586,7 +580,7 @@ const I18N = {
     "hero.stat3": "Easy access", "hero.stat3val": "24/7",
     "course45.eyebrow": "45-Day Course",
     "course45.title": "The 45-Day Training Course",
-    "course45.sub": "12 step-by-step video lessons — from beauty and makeup to style and lifestyle. Watch or download each lesson.",
+    "course45.sub": "45 step-by-step video lessons — from beauty and makeup to style and lifestyle. Watch or download each lesson.",
     "course45.page.title": "45-Day Course",
     "course45.page.sub": "All 45 lessons of the Daily Fashion 45-day course — each with a download button.",
     "reels.download": "Download", "reels.watch": "Watch",
@@ -624,40 +618,37 @@ const I18N = {
     "footer.tagline": "45-Day Training Course — free beauty, makeup and fashion education for everyone.",
     "footer.links": "Quick links", "footer.contact": "Contact",
     "footer.channel": "WhatsApp Channel",
-    "footer.rights": "© 2026 Daily Fashion AF. All Rights Reserved."
+    "footer.rights": "© 2026 Daily Fashion AF. All Rights Reserved.",
+    "admin.title": "Admin Panel", "admin.passPlaceholder": "Enter password",
+    "admin.loginBtn": "Login", "admin.logoutBtn": "Logout",
+    "admin.uploadTitle": "Upload New Video", "admin.selectLesson": "Lesson Number (1-45):",
+    "admin.selectFile": "Select Video File:", "admin.uploadBtn": "Start Upload",
+    "admin.wrongPass": "Incorrect password!", "admin.success": "Video uploaded and published successfully!",
+    "admin.uploading": "Uploading... Please wait", "admin.error": "Error: "
   }
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   §6 ICONS
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §4 ICONS & HELPERS ═══════════ */
 const ICONS = {
-  play    : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></svg>',
-  pause   : '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1.3"/><rect x="14" y="4" width="4" height="16" rx="1.3"/></svg>',
-  back    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>',
-  arrow   : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></svg>',
   download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
-  clock   : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-  mail    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 7 9 6 9-6"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 7 9 6 9-6"/></svg>',
   whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.33-1.19l-.31-.18-3.12.82.83-3.04-.2-.32a8.22 8.22 0 0 1-1.26-4.33c0-4.54 3.7-8.24 8.24-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.54-3.7 8.24-8.24 8.24Z"/><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z"/></svg>',
-  bag     : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.2 12.2a1.8 1.8 0 0 1-1.8 2H6.6a1.8 1.8 0 0 1-1.8-2L6 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg>',
-  check   : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
-  sparkle : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14 9l7 2-7 2-2 7-2-7-7-2 7-2 2-7Z"/></svg>'
+  bag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.2 12.2a1.8 1.8 0 0 1-1.8 2H6.6a1.8 1.8 0 0 1-1.8-2L6 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  sparkle: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14 9l7 2-7 2-2 7-2-7-7-2 7-2 2-7Z"/></svg>'
 };
 const ico = name => `<span class="ico" aria-hidden="true">${ICONS[name] || ""}</span>`;
 
-/* ═══════════════════════════════════════════════════════════════
-   §7 STATE & HELPERS
-   ═══════════════════════════════════════════════════════════════ */
 const app = document.getElementById("app");
 const state = { lang: (localStorage.getItem("df-lang") === "en") ? "en" : "fa" };
 
-const t  = key => { const d = I18N[state.lang] || I18N.fa; return d[key] !== undefined ? d[key] : (I18N.fa[key] || key); };
+const t = key => { const d = I18N[state.lang] || I18N.fa; return d[key] !== undefined ? d[key] : (I18N.fa[key] || key); };
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
 
 function applyLanguage(){
   document.documentElement.lang = state.lang;
-  document.documentElement.dir  = state.lang === "fa" ? "rtl" : "ltr";
+  document.documentElement.dir = state.lang === "fa" ? "rtl" : "ltr";
   localStorage.setItem("df-lang", state.lang);
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const v = t(el.dataset.i18n);
@@ -666,7 +657,6 @@ function applyLanguage(){
   document.querySelectorAll(".lang-switch button").forEach(b => {
     const a = b.dataset.lang === state.lang;
     b.classList.toggle("active", a);
-    b.setAttribute("aria-pressed", a ? "true" : "false");
   });
 }
 function setLanguage(lang){
@@ -676,9 +666,7 @@ function setLanguage(lang){
   render({ scroll: false });
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   §8 ROUTER
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §5 ROUTER ═══════════ */
 function parseHash(){
   const raw = location.hash.replace(/^#\/?/, "") || "home";
   const p = raw.split("/").filter(Boolean);
@@ -693,15 +681,14 @@ function render(opts){
   else if(r.name === "about")      pages.about();
   else if(r.name === "shop")       pages.shop();
   else if(r.name === "contact")    pages.contact();
+  else if(r.name === "admin")      pages.admin();
   else                             pages.home();
 
   document.querySelectorAll("[data-nav]").forEach(a => a.classList.toggle("active", a.dataset.nav === r.name));
   if(o.scroll !== false) window.scrollTo({ top: 0, behavior: "auto" });
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   §9 TOAST
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §6 TOAST & MODAL ═══════════ */
 let toastTimer = 0;
 function toast(msg){
   const el = document.getElementById("toast");
@@ -711,41 +698,37 @@ function toast(msg){
   toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   §10 MODAL (Video Player & Download)
-   ═══════════════════════════════════════════════════════════════ */
 function openReel(index){
   const reel = REELS[index];
   if(!reel) return;
+  
+  // چک کردن اینکه آیا ویدیو در دیتابیس آپلود شده یا خیر
+  const videoSrc = dbVideos[index + 1] || reel.src;
 
   document.getElementById("modalTitle").textContent = reel.title[state.lang];
-  document.getElementById("modalDesc").textContent  = reel.desc[state.lang];
+  document.getElementById("modalDesc").textContent = reel.desc[state.lang];
 
-  // دکمه دانلود اصلی
   const dlBtn = document.getElementById("modalDownload");
-  dlBtn.href = reel.src;
+  dlBtn.href = videoSrc;
   dlBtn.setAttribute("download", `DailyFashion-Lesson-${index + 1}.mp4`);
 
   const videoBox = document.getElementById("modalVideo");
   videoBox.innerHTML = "";
   const video = document.createElement("video");
-  video.src = reel.src;
+  video.src = videoSrc;
   video.controls = true;
   video.autoplay = true;
   video.playsInline = true;
-  video.setAttribute("aria-label", reel.title[state.lang]);
   videoBox.appendChild(video);
 
   const modal = document.getElementById("modal");
   modal.classList.add("open");
-  modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 }
 
 function closeReel(){
   const modal = document.getElementById("modal");
   modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
   document.getElementById("modalVideo").innerHTML = "";
   document.body.style.overflow = "";
 }
@@ -758,17 +741,15 @@ function bindReelButtons(){
   });
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   §11 REEL CARD TEMPLATE
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §7 CARD TEMPLATES ═══════════ */
 function reelCardHTML(reel, i){
-  const numFa = ["۱","۲","۳","۴","۵","۶","۷","۸","۹","۱۰","۱۱","۱۲"];
-  const numText = state.lang === "fa" ? numFa[i] : String(i + 1);
-  
+  const numText = state.lang === "fa" ? (i + 1).toLocaleString('fa-IR') : String(i + 1);
+  const videoSrc = dbVideos[i + 1] || reel.src;
+
   return `
     <article class="reel-card">
       <button type="button" class="reel-thumb" data-reel="${i}" aria-label="${esc(reel.title[state.lang])}">
-        <video src="${reel.src}#t=0.5" preload="metadata" muted playsinline></video>
+        <video src="${videoSrc}#t=0.5" preload="metadata" muted playsinline></video>
         <span class="reel-num">${numText}</span>
         <span class="reel-badge">${esc(t("reels.catCourse"))}</span>
         <span class="play-fab">${ico("play")}</span>
@@ -778,7 +759,7 @@ function reelCardHTML(reel, i){
         <p>${esc(reel.desc[state.lang])}</p>
         <div class="reel-actions">
           <button type="button" class="btn btn-ghost btn-sm" data-reel="${i}">${ico("play")} ${t("reels.watch")}</button>
-          <a href="${reel.src}" download="DailyFashion-Lesson-${i+1}.mp4" class="btn btn-primary btn-sm">${ico("download")} ${t("reels.download")}</a>
+          <a href="${videoSrc}" download="DailyFashion-Lesson-${i+1}.mp4" class="btn btn-primary btn-sm">${ico("download")} ${t("reels.download")}</a>
         </div>
       </div>
     </article>`;
@@ -796,9 +777,7 @@ function lifeCardHTML(item){
     </article>`;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   §12 PAGES
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §8 PAGES ═══════════ */
 const pages = {
   home(){
     document.title = "Daily Fashion AF — " + t("course45.title");
@@ -816,7 +795,7 @@ const pages = {
               <a class="btn btn-ghost" href="#/about">${esc(t("hero.cta2"))}</a>
             </div>
             <div class="hero-stats">
-              <div><strong>${state.lang === 'fa' ? '۱۲' : '12'}</strong><span>${esc(t("hero.stat1"))}</span></div>
+              <div><strong>${state.lang === 'fa' ? '۴۵' : '45'}</strong><span>${esc(t("hero.stat1"))}</span></div>
               <div><strong>${state.lang === 'fa' ? '۴۵' : '45'}</strong><span>${esc(t("hero.stat2"))}</span></div>
               <div><strong>${esc(t("hero.stat3val"))}</strong><span>${esc(t("hero.stat3"))}</span></div>
             </div>
@@ -946,7 +925,6 @@ const pages = {
             <div class="about-hero-img" style="background-image:url('${IMG.aboutHero}')"></div>
           </div>
 
-          <!-- بخش معرفی عرش نیکزاد -->
           <div class="founder-card">
             <div class="founder-img" style="background-image:url('${IMG.founder}')"></div>
             <div class="founder-text">
@@ -1036,16 +1014,114 @@ const pages = {
         </div>
       </section>
     `;
+  },
+
+  admin(){
+    document.title = "Daily Fashion AF — Admin";
+    const isAuth = sessionStorage.getItem("df-admin-auth") === "true";
+
+    if(!isAuth){
+      app.innerHTML = `
+        <div class="container admin-wrap">
+          <div class="admin-card">
+            <h2>${esc(t("admin.title"))}</h2>
+            <input type="password" id="adminPass" class="admin-input" placeholder="${esc(t("admin.passPlaceholder"))}">
+            <button class="btn btn-primary" style="width:100%" onclick="loginAdmin()">${esc(t("admin.loginBtn"))}</button>
+            <div id="loginStatus" class="admin-status" style="color:#d93838"></div>
+          </div>
+        </div>
+      `;
+    } else {
+      app.innerHTML = `
+        <div class="container admin-wrap">
+          <div class="admin-card">
+            <h2>${esc(t("admin.uploadTitle"))}</h2>
+            
+            <label style="display:block;text-align:right;margin-bottom:.5rem">${esc(t("admin.selectLesson"))}</label>
+            <input type="number" id="adminLessonNum" class="admin-input" min="1" max="45" placeholder="1 - 45">
+            
+            <label style="display:block;text-align:right;margin-bottom:.5rem">${esc(t("admin.selectFile"))}</label>
+            <input type="file" id="adminVideoFile" accept="video/mp4" class="admin-input" style="padding-top:.6rem">
+            
+            <button class="btn btn-primary" style="width:100%" id="uploadBtn" onclick="uploadVideo()">${esc(t("admin.uploadBtn"))}</button>
+            <div id="uploadStatus" class="admin-status"></div>
+            
+            <button class="btn btn-dark btn-sm" style="width:100%;margin-top:2rem" onclick="logoutAdmin()">${esc(t("admin.logoutBtn"))}</button>
+          </div>
+        </div>
+      `;
+    }
   }
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   §13 INITIALIZATION & THEME
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════ §9 ADMIN LOGIC ═══════════ */
+window.loginAdmin = function() {
+  const pass = document.getElementById("adminPass").value;
+  if(pass === "admin123") {
+    sessionStorage.setItem("df-admin-auth", "true");
+    pages.admin();
+  } else {
+    document.getElementById("loginStatus").textContent = t("admin.wrongPass");
+  }
+};
+
+window.logoutAdmin = function() {
+  sessionStorage.removeItem("df-admin-auth");
+  pages.admin();
+};
+
+window.uploadVideo = async function() {
+  const lessonNum = document.getElementById("adminLessonNum").value;
+  const fileInput = document.getElementById("adminVideoFile");
+  const btn = document.getElementById("uploadBtn");
+  const status = document.getElementById("uploadStatus");
+
+  if (!lessonNum || lessonNum < 1 || lessonNum > 45) return alert("شماره دوره را بین ۱ تا ۴۵ وارد کنید.");
+  if (!fileInput.files.length) return alert("لطفاً یک ویدیو انتخاب کنید.");
+
+  const file = fileInput.files[0];
+  // نام فایل را با شماره دوره شروع می‌کنیم تا مرتب باشد
+  const fileName = `lesson-${lessonNum}-${Date.now()}.mp4`;
+
+  status.innerText = t("admin.uploading");
+  status.style.color = "var(--ink)";
+  btn.disabled = true;
+
+  try {
+    // 1. آپلود به Storage
+    const { error: uploadError } = await supabaseClient.storage.from('videos').upload(fileName, file);
+    if (uploadError) throw uploadError;
+
+    // 2. گرفتن لینک
+    const { data: publicUrlData } = supabaseClient.storage.from('videos').getPublicUrl(fileName);
+    const publicUrl = publicUrlData.publicUrl;
+
+    // 3. ذخیره در دیتابیس (Upsert)
+    const { error: dbError } = await supabaseClient.from('videos').upsert(
+      { lesson_number: parseInt(lessonNum), video_url: publicUrl },
+      { onConflict: 'lesson_number' }
+    );
+    if (dbError) throw dbError;
+
+    status.innerText = t("admin.success");
+    status.style.color = "#1eb955";
+    btn.innerText = "آپلود شد!";
+    
+    // آپدیت دیتابیس محلی
+    dbVideos[lessonNum] = publicUrl;
+
+  } catch (error) {
+    console.error(error);
+    status.innerText = t("admin.error") + (error.message || "");
+    status.style.color = "#d93838";
+    btn.disabled = false;
+  }
+};
+
+/* ═══════════ §10 INIT ═══════════ */
 function initTheme(){
   const btn = document.getElementById("themeToggle");
   const html = document.documentElement;
-  
   btn.addEventListener("click", () => {
     const current = html.getAttribute("data-theme");
     const next = current === "dark" ? "light" : "dark";
@@ -1054,36 +1130,38 @@ function initTheme(){
   });
 }
 
-(function init(){
+document.querySelectorAll(".lang-switch button").forEach(btn =>
+  btn.addEventListener("click", () => setLanguage(btn.dataset.lang)));
+
+const burger = document.getElementById("burger");
+const nav    = document.getElementById("mainNav");
+burger.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  burger.setAttribute("aria-expanded", open ? "true" : "false");
+  burger.innerHTML = open
+    ? '<span class="ico" style="font-size:1.3rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>'
+    : '<span class="ico" style="font-size:1.3rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>';
+});
+nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+  nav.classList.remove("open");
+  burger.setAttribute("aria-expanded", "false");
+}));
+
+document.querySelectorAll("#modal [data-close]").forEach(el => el.addEventListener("click", closeReel));
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape" && document.getElementById("modal").classList.contains("open")) closeReel();
+});
+
+window.addEventListener("hashchange", () => render());
+
+// شروع برنامه: اول دیتابیس را لود می‌کنیم، بعد رندر می‌کنیم
+(async function start() {
   applyLanguage();
   initTheme();
-
-  document.querySelectorAll(".lang-switch button").forEach(btn =>
-    btn.addEventListener("click", () => setLanguage(btn.dataset.lang)));
-
-  const burger = document.getElementById("burger");
-  const nav    = document.getElementById("mainNav");
-  burger.addEventListener("click", () => {
-    const open = nav.classList.toggle("open");
-    burger.setAttribute("aria-expanded", open ? "true" : "false");
-    burger.innerHTML = open
-      ? '<span class="ico" style="font-size:1.3rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>'
-      : '<span class="ico" style="font-size:1.3rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>';
-  });
-  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
-    nav.classList.remove("open");
-    burger.setAttribute("aria-expanded", "false");
-  }));
-
-  document.querySelectorAll("#modal [data-close]").forEach(el => el.addEventListener("click", closeReel));
-  document.addEventListener("keydown", e => {
-    if(e.key === "Escape" && document.getElementById("modal").classList.contains("open")) closeReel();
-  });
-
-  window.addEventListener("hashchange", () => render());
+  await loadVideosFromDB();
   if(!location.hash) location.hash = "#/home";
   render();
 })();
 </script>
 </body>
-  </html>
+</html>
