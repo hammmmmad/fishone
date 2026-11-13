@@ -374,10 +374,10 @@ html[lang="fa"] .footer-col h4{letter-spacing:.02em;text-transform:none;font-siz
       <h3 id="modalTitle"></h3>
       <p id="modalDesc"></p>
       <div class="modal-actions">
-        <a id="modalDownload" class="btn btn-primary" href="#" download>
+        <button id="modalDownload" class="btn btn-primary" type="button">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span>
           <span data-i18n="reels.download"></span>
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -439,29 +439,26 @@ const SUPABASE_URL = "https://ftorrprlveukbqhkwtgk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_klxW4W61vXPqwEqRrm8jGQ_omkppRPq";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ═══════════ §2 DATA SOURCES (بدون کارت خالی) ═══════════ */
-
-// ⬇️ ویدیوهایی که در گیت‌هاب دارید را اینجا بنویسید (فقط شماره‌ها)
+/* ═══════════ §2 DATA SOURCES ═══════════ */
+// ویدیوهای پیش‌فرضی که در گیت‌هاب دارید
 const GITHUB_VIDEOS = [1, 2, 3, 8]; 
 
-// دیتابیس محلی برای نگهداری ویدیوهای موجود
 let availableVideos = {};
+let REELS = [];
 
-// تابع ساخت لیست نهایی (ادغام گیت‌هاب و Supabase)
 async function loadVideosFromDB() {
+  // ۱. ابتدا ویدیوهای گیت‌هاب را به عنوان پیش‌فرض قرار می‌دهیم
   availableVideos = {};
-
-  // ۱. اضافه کردن ویدیوهای گیت‌هاب
   GITHUB_VIDEOS.forEach(id => {
     availableVideos[id] = {
       id: id,
-      src: `videos/${id}.mp4`,
+      src: `videos/${id}.mp4`, 
       title: { fa: `دوره ${id.toLocaleString('fa-IR')}`, en: `Course ${id}` },
       desc: { fa: `درس ${id.toLocaleString('fa-IR')} از دوره آموزشی دیلی فشن`, en: `Lesson ${id} of the Daily Fashion course` }
     };
   });
 
-  // ۲. خواندن از Supabase و جایگزینی/اضافه کردن
+  // ۲. ویدیوهای Supabase را می‌خوانیم (این‌ها روی گیت‌هاب را overwrite می‌کنند)
   try {
     const { data, error } = await supabaseClient.from('videos').select('*');
     if (error) throw error;
@@ -470,7 +467,7 @@ async function loadVideosFromDB() {
       data.forEach(v => {
         availableVideos[v.lesson_number] = {
           id: v.lesson_number,
-          src: v.video_url, // لینک Supabase
+          src: v.video_url, 
           title: { fa: `دوره ${v.lesson_number.toLocaleString('fa-IR')}`, en: `Course ${v.lesson_number}` },
           desc: { fa: `درس ${v.lesson_number.toLocaleString('fa-IR')} از دوره آموزشی دیلی فشن`, en: `Lesson ${v.lesson_number} of the Daily Fashion course` }
         };
@@ -480,13 +477,10 @@ async function loadVideosFromDB() {
     console.warn("خطا در دیتابیس (فقط ویدیوهای گیت‌هاب نمایش داده می‌شوند):", err);
   }
 
-  // ۳. تبدیل به آرایه و مرتب‌سازی بر اساس شماره
+  // ۳. تبدیل به لیست و مرتب‌سازی بر اساس شماره
   REELS = Object.values(availableVideos).sort((a, b) => a.id - b.id);
+  console.log("تعداد کل ویدیوهای آماده نمایش:", REELS.length);
 }
-
-// متغیر اصلی که کارت‌ها از آن ساخته می‌شوند
-let REELS = [];
-
 
 /* ═══════════ §3 CONFIG & DATA ═══════════ */
 const CONFIG = {
@@ -727,8 +721,10 @@ function openReel(index){
   document.getElementById("modalDesc").textContent = reel.desc[state.lang];
 
   const dlBtn = document.getElementById("modalDownload");
-  dlBtn.href = reel.src;
-  dlBtn.setAttribute("download", `DailyFashion-Lesson-${reel.id}.mp4`);
+  dlBtn.onclick = function(e) {
+    e.preventDefault();
+    downloadVideo(reel.src, `DailyFashion-Lesson-${reel.id}.mp4`);
+  };
 
   const videoBox = document.getElementById("modalVideo");
   videoBox.innerHTML = "";
@@ -764,6 +760,26 @@ function bindReelButtons(){
   });
 }
 
+// تابع دانلود اجباری ویدیو (حل مشکل باز شدن در تب جدید)
+async function downloadVideo(url, filename) {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    console.error("Download failed:", error);
+    window.open(url, '_blank');
+  }
+}
+
 /* ═══════════ §8 CARD TEMPLATES ═══════════ */
 function reelCardHTML(reel, i){
   const numText = state.lang === "fa" ? (reel.id).toLocaleString('fa-IR') : String(reel.id);
@@ -781,7 +797,7 @@ function reelCardHTML(reel, i){
         <p>${esc(reel.desc[state.lang])}</p>
         <div class="reel-actions">
           <button type="button" class="btn btn-ghost btn-sm" data-reel="${i}">${ico("play")} ${t("reels.watch")}</button>
-          <a href="${reel.src}" download="DailyFashion-Lesson-${reel.id}.mp4" class="btn btn-primary btn-sm">${ico("download")} ${t("reels.download")}</a>
+          <button type="button" class="btn btn-primary btn-sm" onclick="downloadVideo('${reel.src}', 'DailyFashion-Lesson-${reel.id}.mp4')">${ico("download")} ${t("reels.download")}</button>
         </div>
       </div>
     </article>`;
@@ -833,7 +849,7 @@ const pages = {
             <p>${esc(t("course45.sub"))}</p>
           </header>
           <div class="reels-grid">
-            ${REELS.length > 0 ? REELS.map(reelCardHTML).join("") : `<p style="text-align:center;width:100%;grid-column:1/-1;color:var(--muted)">ویدیویی یافت نشد.</p>`}
+            ${REELS.length > 0 ? REELS.map(reelCardHTML).join("") : `<p style="text-align:center;width:100%;grid-column:1/-1;color:var(--muted)">در حال بارگذاری...</p>`}
           </div>
         </div>
       </section>
@@ -895,7 +911,7 @@ const pages = {
       <section class="section">
         <div class="container">
           <div class="reels-grid">
-            ${REELS.length > 0 ? REELS.map(reelCardHTML).join("") : `<p style="text-align:center;width:100%;grid-column:1/-1;color:var(--muted)">ویدیویی یافت نشد.</p>`}
+            ${REELS.length > 0 ? REELS.map(reelCardHTML).join("") : `<p style="text-align:center;width:100%;grid-column:1/-1;color:var(--muted)">در حال بارگذاری...</p>`}
           </div>
         </div>
       </section>
@@ -1104,10 +1120,7 @@ window.uploadVideo = async function() {
   const btn = document.getElementById("uploadBtn");
   const status = document.getElementById("uploadStatus");
 
-  // چک کردن اعتبار شماره دوره (۱ تا ۴۵)
-  if (!lessonNum || lessonNum < 1 || lessonNum > 45) {
-    return alert("شماره دوره را بین ۱ تا ۴۵ وارد کنید.");
-  }
+  if (!lessonNum || lessonNum < 1 || lessonNum > 45) return alert("شماره دوره را بین ۱ تا ۴۵ وارد کنید.");
   if (!fileInput.files.length) return alert("لطفاً یک ویدیو انتخاب کنید.");
 
   const file = fileInput.files[0];
@@ -1194,4 +1207,4 @@ window.addEventListener("hashchange", () => render());
 })();
 </script>
 </body>
-</html>
+  </html>
