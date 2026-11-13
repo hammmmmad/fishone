@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#e9a6bb">
-<title>Daily Fashion AF — دوره آموزشی</title>
-<meta name="description" content="Daily Fashion AF — دوره آموزشی رایگان با ویدیوهای گام به گام.">
+<title>Daily Fashion AF — دوره ۴۵ روزه</title>
+<meta name="description" content="Daily Fashion AF — دوره ۴۵ روزه با ۴۵ درس ویدیویی رایگان.">
 <link rel="icon" href="image/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -439,25 +439,24 @@ const SUPABASE_URL = "https://ftorrprlveukbqhkwtgk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_klxW4W61vXPqwEqRrm8jGQ_omkppRPq";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ═══════════ §2 DATA SOURCES (دقیقاً ۸ ویدیو) ═══════════ */
+/* ═══════════ §2 DATA SOURCES ═══════════ */
 let REELS = [];
 
-// تابع ساخت ۸ کارت ثابت
+// تابع ساخت ۴۵ دوره ثابت
 function buildCourses() {
   REELS = [];
-  // فقط و فقط ۸ دوره
-  for (let i = 1; i <= 8; i++) {
+  for (let i = 1; i <= 45; i++) {
     REELS.push({
       id: i,
       src: "videos/" + `${i}.mp4`, // لینک پیش‌فرض گیت‌هاب
       title: { fa: `دوره ${i.toLocaleString('fa-IR')}`, en: `Course ${i}` },
-      desc: { fa: `درس ${i.toLocaleString('fa-IR')} از دوره آموزشی دیلی فشن`, en: `Lesson ${i} of the Daily Fashion course` }
+      desc: { fa: `درس ${i.toLocaleString('fa-IR')} از دوره ۴۵ روزه دیلی فشن`, en: `Lesson ${i} of the 45-day Daily Fashion course` }
     });
   }
 }
 
 async function loadVideosFromDB() {
-  buildCourses(); // ابتدا ۸ ویدیوی گیت‌هاب را می‌سازیم
+  buildCourses(); // ابتدا ۴۵ ویدیوی گیت‌هاب را می‌سازیم
 
   try {
     const { data, error } = await supabaseClient.from('videos').select('*');
@@ -465,8 +464,8 @@ async function loadVideosFromDB() {
 
     if (data && data.length > 0) {
       data.forEach(v => {
-        // اگر ویدیو آپلود شده مربوط به دوره‌های ۱ تا ۸ بود، لینک گیت‌هاب را با لینک Supabase جایگزین کن
-        if (v.lesson_number >= 1 && v.lesson_number <= 8) {
+        // اگر ویدیو آپلود شده مربوط به دوره‌های ۱ تا ۴۵ بود، لینک گیت‌هاب را با لینک Supabase جایگزین کن
+        if (v.lesson_number >= 1 && v.lesson_number <= 45) {
           const index = REELS.findIndex(r => r.id === v.lesson_number);
           if (index !== -1) {
             REELS[index].src = v.video_url; // لینک ویدیوی آپلود شده در Supabase
@@ -525,19 +524,19 @@ const LIFESTYLE = {
 const I18N = {
   fa: {
     "brand.sub": "زیبایی · مد · آموزش",
-    "nav.home": "خانه", "nav.videos": "دوره آموزشی", "nav.lifestyle": "سبک زندگی",
+    "nav.home": "خانه", "nav.videos": "دوره ۴۵ روزه", "nav.lifestyle": "سبک زندگی",
     "nav.about": "درباره ما", "nav.shop": "فروشگاه", "nav.contact": "تماس",
-    "hero.badge": "دوره آموزشی دیلی فشن",
+    "hero.badge": "دوره آموزشی ۴۵ روزه",
     "hero.title": "بیاموزید، خلاقیت به خرج دهید و بدرخشید",
-    "hero.lead": "دیلی فشن دوره آموزشی رایگان را با ویدیوهای گام به گام ارائه می‌دهد — از آرایش و زیبایی تا فشن و سبک زندگی. همین امروز یادگیری را آغاز کنید.",
-    "hero.cta": "شروع دوره", "hero.cta2": "درباره ما",
+    "hero.lead": "دیلی فشن دوره آموزشی ۴۵ روزه را با ویدیوهای رایگان ارائه می‌دهد — از آرایش و زیبایی تا فشن و سبک زندگی. همین امروز یادگیری را آغاز کنید.",
+    "hero.cta": "شروع دوره ۴۵ روزه", "hero.cta2": "درباره ما",
     "hero.stat1": "درس ویدیویی", "hero.stat2": "روز برنامه",
     "hero.stat3": "دسترسی آسان", "hero.stat3val": "۲۴/۷",
-    "course45.eyebrow": "کتابخانه ویدیویی",
-    "course45.title": "دوره آموزشی دیلی فشن",
-    "course45.sub": "درس‌های ویدیویی گام به گام — از آرایش و زیبایی تا استایل و سبک زندگی. هر درس را تماشا کنید یا دانلود کنید.",
-    "course45.page.title": "دوره آموزشی",
-    "course45.page.sub": "درس‌های دوره آموزشی دیلی فشن — با دکمه دانلود برای هر درس.",
+    "course45.eyebrow": "دوره ۴۵ روزه",
+    "course45.title": "دوره آموزشی ۴۵ روزه",
+    "course45.sub": "۴۵ درس ویدیویی گام به گام — از آرایش و زیبایی تا استایل و سبک زندگی. هر درس را تماشا کنید یا دانلود کنید.",
+    "course45.page.title": "دوره ۴۵ روزه",
+    "course45.page.sub": "همه ۴۵ درس دوره ۴۵ روزه دیلی فشن — با دکمه دانلود برای هر درس.",
     "reels.download": "دانلود", "reels.watch": "تماشا",
     "reels.catCourse": "دوره", "reels.empty": "ویدیو هنوز آپلود نشده است.",
     "reels.downloaded": "دانلود آغاز شد", "reels.downloadHint": "فایل اطلاعات ویدیو دانلود شد",
@@ -570,32 +569,32 @@ const I18N = {
     "contact.channelBtn": "عضویت در کانال",
     "contact.waLabel": "واتس‌اپ مدیر", "contact.waHint": "پرسش‌ها و همکاری",
     "contact.waBtn": "پیام در واتس‌اپ",
-    "footer.tagline": "دوره آموزشی دیلی فشن — آموزش رایگان آرایش، زیبایی و فیشن برای همه.",
+    "footer.tagline": "دوره آموزشی ۴۵ روزه — آموزش رایگان آرایش، زیبایی و فیشن برای همه.",
     "footer.links": "دسترسی سریع", "footer.contact": "تماس",
     "footer.channel": "کانال واتس‌اپ",
     "footer.rights": "© ۲۰۲۶ دیلی فیشن افغانستان. تمام حقوق محفوظ است.",
     "admin.title": "پنل مدیریت", "admin.passPlaceholder": "رمز عبور را وارد کنید",
     "admin.loginBtn": "ورود", "admin.logoutBtn": "خروج",
-    "admin.uploadTitle": "آپلود ویدیو جدید", "admin.selectLesson": "شماره دوره (۱ تا ۸):",
+    "admin.uploadTitle": "آپلود ویدیو جدید", "admin.selectLesson": "شماره دوره (۱ تا ۴۵):",
     "admin.selectFile": "انتخاب فایل ویدیو:", "admin.uploadBtn": "شروع آپلود",
     "admin.wrongPass": "رمز عبور اشتباه است!", "admin.success": "ویدیو با موفقیت آپلود و در سایت قرار گرفت!",
     "admin.uploading": "در حال آپلود... لطفاً صبر کنید", "admin.error": "خطا: "
   },
   en: {
     "brand.sub": "Beauty · Fashion · Education",
-    "nav.home": "Home", "nav.videos": "Course", "nav.lifestyle": "Lifestyle",
+    "nav.home": "Home", "nav.videos": "45-Day Course", "nav.lifestyle": "Lifestyle",
     "nav.about": "About", "nav.shop": "Shop", "nav.contact": "Contact",
-    "hero.badge": "Daily Fashion Course",
+    "hero.badge": "45-Day Course",
     "hero.title": "Learn, Create & Shine with Daily Fashion AF",
-    "hero.lead": "Daily Fashion AF offers a free training course with step-by-step video lessons — from beauty and makeup to fashion and lifestyle. Start learning today.",
+    "hero.lead": "Daily Fashion AF offers a 45-day training course with free video lessons — from beauty and makeup to fashion and lifestyle. Start learning today.",
     "hero.cta": "Start Course", "hero.cta2": "About Us",
     "hero.stat1": "Video lessons", "hero.stat2": "Day program",
     "hero.stat3": "Easy access", "hero.stat3val": "24/7",
-    "course45.eyebrow": "Video Library",
-    "course45.title": "Daily Fashion Course",
+    "course45.eyebrow": "45-Day Course",
+    "course45.title": "The 45-Day Training Course",
     "course45.sub": "Step-by-step video lessons — from beauty and makeup to style and lifestyle. Watch or download each lesson.",
-    "course45.page.title": "Course",
-    "course45.page.sub": "All lessons of the Daily Fashion course — each with a download button.",
+    "course45.page.title": "45-Day Course",
+    "course45.page.sub": "All 45 lessons of the Daily Fashion 45-day course — each with a download button.",
     "reels.download": "Download", "reels.watch": "Watch",
     "reels.catCourse": "Course", "reels.empty": "Video not uploaded yet.",
     "reels.downloaded": "Download started", "reels.downloadHint": "Video info file downloaded",
@@ -628,13 +627,13 @@ const I18N = {
     "contact.channelBtn": "Join Channel",
     "contact.waLabel": "WhatsApp Admin", "contact.waHint": "Questions and collaborations",
     "contact.waBtn": "Message on WhatsApp",
-    "footer.tagline": "Daily Fashion Course — free beauty, makeup and fashion education for everyone.",
+    "footer.tagline": "45-Day Training Course — free beauty, makeup and fashion education for everyone.",
     "footer.links": "Quick links", "footer.contact": "Contact",
     "footer.channel": "WhatsApp Channel",
     "footer.rights": "© 2026 Daily Fashion AF. All Rights Reserved.",
     "admin.title": "Admin Panel", "admin.passPlaceholder": "Enter password",
     "admin.loginBtn": "Login", "admin.logoutBtn": "Logout",
-    "admin.uploadTitle": "Upload New Video", "admin.selectLesson": "Lesson Number (1-8):",
+    "admin.uploadTitle": "Upload New Video", "admin.selectLesson": "Lesson Number (1-45):",
     "admin.selectFile": "Select Video File:", "admin.uploadBtn": "Start Upload",
     "admin.wrongPass": "Incorrect password!", "admin.success": "Video uploaded and published successfully!",
     "admin.uploading": "Uploading... Please wait", "admin.error": "Error: "
@@ -810,7 +809,7 @@ const pages = {
             </div>
             <div class="hero-stats">
               <div><strong>${state.lang === 'fa' ? (REELS.length).toLocaleString('fa-IR') : REELS.length}</strong><span>${esc(t("hero.stat1"))}</span></div>
-              <div><strong>${state.lang === 'fa' ? '۸' : '8'}</strong><span>${esc(t("hero.stat2"))}</span></div>
+              <div><strong>${state.lang === 'fa' ? '۴۵' : '45'}</strong><span>${esc(t("hero.stat2"))}</span></div>
               <div><strong>${esc(t("hero.stat3val"))}</strong><span>${esc(t("hero.stat3"))}</span></div>
             </div>
           </div>
@@ -1058,7 +1057,7 @@ const pages = {
             <h2>${esc(t("admin.uploadTitle"))}</h2>
             
             <label style="display:block;text-align:right;margin-bottom:.5rem">${esc(t("admin.selectLesson"))}</label>
-            <input type="number" id="adminLessonNum" class="admin-input" min="1" max="8" placeholder="1 - 8">
+            <input type="number" id="adminLessonNum" class="admin-input" min="1" max="45" placeholder="1 - 45">
             
             <label style="display:block;text-align:right;margin-bottom:.5rem">${esc(t("admin.selectFile"))}</label>
             <input type="file" id="adminVideoFile" accept="video/mp4" class="admin-input" style="padding-top:.6rem">
@@ -1096,7 +1095,7 @@ window.uploadVideo = async function() {
   const btn = document.getElementById("uploadBtn");
   const status = document.getElementById("uploadStatus");
 
-  if (!lessonNum || lessonNum < 1 || lessonNum > 8) return alert("شماره دوره را بین ۱ تا ۸ وارد کنید.");
+  if (!lessonNum || lessonNum < 1 || lessonNum > 45) return alert("شماره دوره را بین ۱ تا ۴۵ وارد کنید.");
   if (!fileInput.files.length) return alert("لطفاً یک ویدیو انتخاب کنید.");
 
   const file = fileInput.files[0];
@@ -1183,4 +1182,4 @@ window.addEventListener("hashchange", () => render());
 })();
 </script>
 </body>
-                                                                                                                                                        </html>
+  </html>
