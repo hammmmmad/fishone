@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#e9a6bb">
-<title>Daily Fashion AF — دوره ۴۵ روزه</title>
-<meta name="description" content="Daily Fashion AF — دوره ۴۵ روزه با ۴۵ درس ویدیویی رایگان.">
+<title>Daily Fashion AF — دوره آموزشی</title>
+<meta name="description" content="Daily Fashion AF — دوره آموزشی رایگان با ویدیوهای گام به گام.">
 <link rel="icon" href="image/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -439,23 +439,63 @@ const SUPABASE_URL = "https://ftorrprlveukbqhkwtgk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_klxW4W61vXPqwEqRrm8jGQ_omkppRPq";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// دیتابیس محلی برای نگهداری لینک ویدیوها
-let dbVideos = {};
+/* ═══════════ §2 DATA SOURCES ═══════════ */
 
+// ۱. ویدیوهای پیش‌فرض شما در گیت‌هاب (پوشه videos)
+// هر ویدیویی که در گیت‌هاب دارید را اینجا اضافه کنید (تا هر تعدادی که خواستید)
+const DEFAULT_VIDEOS = [
+  { id: 1, src: "videos/1.mp4", title: { fa: "دوره اول", en: "Course 1" }, desc: { fa: "درس ۱ از دوره آموزشی دیلی فشن", en: "Lesson 1 of the Daily Fashion course" } },
+  { id: 2, src: "videos/2.mp4", title: { fa: "دوره دوم", en: "Course 2" }, desc: { fa: "درس ۲ از دوره آموزشی دیلی فشن", en: "Lesson 2 of the Daily Fashion course" } },
+  { id: 3, src: "videos/3.mp4", title: { fa: "دوره سوم", en: "Course 3" }, desc: { fa: "درس ۳ از دوره آموزشی دیلی فشن", en: "Lesson 3 of the Daily Fashion course" } }
+];
+
+// متغیری که لیست نهایی را نگه می‌دارد
+let REELS = [];
+
+// ۲. تابع اتصال به Supabase و ترکیب اطلاعات
 async function loadVideosFromDB() {
+  // ابتدا ویدیوهای گیت‌هاب را کپی می‌کنیم
+  REELS = [...DEFAULT_VIDEOS];
+
   try {
     const { data, error } = await supabaseClient.from('videos').select('*');
     if (error) throw error;
-    dbVideos = {};
-    if (data) {
-      data.forEach(v => { dbVideos[v.lesson_number] = v.video_url; });
+
+    if (data && data.length > 0) {
+      data.forEach(v => {
+        // چک می‌کنیم آیا این ویدیو قبلاً در لیست گیت‌هاب بوده یا نه
+        const existingIndex = REELS.findIndex(r => r.id === v.lesson_number);
+        
+        if (existingIndex !== -1) {
+          // اگر بود، لینکش را با لینک Supabase عوض می‌کنیم
+          REELS[existingIndex].src = v.video_url;
+        } else {
+          // اگر ویدیوی جدیدی در Supabase بود که در گیت‌هاب نبود، به لیست اضافه می‌کنیم
+          REELS.push({
+            id: v.lesson_number,
+            src: v.video_url,
+            title: { 
+              fa: `دوره ${v.lesson_number.toLocaleString('fa-IR')}`, 
+              en: `Course ${v.lesson_number}` 
+            },
+            desc: { 
+              fa: `درس ${v.lesson_number.toLocaleString('fa-IR')} از دوره آموزشی دیلی فشن`, 
+              en: `Lesson ${v.lesson_number} of the Daily Fashion course` 
+            }
+          });
+        }
+      });
     }
   } catch (err) {
-    console.warn("خطا در خواندن دیتابیس، از ویدیوهای محلی استفاده می‌شود.", err);
+    console.warn("خطا در اتصال به دیتابیس (فقط ویدیوهای گیت‌هاب نمایش داده می‌شوند):", err);
   }
+
+  // در نهایت لیست را بر اساس شماره دوره مرتب می‌کنیم
+  REELS.sort((a, b) => a.id - b.id);
 }
 
-/* ═══════════ §2 CONFIG & DATA ═══════════ */
+
+/* ═══════════ §3 CONFIG & DATA ═══════════ */
 const CONFIG = {
   contact: {
     email       : "Dailyfashion@gmail.com",
@@ -472,25 +512,6 @@ const CONFIG = {
   s.setProperty('--reel-min', CONFIG.size.reelMinWidth + 'px');
   s.setProperty('--reel-ratio', CONFIG.size.reelAspectRatio);
 })();
-
-// ساخت خودکار ۴۵ دوره
-let REELS = [];
-
-function buildCourses() {
-  REELS = Array.from({ length: 45 }, (_, i) => {
-    const num = i + 1;
-    // اگر ویدیو در دیتابیس وجود داشت از آن استفاده کن، وگرنه از پوشه محلی
-    const videoSrc = dbVideos[num] || (CONFIG.paths.videos + `${num}.mp4`);
-    return {
-      id: String(num),
-      src: videoSrc,
-      isDb: !!dbVideos[num], // آیا از دیتابیس آمده؟
-      category: "course",
-      title: { fa: `دوره ${num}`, en: `Course ${num}` },
-      desc: { fa: `درس ${num} از دوره ۴۵ روزه دیلی فشن — آموزش گام به گام`, en: `Lesson ${num} of the Daily Fashion 45-day course — step-by-step` }
-    };
-  });
-}
 
 const IMG = {
   women     : "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80",
@@ -515,23 +536,23 @@ const LIFESTYLE = {
   ]
 };
 
-/* ═══════════ §3 TRANSLATIONS ═══════════ */
+/* ═══════════ §4 TRANSLATIONS ═══════════ */
 const I18N = {
   fa: {
     "brand.sub": "زیبایی · مد · آموزش",
-    "nav.home": "خانه", "nav.videos": "دوره ۴۵ روزه", "nav.lifestyle": "سبک زندگی",
+    "nav.home": "خانه", "nav.videos": "دوره آموزشی", "nav.lifestyle": "سبک زندگی",
     "nav.about": "درباره ما", "nav.shop": "فروشگاه", "nav.contact": "تماس",
-    "hero.badge": "دوره آموزشی ۴۵ روزه · ۴۵ درس",
+    "hero.badge": "دوره آموزشی دیلی فشن",
     "hero.title": "بیاموزید، خلاقیت به خرج دهید و بدرخشید",
-    "hero.lead": "دیلی فشن دوره آموزشی ۴۵ روزه را با ۴۵ درس ویدیویی رایگان ارائه می‌دهد — از آرایش و زیبایی تا فشن و سبک زندگی. همین امروز یادگیری را آغاز کنید.",
-    "hero.cta": "شروع دوره ۴۵ روزه", "hero.cta2": "درباره ما",
+    "hero.lead": "دیلی فشن دوره آموزشی رایگان را با ویدیوهای گام به گام ارائه می‌دهد — از آرایش و زیبایی تا فشن و سبک زندگی. همین امروز یادگیری را آغاز کنید.",
+    "hero.cta": "شروع دوره", "hero.cta2": "درباره ما",
     "hero.stat1": "درس ویدیویی", "hero.stat2": "روز برنامه",
     "hero.stat3": "دسترسی آسان", "hero.stat3val": "۲۴/۷",
-    "course45.eyebrow": "دوره ۴۵ روزه",
-    "course45.title": "دوره آموزشی ۴۵ روزه",
-    "course45.sub": "۴۵ درس ویدیویی گام به گام — از آرایش و زیبایی تا استایل و سبک زندگی. هر درس را تماشا کنید یا دانلود کنید.",
-    "course45.page.title": "دوره ۴۵ روزه",
-    "course45.page.sub": "همه ۴۵ درس دوره ۴۵ روزه دیلی فشن — با دکمه دانلود برای هر درس.",
+    "course45.eyebrow": "کتابخانه ویدیویی",
+    "course45.title": "دوره آموزشی دیلی فشن",
+    "course45.sub": "درس‌های ویدیویی گام به گام — از آرایش و زیبایی تا استایل و سبک زندگی. هر درس را تماشا کنید یا دانلود کنید.",
+    "course45.page.title": "دوره آموزشی",
+    "course45.page.sub": "درس‌های دوره آموزشی دیلی فشن — با دکمه دانلود برای هر درس.",
     "reels.download": "دانلود", "reels.watch": "تماشا",
     "reels.catCourse": "دوره", "reels.empty": "ویدیو هنوز آپلود نشده است.",
     "reels.downloaded": "دانلود آغاز شد", "reels.downloadHint": "فایل اطلاعات ویدیو دانلود شد",
@@ -564,32 +585,32 @@ const I18N = {
     "contact.channelBtn": "عضویت در کانال",
     "contact.waLabel": "واتس‌اپ مدیر", "contact.waHint": "پرسش‌ها و همکاری",
     "contact.waBtn": "پیام در واتس‌اپ",
-    "footer.tagline": "دوره آموزشی ۴۵ روزه — آموزش رایگان آرایش، زیبایی و فیشن برای همه.",
+    "footer.tagline": "دوره آموزشی دیلی فشن — آموزش رایگان آرایش، زیبایی و فیشن برای همه.",
     "footer.links": "دسترسی سریع", "footer.contact": "تماس",
     "footer.channel": "کانال واتس‌اپ",
     "footer.rights": "© ۲۰۲۶ دیلی فیشن افغانستان. تمام حقوق محفوظ است.",
     "admin.title": "پنل مدیریت", "admin.passPlaceholder": "رمز عبور را وارد کنید",
     "admin.loginBtn": "ورود", "admin.logoutBtn": "خروج",
-    "admin.uploadTitle": "آپلود ویدیو جدید", "admin.selectLesson": "شماره دوره (۱ تا ۴۵):",
+    "admin.uploadTitle": "آپلود ویدیو جدید", "admin.selectLesson": "شماره درس:",
     "admin.selectFile": "انتخاب فایل ویدیو:", "admin.uploadBtn": "شروع آپلود",
     "admin.wrongPass": "رمز عبور اشتباه است!", "admin.success": "ویدیو با موفقیت آپلود و در سایت قرار گرفت!",
     "admin.uploading": "در حال آپلود... لطفاً صبر کنید", "admin.error": "خطا: "
   },
   en: {
     "brand.sub": "Beauty · Fashion · Education",
-    "nav.home": "Home", "nav.videos": "45-Day Course", "nav.lifestyle": "Lifestyle",
+    "nav.home": "Home", "nav.videos": "Course", "nav.lifestyle": "Lifestyle",
     "nav.about": "About", "nav.shop": "Shop", "nav.contact": "Contact",
-    "hero.badge": "45-Day Course · 45 Lessons",
+    "hero.badge": "Daily Fashion Course",
     "hero.title": "Learn, Create & Shine with Daily Fashion AF",
-    "hero.lead": "Daily Fashion AF offers a 45-day training course with 45 free video lessons — from beauty and makeup to fashion and lifestyle. Start learning today.",
-    "hero.cta": "Start 45-Day Course", "hero.cta2": "About Us",
+    "hero.lead": "Daily Fashion AF offers a free training course with step-by-step video lessons — from beauty and makeup to fashion and lifestyle. Start learning today.",
+    "hero.cta": "Start Course", "hero.cta2": "About Us",
     "hero.stat1": "Video lessons", "hero.stat2": "Day program",
     "hero.stat3": "Easy access", "hero.stat3val": "24/7",
-    "course45.eyebrow": "45-Day Course",
-    "course45.title": "The 45-Day Training Course",
-    "course45.sub": "45 step-by-step video lessons — from beauty and makeup to style and lifestyle. Watch or download each lesson.",
-    "course45.page.title": "45-Day Course",
-    "course45.page.sub": "All 45 lessons of the Daily Fashion 45-day course — each with a download button.",
+    "course45.eyebrow": "Video Library",
+    "course45.title": "Daily Fashion Course",
+    "course45.sub": "Step-by-step video lessons — from beauty and makeup to style and lifestyle. Watch or download each lesson.",
+    "course45.page.title": "Course",
+    "course45.page.sub": "All lessons of the Daily Fashion course — each with a download button.",
     "reels.download": "Download", "reels.watch": "Watch",
     "reels.catCourse": "Course", "reels.empty": "Video not uploaded yet.",
     "reels.downloaded": "Download started", "reels.downloadHint": "Video info file downloaded",
@@ -622,20 +643,20 @@ const I18N = {
     "contact.channelBtn": "Join Channel",
     "contact.waLabel": "WhatsApp Admin", "contact.waHint": "Questions and collaborations",
     "contact.waBtn": "Message on WhatsApp",
-    "footer.tagline": "45-Day Training Course — free beauty, makeup and fashion education for everyone.",
+    "footer.tagline": "Daily Fashion Course — free beauty, makeup and fashion education for everyone.",
     "footer.links": "Quick links", "footer.contact": "Contact",
     "footer.channel": "WhatsApp Channel",
     "footer.rights": "© 2026 Daily Fashion AF. All Rights Reserved.",
     "admin.title": "Admin Panel", "admin.passPlaceholder": "Enter password",
     "admin.loginBtn": "Login", "admin.logoutBtn": "Logout",
-    "admin.uploadTitle": "Upload New Video", "admin.selectLesson": "Lesson Number (1-45):",
+    "admin.uploadTitle": "Upload New Video", "admin.selectLesson": "Lesson Number:",
     "admin.selectFile": "Select Video File:", "admin.uploadBtn": "Start Upload",
     "admin.wrongPass": "Incorrect password!", "admin.success": "Video uploaded and published successfully!",
     "admin.uploading": "Uploading... Please wait", "admin.error": "Error: "
   }
 };
 
-/* ═══════════ §4 ICONS & HELPERS ═══════════ */
+/* ═══════════ §5 ICONS & HELPERS ═══════════ */
 const ICONS = {
   play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></svg>',
   download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
@@ -673,7 +694,7 @@ function setLanguage(lang){
   render({ scroll: false });
 }
 
-/* ═══════════ §5 ROUTER ═══════════ */
+/* ═══════════ §6 ROUTER ═══════════ */
 function parseHash(){
   const raw = location.hash.replace(/^#\/?/, "") || "home";
   const p = raw.split("/").filter(Boolean);
@@ -695,7 +716,7 @@ function render(opts){
   if(o.scroll !== false) window.scrollTo({ top: 0, behavior: "auto" });
 }
 
-/* ═══════════ §6 TOAST & MODAL ═══════════ */
+/* ═══════════ §7 TOAST & MODAL ═══════════ */
 let toastTimer = 0;
 function toast(msg){
   const el = document.getElementById("toast");
@@ -708,25 +729,22 @@ function toast(msg){
 function openReel(index){
   const reel = REELS[index];
   if(!reel) return;
-  
-  const videoSrc = reel.src;
 
   document.getElementById("modalTitle").textContent = reel.title[state.lang];
   document.getElementById("modalDesc").textContent = reel.desc[state.lang];
 
   const dlBtn = document.getElementById("modalDownload");
-  dlBtn.href = videoSrc;
-  dlBtn.setAttribute("download", `DailyFashion-Lesson-${index + 1}.mp4`);
+  dlBtn.href = reel.src;
+  dlBtn.setAttribute("download", `DailyFashion-Lesson-${reel.id}.mp4`);
 
   const videoBox = document.getElementById("modalVideo");
   videoBox.innerHTML = "";
   const video = document.createElement("video");
-  video.src = videoSrc;
+  video.src = reel.src;
   video.controls = true;
   video.autoplay = true;
   video.playsInline = true;
   
-  // نمایش پیام در صورت وجود نداشتن ویدیو
   video.onerror = function() {
       videoBox.innerHTML = `<div style="color:#fff; padding:2rem; text-align:center; font-size:1.2rem;">${t("reels.empty")}</div>`;
   };
@@ -753,15 +771,14 @@ function bindReelButtons(){
   });
 }
 
-/* ═══════════ §7 CARD TEMPLATES ═══════════ */
+/* ═══════════ §8 CARD TEMPLATES ═══════════ */
 function reelCardHTML(reel, i){
-  const numText = state.lang === "fa" ? (i + 1).toLocaleString('fa-IR') : String(i + 1);
-  const videoSrc = reel.src;
+  const numText = state.lang === "fa" ? (reel.id).toLocaleString('fa-IR') : String(reel.id);
 
   return `
     <article class="reel-card">
       <button type="button" class="reel-thumb" data-reel="${i}" aria-label="${esc(reel.title[state.lang])}">
-        <video src="${videoSrc}#t=0.5" preload="metadata" muted playsinline></video>
+        <video src="${reel.src}#t=0.5" preload="metadata" muted playsinline></video>
         <span class="reel-num">${numText}</span>
         <span class="reel-badge">${esc(t("reels.catCourse"))}</span>
         <span class="play-fab">${ico("play")}</span>
@@ -771,7 +788,7 @@ function reelCardHTML(reel, i){
         <p>${esc(reel.desc[state.lang])}</p>
         <div class="reel-actions">
           <button type="button" class="btn btn-ghost btn-sm" data-reel="${i}">${ico("play")} ${t("reels.watch")}</button>
-          <a href="${videoSrc}" download="DailyFashion-Lesson-${i+1}.mp4" class="btn btn-primary btn-sm">${ico("download")} ${t("reels.download")}</a>
+          <a href="${reel.src}" download="DailyFashion-Lesson-${reel.id}.mp4" class="btn btn-primary btn-sm">${ico("download")} ${t("reels.download")}</a>
         </div>
       </div>
     </article>`;
@@ -789,7 +806,7 @@ function lifeCardHTML(item){
     </article>`;
 }
 
-/* ═══════════ §8 PAGES ═══════════ */
+/* ═══════════ §9 PAGES ═══════════ */
 const pages = {
   home(){
     document.title = "Daily Fashion AF — " + t("course45.title");
@@ -807,7 +824,7 @@ const pages = {
               <a class="btn btn-ghost" href="#/about">${esc(t("hero.cta2"))}</a>
             </div>
             <div class="hero-stats">
-              <div><strong>${state.lang === 'fa' ? '۴۵' : '45'}</strong><span>${esc(t("hero.stat1"))}</span></div>
+              <div><strong>${state.lang === 'fa' ? (REELS.length).toLocaleString('fa-IR') : REELS.length}</strong><span>${esc(t("hero.stat1"))}</span></div>
               <div><strong>${state.lang === 'fa' ? '۴۵' : '45'}</strong><span>${esc(t("hero.stat2"))}</span></div>
               <div><strong>${esc(t("hero.stat3val"))}</strong><span>${esc(t("hero.stat3"))}</span></div>
             </div>
@@ -822,7 +839,9 @@ const pages = {
             <h2>${esc(t("course45.title"))}</h2>
             <p>${esc(t("course45.sub"))}</p>
           </header>
-          <div class="reels-grid">${REELS.map(reelCardHTML).join("")}</div>
+          <div class="reels-grid">
+            ${REELS.length > 0 ? REELS.map(reelCardHTML).join("") : `<p style="text-align:center;width:100%;grid-column:1/-1;color:var(--muted)">ویدیویی یافت نشد.</p>`}
+          </div>
         </div>
       </section>
 
@@ -881,7 +900,11 @@ const pages = {
         </div>
       </header>
       <section class="section">
-        <div class="container"><div class="reels-grid">${REELS.map(reelCardHTML).join("")}</div></div>
+        <div class="container">
+          <div class="reels-grid">
+            ${REELS.length > 0 ? REELS.map(reelCardHTML).join("") : `<p style="text-align:center;width:100%;grid-column:1/-1;color:var(--muted)">ویدیویی یافت نشد.</p>`}
+          </div>
+        </div>
       </section>
     `;
     bindReelButtons();
@@ -1050,7 +1073,7 @@ const pages = {
             <h2>${esc(t("admin.uploadTitle"))}</h2>
             
             <label style="display:block;text-align:right;margin-bottom:.5rem">${esc(t("admin.selectLesson"))}</label>
-            <input type="number" id="adminLessonNum" class="admin-input" min="1" max="45" placeholder="1 - 45">
+            <input type="number" id="adminLessonNum" class="admin-input" placeholder="مثلاً 4">
             
             <label style="display:block;text-align:right;margin-bottom:.5rem">${esc(t("admin.selectFile"))}</label>
             <input type="file" id="adminVideoFile" accept="video/mp4" class="admin-input" style="padding-top:.6rem">
@@ -1066,7 +1089,7 @@ const pages = {
   }
 };
 
-/* ═══════════ §9 ADMIN LOGIC ═══════════ */
+/* ═══════════ §10 ADMIN LOGIC ═══════════ */
 window.loginAdmin = function() {
   const pass = document.getElementById("adminPass").value;
   if(pass === "admin123") {
@@ -1088,7 +1111,7 @@ window.uploadVideo = async function() {
   const btn = document.getElementById("uploadBtn");
   const status = document.getElementById("uploadStatus");
 
-  if (!lessonNum || lessonNum < 1 || lessonNum > 45) return alert("شماره دوره را بین ۱ تا ۴۵ وارد کنید.");
+  if (!lessonNum || lessonNum < 1) return alert("شماره درس را وارد کنید.");
   if (!fileInput.files.length) return alert("لطفاً یک ویدیو انتخاب کنید.");
 
   const file = fileInput.files[0];
@@ -1118,9 +1141,8 @@ window.uploadVideo = async function() {
     status.style.color = "#1eb955";
     btn.innerText = "آپلود شد!";
     
-    // آپدیت دیتابیس محلی و بازسازی کارت‌ها
-    dbVideos[lessonNum] = publicUrl;
-    buildCourses();
+    // لود مجدد ویدیوها
+    await loadVideosFromDB();
 
   } catch (error) {
     console.error(error);
@@ -1130,7 +1152,7 @@ window.uploadVideo = async function() {
   }
 };
 
-/* ═══════════ §10 INIT ═══════════ */
+/* ═══════════ §11 INIT ═══════════ */
 function initTheme(){
   const btn = document.getElementById("themeToggle");
   const html = document.documentElement;
@@ -1171,7 +1193,6 @@ window.addEventListener("hashchange", () => render());
   applyLanguage();
   initTheme();
   await loadVideosFromDB();
-  buildCourses();
   if(!location.hash) location.hash = "#/home";
   render();
 })();
