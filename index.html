@@ -473,24 +473,31 @@ const CONFIG = {
   s.setProperty('--reel-ratio', CONFIG.size.reelAspectRatio);
 })();
 
-// ساخت ۴۵ دوره
-const REELS = Array.from({ length: 45 }, (_, i) => {
-  const num = i + 1;
-  return {
-    id: String(num),
-    src: CONFIG.paths.videos + `${num}.mp4`,
-    category: "course",
-    title: { fa: `دوره ${num}`, en: `Course ${num}` },
-    desc: { fa: `درس ${num} از دوره ۴۵ روزه دیلی فشن — آموزش گام به گام`, en: `Lesson ${num} of the Daily Fashion 45-day course — step-by-step` }
-  };
-});
+// ساخت خودکار ۴۵ دوره
+let REELS = [];
+
+function buildCourses() {
+  REELS = Array.from({ length: 45 }, (_, i) => {
+    const num = i + 1;
+    // اگر ویدیو در دیتابیس وجود داشت از آن استفاده کن، وگرنه از پوشه محلی
+    const videoSrc = dbVideos[num] || (CONFIG.paths.videos + `${num}.mp4`);
+    return {
+      id: String(num),
+      src: videoSrc,
+      isDb: !!dbVideos[num], // آیا از دیتابیس آمده؟
+      category: "course",
+      title: { fa: `دوره ${num}`, en: `Course ${num}` },
+      desc: { fa: `درس ${num} از دوره ۴۵ روزه دیلی فشن — آموزش گام به گام`, en: `Lesson ${num} of the Daily Fashion 45-day course — step-by-step` }
+    };
+  });
+}
 
 const IMG = {
   women     : "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80",
   men       : "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80",
   afghan    : "https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&w=900&q=80",
   aboutHero : "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80",
-  founder   : "image/founder.jpg" // تغییر به لوکال، اگر عکس ندارید از لینک استفاده کنید
+  founder   : "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=600&q=80"
 };
 
 const LIFESTYLE = {
@@ -526,7 +533,7 @@ const I18N = {
     "course45.page.title": "دوره ۴۵ روزه",
     "course45.page.sub": "همه ۴۵ درس دوره ۴۵ روزه دیلی فشن — با دکمه دانلود برای هر درس.",
     "reels.download": "دانلود", "reels.watch": "تماشا",
-    "reels.catCourse": "دوره",
+    "reels.catCourse": "دوره", "reels.empty": "ویدیو هنوز آپلود نشده است.",
     "reels.downloaded": "دانلود آغاز شد", "reels.downloadHint": "فایل اطلاعات ویدیو دانلود شد",
     "life.eyebrow": "سبک زندگی", "life.title": "سبک‌های زندگی",
     "life.sub": "ایده‌های استایل برای خانم‌ها و آقایان — از روزمره تا مجلسی.",
@@ -584,7 +591,7 @@ const I18N = {
     "course45.page.title": "45-Day Course",
     "course45.page.sub": "All 45 lessons of the Daily Fashion 45-day course — each with a download button.",
     "reels.download": "Download", "reels.watch": "Watch",
-    "reels.catCourse": "Course",
+    "reels.catCourse": "Course", "reels.empty": "Video not uploaded yet.",
     "reels.downloaded": "Download started", "reels.downloadHint": "Video info file downloaded",
     "life.eyebrow": "Lifestyle", "life.title": "Lifestyle Styles",
     "life.sub": "Style ideas for women and men — from everyday to party.",
@@ -702,8 +709,7 @@ function openReel(index){
   const reel = REELS[index];
   if(!reel) return;
   
-  // چک کردن اینکه آیا ویدیو در دیتابیس آپلود شده یا خیر
-  const videoSrc = dbVideos[index + 1] || reel.src;
+  const videoSrc = reel.src;
 
   document.getElementById("modalTitle").textContent = reel.title[state.lang];
   document.getElementById("modalDesc").textContent = reel.desc[state.lang];
@@ -719,6 +725,12 @@ function openReel(index){
   video.controls = true;
   video.autoplay = true;
   video.playsInline = true;
+  
+  // نمایش پیام در صورت وجود نداشتن ویدیو
+  video.onerror = function() {
+      videoBox.innerHTML = `<div style="color:#fff; padding:2rem; text-align:center; font-size:1.2rem;">${t("reels.empty")}</div>`;
+  };
+
   videoBox.appendChild(video);
 
   const modal = document.getElementById("modal");
@@ -744,7 +756,7 @@ function bindReelButtons(){
 /* ═══════════ §7 CARD TEMPLATES ═══════════ */
 function reelCardHTML(reel, i){
   const numText = state.lang === "fa" ? (i + 1).toLocaleString('fa-IR') : String(i + 1);
-  const videoSrc = dbVideos[i + 1] || reel.src;
+  const videoSrc = reel.src;
 
   return `
     <article class="reel-card">
@@ -1080,7 +1092,6 @@ window.uploadVideo = async function() {
   if (!fileInput.files.length) return alert("لطفاً یک ویدیو انتخاب کنید.");
 
   const file = fileInput.files[0];
-  // نام فایل را با شماره دوره شروع می‌کنیم تا مرتب باشد
   const fileName = `lesson-${lessonNum}-${Date.now()}.mp4`;
 
   status.innerText = t("admin.uploading");
@@ -1107,8 +1118,9 @@ window.uploadVideo = async function() {
     status.style.color = "#1eb955";
     btn.innerText = "آپلود شد!";
     
-    // آپدیت دیتابیس محلی
+    // آپدیت دیتابیس محلی و بازسازی کارت‌ها
     dbVideos[lessonNum] = publicUrl;
+    buildCourses();
 
   } catch (error) {
     console.error(error);
@@ -1159,6 +1171,7 @@ window.addEventListener("hashchange", () => render());
   applyLanguage();
   initTheme();
   await loadVideosFromDB();
+  buildCourses();
   if(!location.hash) location.hash = "#/home";
   render();
 })();
