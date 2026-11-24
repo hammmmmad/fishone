@@ -38,11 +38,7 @@
 
 /* ═══════════ §2 RESET ═══════════ */
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body {
-  font-family: 'Vazirmatn', sans-serif; background-color: var(--bg-color); color: var(--text-main);
-  line-height: 1.7; overflow-x: hidden; transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
-  padding-bottom: var(--bottom-nav-h);
-}
+body { font-family: 'Vazirmatn', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.7; overflow-x: hidden; transition: background-color 0.4s var(--ease), color 0.4s var(--ease); padding-bottom: var(--bottom-nav-h); }
 @media (min-width: 900px) { body { padding-bottom: 0; } }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
@@ -52,11 +48,7 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.3; }
 .container { width: min(100% - 2rem, 1200px); margin-inline: auto; }
 
 /* ═══════════ §3 HEADER & NAV ═══════════ */
-.site-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--header-h);
-  background: rgba(252, 251, 249, 0.85); backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border); transition: all 0.3s var(--ease);
-}
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--header-h); background: rgba(252, 251, 249, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s var(--ease); }
 [data-theme="dark"] .site-header { background: rgba(20, 20, 22, 0.85); }
 .nav-wrap { display: flex; align-items: center; justify-content: space-between; height: 100%; }
 .brand { display: flex; align-items: center; gap: 0.75rem; }
@@ -77,13 +69,7 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.3; }
 .lang-switch button { padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); transition: all 0.3s; }
 .lang-switch button.active { background: var(--primary); color: #fff; }
 
-/* Bottom Nav */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-h); z-index: 100;
-  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center;
-  padding-bottom: env(safe-area-inset-bottom);
-}
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-h); z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
 [data-theme="dark"] .bottom-nav { background: rgba(30, 30, 34, 0.95); }
 @media (min-width: 900px) { .bottom-nav { display: none; } }
 .bottom-nav a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2rem; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; transition: all 0.3s var(--ease); flex: 1; height: 100%; position: relative; }
@@ -238,14 +224,13 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.3; }
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 "use strict";
 
 // 1. CONFIG
-const SUPABASE_URL = "https://ftorrprlveukbqhkwtgk.supabase.co";
-const SUPABASE_KEY = "sb_publishable_klxW4W61vXPqwEqRrm8jGQ_omkppRPq";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const GITHUB_USER = "YOUR_GITHUB_USERNAME"; // نام کاربری گیت‌هاب خود را اینجا وارد کنید
+const GITHUB_REPO = "YOUR_REPO_NAME";       // نام مخزن خود را اینجا وارد کنید
+const JSON_FILE_PATH = "videos.json";       // مسیر فایل JSON در مخزن
 
 const app = document.getElementById("app");
 const state = {
@@ -256,16 +241,6 @@ const state = {
   loading: true,
   error: null
 };
-
-// ⬇️⬇️⬇️ **بخش بسیار مهم: جایگزینی لینک‌های گیت‌هاب** ⬇️⬇️⬇️
-// ویدیوهای خود را در گیت‌هاب آپلود کنید، لینک Raw آنها را کپی کنید و اینجا قرار دهید.
-const FALLBACK_VIDEOS = [
-  { lesson_number: 1, video_url: "https://raw.githubusercontent.com/username/repo/main/videos/1.mp4" },
-  { lesson_number: 2, video_url: "https://raw.githubusercontent.com/username/repo/main/videos/2.mp4" },
-  { lesson_number: 3, video_url: "https://raw.githubusercontent.com/username/repo/main/videos/3.mp4" }
-  // ... تا ویدیوی ۱۵ (و بقیه) را اینجا اضافه کنید ...
-];
-// ⬆️⬆️⬆️ **مابقی ویدیوها را اینجا اضافه کنید** ⬆️⬆️⬆️
 
 // 2. I18N
 const I18N = {
@@ -312,27 +287,25 @@ function initTheme() {
   });
 }
 
-// 4. FETCH DATA (با سیستم پشتیبان Fallback)
+// 4. FETCH DATA (از فایل JSON گیت‌هاب)
 async function fetchVideos() {
   state.loading = true;
   state.error = null;
   try {
-    // تلاش برای خواندن از Supabase
-    const { data, error } = await supabaseClient.from('videos').select('*').order('lesson_number', { ascending: true });
+    const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${JSON_FILE_PATH}?t=${Date.now()}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("فایل videos.json در گیت‌هاب پیدا نشد.");
+    const data = await res.json();
     
-    if (error) throw error;
-    
-    if (data && data.length > 0) {
-      state.videos = data;
-      console.log("ویدیوها از Supabase لود شدند.");
+    if (Array.isArray(data)) {
+      state.videos = data.sort((a,b) => parseInt(a.lesson_number) - parseInt(b.lesson_number));
     } else {
-      // اگر Supabase خالی بود یا قطع بود، از Fallback استفاده کن
-      throw new Error("Supabase Empty");
+      state.videos = [];
     }
   } catch (err) {
-    console.warn("Supabase در دسترس نیست. استفاده از ویدیوهای پیش‌فرض (گیت‌هاب).");
-    state.error = "نمایش نسخه پشتیبان (گیت‌هاب)";
-    state.videos = FALLBACK_VIDEOS; // استفاده از لینک‌های گیت‌هاب
+    console.error("Data Fetch Error:", err);
+    state.error = err.message;
+    state.videos = [];
   } finally {
     state.loading = false;
     router(); 
@@ -458,6 +431,48 @@ const pages = {
         </div>
       </section>
     `;
+  },
+
+  admin() {
+    const isAuth = sessionStorage.getItem('admin-auth') === 'true';
+    if(!isAuth) {
+      app.innerHTML = `
+        <div class="admin-wrap fade-in">
+          <div class="admin-card">
+            <h2>${state.lang === 'fa' ? 'پنل مدیریت' : 'Admin Panel'}</h2>
+            <div class="form-group">
+              <input type="password" id="adminPass" class="form-input" placeholder="${state.lang === 'fa' ? 'رمز عبور' : 'Password'}">
+            </div>
+            <button class="btn btn-primary btn-block" onclick="loginAdmin()">${state.lang === 'fa' ? 'ورود' : 'Login'}</button>
+          </div>
+        </div>
+      `;
+    } else {
+      app.innerHTML = `
+        <div class="admin-wrap fade-in">
+          <div class="admin-card">
+            <h2>${state.lang === 'fa' ? 'مدیریت ویدیوها' : 'Video Management'}</h2>
+            
+            <div class="form-group">
+              <label>${state.lang === 'fa' ? 'شماره دوره (۱ تا ۴۵)' : 'Lesson Number (1-45)'}</label>
+              <input type="number" id="ghLesson" class="form-input" placeholder="1">
+            </div>
+            <div class="form-group">
+              <label>GitHub Token (repo scope)</label>
+              <input type="password" id="ghToken" class="form-input" placeholder="ghp_...">
+            </div>
+            <div class="form-group">
+              <label>${state.lang === 'fa' ? 'انتخاب فایل ویدیو' : 'Select Video File'}</label>
+              <input type="file" id="ghFile" class="form-input" accept="video/mp4" style="padding-top: 0.5rem;">
+            </div>
+            <button class="btn btn-primary btn-block" id="ghBtn" onclick="uploadToGitHub()">${state.lang === 'fa' ? 'آپلود و ذخیره' : 'Upload & Save'}</button>
+            <div id="ghStatus" class="admin-status"></div>
+
+            <button class="btn btn-outline btn-block" style="margin-top:1.5rem;" onclick="logoutAdmin()">${state.lang === 'fa' ? 'خروج' : 'Logout'}</button>
+          </div>
+        </div>
+      `;
+    }
   }
 };
 
@@ -483,6 +498,136 @@ document.querySelectorAll('[data-close]').forEach(el => {
   });
 });
 
+window.loginAdmin = function() {
+  const pass = document.getElementById('adminPass').value;
+  if(pass === 'admin123') {
+    sessionStorage.setItem('admin-auth', 'true');
+    pages.admin();
+  } else {
+    alert(state.lang === 'fa' ? 'رمز اشتباه است' : 'Incorrect password');
+  }
+};
+
+window.logoutAdmin = function() {
+  sessionStorage.removeItem('admin-auth');
+  pages.admin();
+};
+
+// GitHub Upload Logic (آپلود ویدیو و آپدیت فایل JSON)
+window.uploadToGitHub = async function() {
+  const lesson = document.getElementById('ghLesson').value;
+  const token = document.getElementById('ghToken').value;
+  const fileInput = document.getElementById('ghFile');
+  const btn = document.getElementById('ghBtn');
+  const status = document.getElementById('ghStatus');
+
+  if(!lesson || !token || !fileInput.files.length) {
+    return alert(state.lang === 'fa' ? 'لطفاً تمام فیلدها را پر کنید.' : 'Please fill all fields.');
+  }
+
+  const file = fileInput.files[0];
+  const videoPath = `videos/${lesson}.mp4`;
+
+  btn.disabled = true;
+  status.textContent = state.lang === 'fa' ? 'در حال آپلود ویدیو به گیت‌هاب...' : 'Uploading video to GitHub...';
+  status.style.color = 'var(--primary)';
+
+  try {
+    // 1. آپلود فایل ویدیو
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    
+    reader.onload = async () => {
+      const base64Content = reader.result.split(',')[1];
+
+      // گرفتن SHA در صورتی که فایل قبلا وجود داشته باشد
+      let videoSha = null;
+      const checkVideoRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${videoPath}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if(checkVideoRes.ok) {
+        const checkData = await checkVideoRes.json();
+        videoSha = checkData.sha;
+      }
+
+      // آپلود ویدیو
+      const uploadVideoRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${videoPath}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+          message: `Upload lesson ${lesson} video`,
+          content: base64Content,
+          sha: videoSha || undefined
+        })
+      });
+
+      const videoData = await uploadVideoRes.json();
+      if(!uploadVideoRes.ok) throw new Error(videoData.message || 'خطا در آپلود ویدیو');
+
+      const downloadUrl = videoData.content.download_url;
+
+      // 2. آپدیت فایل videos.json
+      status.textContent = state.lang === 'fa' ? 'در حال بروزرسانی دیتابیس (JSON)...' : 'Updating database (JSON)...';
+
+      // خواندن JSON فعلی
+      let jsonSha = null;
+      let currentJson = [];
+      const checkJsonRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${JSON_FILE_PATH}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      if(checkJsonRes.ok) {
+        const checkJsonData = await checkJsonRes.json();
+        jsonSha = checkJsonData.sha;
+        const decoded = atob(checkJsonData.content);
+        currentJson = JSON.parse(decoded);
+      }
+
+      // افزودن/آپدیت ویدیو در آرایه
+      const existingIndex = currentJson.findIndex(v => parseInt(v.lesson_number) === parseInt(lesson));
+      if(existingIndex !== -1) {
+        currentJson[existingIndex].video_url = downloadUrl;
+      } else {
+        currentJson.push({ lesson_number: parseInt(lesson), video_url: downloadUrl });
+      }
+
+      // آپلود JSON جدید
+      const jsonString = JSON.stringify(currentJson, null, 2);
+      const base64Json = btoa(unescape(encodeURIComponent(jsonString)));
+
+      const uploadJsonRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${JSON_FILE_PATH}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+          message: `Update video list with lesson ${lesson}`,
+          content: base64Json,
+          sha: jsonSha || undefined
+        })
+      });
+
+      if(!uploadJsonRes.ok) throw new Error('خطا در بروزرسانی JSON');
+
+      status.textContent = state.lang === 'fa' ? '✅ ویدیو با موفقیت آپلود و ثبت شد!' : '✅ Video uploaded and saved!';
+      status.style.color = 'green';
+      
+      // رفرش کردن داده‌ها
+      fetchVideos();
+    };
+  } catch(err) {
+    status.textContent = '❌ ' + err.message;
+    status.style.color = 'red';
+    btn.disabled = false;
+  }
+};
+
 // 8. ROUTER
 function router() {
   const hash = window.location.hash.replace('#/', '') || 'home';
@@ -496,6 +641,7 @@ function router() {
   if(route === 'videos') pages.videos();
   else if(route === 'about') pages.about();
   else if(route === 'contact') pages.contact();
+  else if(route === 'admin') pages.admin();
   else pages.home();
 
   window.scrollTo(0, 0);
