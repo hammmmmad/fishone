@@ -67,7 +67,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .ico svg{width:1em;height:1em;display:block}
 html[dir="rtl"] .play-fab .ico,html[dir="rtl"] .card-link .ico,html[dir="rtl"] .back-link .ico{transform:scaleX(-1)}
 
-/* ═══════════ §3 HEADER ═══════════ */
+/* ═══════════ §3 HEADER & NEW NAV ═══════════ */
 .site-header{position:sticky;top:0;z-index:80;background:rgba(255,255,255,.85);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid #f3e7ec;transition:background-color .3s, border-color .3s}
 [data-theme="dark"] .site-header{background:rgba(20,20,24,.85);border-bottom-color:#2a2a33}
 .nav-wrap{display:flex;align-items:center;gap:1rem;height:var(--header-h)}
@@ -84,10 +84,19 @@ html[dir="rtl"] .play-fab .ico,html[dir="rtl"] .card-link .ico,html[dir="rtl"] .
 .brand-name em{font-style:normal;color:var(--pink-deep)}
 .brand-sub{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:2px}
 html[lang="fa"] .brand-sub{letter-spacing:.02em;text-transform:none;font-size:.72rem}
-.main-nav{display:flex;align-items:center;gap:.15rem;margin-inline:auto}
-.main-nav a{padding:.55rem 1rem;border-radius:999px;font-size:.9rem;font-weight:500;color:var(--ink-2);transition:.25s;position:relative;white-space:nowrap}
+
+/* ═══════════ NEW NAVIGATION STYLES ═══════════ */
+.main-nav{display:flex;align-items:center;gap:.35rem;margin-inline:auto}
+.main-nav a{
+  padding:.55rem 1rem;border-radius:999px;font-size:.9rem;font-weight:600;color:var(--ink-2);
+  transition:all .3s var(--ease);position:relative;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:0.5rem;
+}
+.main-nav a .ico{font-size:1.15em;transition:transform .3s var(--ease);color:var(--muted)}
 .main-nav a:hover,.main-nav a.active{background:var(--pink-light);color:var(--pink-deep)}
-.main-nav a.active{font-weight:700}
+.main-nav a:hover .ico,.main-nav a.active .ico{color:var(--pink-deep);transform:scale(1.15) rotate(5deg)}
+.main-nav a.active{font-weight:800;box-shadow:0 4px 12px -4px rgba(168,74,107,.2)}
+
 .nav-actions{display:flex;align-items:center;gap:.55rem}
 .icon-btn{width:38px;height:38px;border-radius:12px;background:var(--gray);display:grid;place-items:center;color:var(--ink-2);transition:background .25s,color .25s,transform .25s}
 .icon-btn:hover{background:var(--pink-light);color:var(--pink-deep);transform:scale(1.05)}
@@ -282,7 +291,7 @@ html[lang="fa"] .footer-col h4{letter-spacing:.02em;text-transform:none;font-siz
   .main-nav{position:absolute;top:calc(var(--header-h) + 8px);inset-inline:1rem;flex-direction:column;align-items:stretch;gap:.25rem;margin:0;background:var(--white);border:1px solid #f3e8ec;border-radius:22px;padding:.7rem;box-shadow:var(--shadow-lg);display:none;max-height:calc(100vh - var(--header-h) - 24px);overflow-y:auto}
   [data-theme="dark"] .main-nav{border-color:#2a2a33}
   .main-nav.open{display:flex}
-  .main-nav a{padding:.85rem 1rem;border-radius:14px;text-align:center;font-size:.95rem}
+  .main-nav a{padding:.85rem 1rem;border-radius:14px;text-align:center;font-size:.95rem;justify-content:center}
   .brand-sub{display:none}
   .about-hero,.afghan-lifestyle,.founder-card{grid-template-columns:1fr}
   .founder-img{aspect-ratio:16/9;max-height:300px}
@@ -335,13 +344,26 @@ html[lang="fa"] .footer-col h4{letter-spacing:.02em;text-transform:none;font-siz
       </span>
     </a>
 
+    <!-- ═══════════ NEW NAVIGATION ═══════════ -->
     <nav class="main-nav" id="mainNav">
-      <a href="#/home"      data-nav="home"      data-i18n="nav.home"></a>
-      <a href="#/videos"    data-nav="videos"    data-i18n="nav.videos"></a>
-      <a href="#/lifestyle" data-nav="lifestyle" data-i18n="nav.lifestyle"></a>
-      <a href="#/about"     data-nav="about"     data-i18n="nav.about"></a>
-      <a href="#/shop"      data-nav="shop"      data-i18n="nav.shop"></a>
-      <a href="#/contact"   data-nav="contact"   data-i18n="nav.contact"></a>
+      <a href="#/home" data-nav="home" data-i18n="nav.home">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+      </a>
+      <a href="#/videos" data-nav="videos" data-i18n="nav.videos">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></span>
+      </a>
+      <a href="#/lifestyle" data-nav="lifestyle" data-i18n="nav.lifestyle">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+      </a>
+      <a href="#/about" data-nav="about" data-i18n="nav.about">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+      </a>
+      <a href="#/shop" data-nav="shop" data-i18n="nav.shop">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
+      </a>
+      <a href="#/contact" data-nav="contact" data-i18n="nav.contact">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+      </a>
     </nav>
 
     <div class="nav-actions">
@@ -439,7 +461,7 @@ const SUPABASE_URL = "https://ftorrprlveukbqhkwtgk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_klxW4W61vXPqwEqRrm8jGQ_omkppRPq";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ═══════════ §2 DATA SOURCES (فقط Supabase) ═══════════ */
+/* ═══════════ §2 DATA SOURCES ═══════════ */
 let availableVideos = {};
 let REELS = [];
 
@@ -447,7 +469,7 @@ async function loadVideosFromDB() {
   availableVideos = {};
   
   try {
-    // فقط از Supabase می‌خوانیم (کاملاً امن و بدون خطای گواهی)
+    // خواندن تمام ویدیوها از دیتابیس (شامل ویدیوهای قبلی و جدید)
     const { data, error } = await supabaseClient.from('videos').select('*');
     if (error) throw error;
 
@@ -565,10 +587,10 @@ const I18N = {
     "footer.rights": "© ۲۰۲۶ دیلی فیشن افغانستان. تمام حقوق محفوظ است.",
     "admin.title": "پنل مدیریت", "admin.passPlaceholder": "رمز عبور را وارد کنید",
     "admin.loginBtn": "ورود", "admin.logoutBtn": "خروج",
-    "admin.uploadTitle": "آپلود ویدیو جدید", "admin.selectLesson": "شماره دوره (۱ تا ۴۵):",
-    "admin.selectFile": "انتخاب فایل ویدیو:", "admin.uploadBtn": "شروع آپلود",
-    "admin.wrongPass": "رمز عبور اشتباه است!", "admin.success": "ویدیو با موفقیت آپلود و در سایت قرار گرفت!",
-    "admin.uploading": "در حال آپلود... لطفاً صبر کنید", "admin.error": "خطا: "
+    "admin.uploadTitle": "ثبت لینک ویدیو جدید", "admin.selectLesson": "شماره دوره (۱ تا ۴۵):",
+    "admin.selectFile": "لینک مستقیم ویدیو (گیت‌هاب، کلودینری و...):", "admin.uploadBtn": "ذخیره لینک",
+    "admin.wrongPass": "رمز عبور اشتباه است!", "admin.success": "لینک ویدیو با موفقیت ثبت شد!",
+    "admin.uploading": "در حال ذخیره...", "admin.error": "خطا: "
   },
   en: {
     "brand.sub": "Beauty · Fashion · Education",
@@ -623,10 +645,10 @@ const I18N = {
     "footer.rights": "© 2026 Daily Fashion AF. All Rights Reserved.",
     "admin.title": "Admin Panel", "admin.passPlaceholder": "Enter password",
     "admin.loginBtn": "Login", "admin.logoutBtn": "Logout",
-    "admin.uploadTitle": "Upload New Video", "admin.selectLesson": "Lesson Number (1-45):",
-    "admin.selectFile": "Select Video File:", "admin.uploadBtn": "Start Upload",
-    "admin.wrongPass": "Incorrect password!", "admin.success": "Video uploaded and published successfully!",
-    "admin.uploading": "Uploading... Please wait", "admin.error": "Error: "
+    "admin.uploadTitle": "Save New Video Link", "admin.selectLesson": "Lesson Number (1-45):",
+    "admin.selectFile": "Direct Video Link (GitHub, Cloudinary):", "admin.uploadBtn": "Save Link",
+    "admin.wrongPass": "Incorrect password!", "admin.success": "Video link saved successfully!",
+    "admin.uploading": "Saving...", "admin.error": "Error: "
   }
 };
 
@@ -708,9 +730,13 @@ function openReel(index){
   document.getElementById("modalDesc").textContent = reel.desc[state.lang];
 
   const dlBtn = document.getElementById("modalDownload");
-  // استفاده از پارامتر ?download برای دانلود مستقیم و امن
-  const dlUrl = reel.src.includes('?') ? reel.src + '&download' : reel.src + '?download';
-  dlBtn.href = dlUrl;
+  // اگر لینک مربوط به Supabase بود، پارامتر دانلود اضافه می‌شود، در غیر این صورت لینک مستقیم دانلود می‌شود
+  let finalUrl = reel.src;
+  if(finalUrl.includes('supabase.co') && !finalUrl.includes('?download')) {
+    finalUrl += '?download';
+  }
+  
+  dlBtn.href = finalUrl;
   dlBtn.setAttribute("download", `DailyFashion-Lesson-${reel.id}.mp4`);
 
   const videoBox = document.getElementById("modalVideo");
@@ -750,8 +776,12 @@ function bindReelButtons(){
 /* ═══════════ §8 CARD TEMPLATES ═══════════ */
 function reelCardHTML(reel, i){
   const numText = state.lang === "fa" ? (reel.id).toLocaleString('fa-IR') : String(reel.id);
-  // استفاده از پارامتر ?download برای دانلود مستقیم و امن
-  const dlUrl = reel.src.includes('?') ? reel.src + '&download' : reel.src + '?download';
+  
+  // لینک دانلود
+  let finalUrl = reel.src;
+  if(finalUrl.includes('supabase.co') && !finalUrl.includes('?download')) {
+    finalUrl += '?download';
+  }
 
   return `
     <article class="reel-card">
@@ -766,7 +796,7 @@ function reelCardHTML(reel, i){
         <p>${esc(reel.desc[state.lang])}</p>
         <div class="reel-actions">
           <button type="button" class="btn btn-ghost btn-sm" data-reel="${i}">${ico("play")} ${t("reels.watch")}</button>
-          <a href="${dlUrl}" download="DailyFashion-Lesson-${reel.id}.mp4" class="btn btn-primary btn-sm">${ico("download")} ${t("reels.download")}</a>
+          <a href="${finalUrl}" download="DailyFashion-Lesson-${reel.id}.mp4" class="btn btn-primary btn-sm">${ico("download")} ${t("reels.download")}</a>
         </div>
       </div>
     </article>`;
@@ -1054,9 +1084,9 @@ const pages = {
             <input type="number" id="adminLessonNum" class="admin-input" min="1" max="45" placeholder="1 - 45">
             
             <label style="display:block;text-align:right;margin-bottom:.5rem">${esc(t("admin.selectFile"))}</label>
-            <input type="file" id="adminVideoFile" accept="video/mp4" class="admin-input" style="padding-top:.6rem">
+            <input type="text" id="adminVideoLink" class="admin-input" placeholder="https://...">
             
-            <button class="btn btn-primary" style="width:100%" id="uploadBtn" onclick="uploadVideo()">${esc(t("admin.uploadBtn"))}</button>
+            <button class="btn btn-primary" style="width:100%" id="uploadBtn" onclick="saveVideoLink()">${esc(t("admin.uploadBtn"))}</button>
             <div id="uploadStatus" class="admin-status"></div>
             
             <button class="btn btn-dark btn-sm" style="width:100%;margin-top:2rem" onclick="logoutAdmin()">${esc(t("admin.logoutBtn"))}</button>
@@ -1083,41 +1113,30 @@ window.logoutAdmin = function() {
   pages.admin();
 };
 
-window.uploadVideo = async function() {
+window.saveVideoLink = async function() {
   const lessonNum = document.getElementById("adminLessonNum").value;
-  const fileInput = document.getElementById("adminVideoFile");
+  const videoLink = document.getElementById("adminVideoLink").value;
   const btn = document.getElementById("uploadBtn");
   const status = document.getElementById("uploadStatus");
 
   if (!lessonNum || lessonNum < 1 || lessonNum > 45) return alert("شماره دوره را بین ۱ تا ۴۵ وارد کنید.");
-  if (!fileInput.files.length) return alert("لطفاً یک ویدیو انتخاب کنید.");
-
-  const file = fileInput.files[0];
-  const fileName = `lesson-${lessonNum}-${Date.now()}.mp4`;
+  if (!videoLink || !videoLink.startsWith('http')) return alert("لطفاً یک لینک معتبر وارد کنید.");
 
   status.innerText = t("admin.uploading");
   status.style.color = "var(--ink)";
   btn.disabled = true;
 
   try {
-    // 1. آپلود به Storage
-    const { error: uploadError } = await supabaseClient.storage.from('videos').upload(fileName, file);
-    if (uploadError) throw uploadError;
-
-    // 2. گرفتن لینک
-    const { data: publicUrlData } = supabaseClient.storage.from('videos').getPublicUrl(fileName);
-    const publicUrl = publicUrlData.publicUrl;
-
-    // 3. ذخیره در دیتابیس (Upsert)
+    // ذخیره لینک در دیتابیس (بدون آپلود فایل)
     const { error: dbError } = await supabaseClient.from('videos').upsert(
-      { lesson_number: parseInt(lessonNum), video_url: publicUrl },
+      { lesson_number: parseInt(lessonNum), video_url: videoLink },
       { onConflict: 'lesson_number' }
     );
     if (dbError) throw dbError;
 
     status.innerText = t("admin.success");
     status.style.color = "#1eb955";
-    btn.innerText = "آپلود شد!";
+    btn.innerText = "ثبت شد!";
     
     // لود مجدد ویدیوها
     await loadVideosFromDB();
@@ -1176,4 +1195,4 @@ window.addEventListener("hashchange", () => render());
 })();
 </script>
 </body>
-</html>
+  </html>
