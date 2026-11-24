@@ -199,7 +199,19 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.3; }
 .form-input:focus { outline: none; border-color: var(--primary); }
 .admin-status { text-align: center; font-size: 0.9rem; margin-top: 1rem; font-weight: 600; }
 
-/* ═══════════ §9 FOOTER ═══════════ */
+/* ═══════════ §9 TOAST ═══════════ */
+.toast {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #2B282C; color: #fff; padding: 0.8rem 1.5rem; border-radius: 999px;
+  font-size: 0.9rem; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  opacity: 0; visibility: hidden; transition: all 0.3s var(--ease); z-index: 300;
+  display: flex; align-items: center; gap: 0.5rem; white-space: nowrap;
+}
+.toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+.toast.success { background: #1eb955; }
+.toast.error { background: #e74c3c; }
+
+/* ═══════════ §10 FOOTER ═══════════ */
 .site-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 3rem 0 1.5rem; margin-top: 3rem; text-align: center; }
 .footer-content { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
 .footer-content p { color: var(--text-muted); font-size: 0.9rem; }
@@ -268,10 +280,15 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.3; }
     <div class="modal-info">
       <h3 id="modalTitle"></h3>
       <p id="modalDesc"></p>
-      <a id="modalDownload" class="btn btn-primary btn-block" download data-i18n="reels.download">دانلود ویدیو</a>
+      <button id="modalDownloadBtn" class="btn btn-primary btn-block">
+        <span data-i18n="reels.download">دانلود ویدیو</span>
+      </button>
     </div>
   </div>
 </div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -292,10 +309,9 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.3; }
 <script>
 "use strict";
 
-// 1. CONFIG (تنظیمات مخزن گیت‌هاب شما)
+// 1. CONFIG
 const GITHUB_USER = "hammmmmad";
 const GITHUB_REPO = "fishone";
-const JSON_FILE_PATH = "videos.json";
 
 const app = document.getElementById("app");
 const state = {
@@ -352,24 +368,44 @@ function initTheme() {
   });
 }
 
-// 4. FETCH DATA (خواندن مستقیم از گیت‌هاب)
+// 4. TOAST
+let toastTimeout;
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = 'toast show ' + type;
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
+}
+
+// ═══════════ 🚀 FETCH VIDEOS FROM GITHUB FOLDER (API) ═══════════
 async function fetchVideos() {
   state.loading = true;
   state.error = null;
   try {
-    const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${JSON_FILE_PATH}?t=${Date.now()}`;
-    const res = await fetch(url);
-    if (!res.ok) {
-      if (res.status === 404) throw new Error("فایل videos.json در گیت‌هاب پیدا نشد. لطفاً آن را بسازید.");
-      throw new Error("خطا در اتصال به گیت‌هاب");
-    }
-    const data = await res.json();
+    // استفاده از API گیت‌هاب برای خواندن محتویات پوشه videos
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/videos`);
+    if (!res.ok) throw new Error("خطا در خواندن پوشه ویدیوها. ممکن است پوشه وجود نداشته باشد.");
     
-    if (Array.isArray(data)) {
-      state.videos = data.sort((a,b) => parseInt(a.lesson_number) - parseInt(b.lesson_number));
-    } else {
-      state.videos = [];
-    }
+    const files = await res.json();
+    
+    // فیلتر کردن فایل‌های mp4 (حذف پوشه‌ها و فایل‌های غیر mp4)
+    const videoFiles = files
+      .filter(file => file.type === 'file' && file.name.toLowerCase().endsWith('.mp4'))
+      .map(file => {
+        const match = file.name.match(/(\d+)/); // پیدا کردن عدد در نام فایل (مثلاً 1.mp4)
+        const num = match ? parseInt(match[0]) : 0; 
+        return {
+          lesson_number: num,
+          video_url: file.download_url, // لینک مستقیم به فایل
+          name: file.name
+        };
+      })
+      .filter(v => v.lesson_number > 0) // فقط فایل‌هایی که شماره دارند (Khamoosh حذف می‌شود)
+      .sort((a, b) => a.lesson_number - b.lesson_number); // مرتب‌سازی
+
+    state.videos = videoFiles;
+    
   } catch (err) {
     console.error("Data Fetch Error:", err);
     state.error = err.message;
@@ -380,11 +416,37 @@ async function fetchVideos() {
   }
 }
 
-// 5. COMPONENTS
-function videoCard(v) {
-  let dlUrl = v.video_url;
-  if(dlUrl.includes('supabase.co') && !dlUrl.includes('?download')) dlUrl += '?download';
+// 5. MODERN DOWNLOAD
+async function downloadVideo(url, lessonNumber) {
+  const filename = `DailyFashion-Lesson-${lessonNumber}.mp4`;
+  
+  try {
+    showToast(state.lang === 'fa' ? '⏳ در حال آماده‌سازی دانلود...' : '⏳ Preparing download...', 'success');
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Network response was not ok');
+    
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    
+    setTimeout(() => window.URL.revokeObjectURL(blobUrl), 1000);
+    showToast(state.lang === 'fa' ? '✅ دانلود آغاز شد!' : '✅ Download started!', 'success');
+    
+  } catch (error) {
+    console.error('Download failed:', error);
+    showToast(state.lang === 'fa' ? '❌ خطا در دانلود.' : '❌ Download failed.', 'error');
+    window.open(url, '_blank');
+  }
+}
 
+// 6. COMPONENTS
+function videoCard(v) {
   return `
     <article class="reel-card">
       <div class="reel-thumb">
@@ -401,14 +463,14 @@ function videoCard(v) {
         <p>${state.lang === 'fa' ? 'آموزش گام به گام دیلی فشن' : 'Daily Fashion step-by-step'}</p>
         <div class="reel-actions">
           <button class="btn btn-outline btn-sm" onclick="openModal('${v.video_url}', ${v.lesson_number})">${state.lang === 'fa' ? 'تماشا' : 'Watch'}</button>
-          <a href="${dlUrl}" download="lesson-${v.lesson_number}.mp4" class="btn btn-primary btn-sm">${state.lang === 'fa' ? 'دانلود' : 'Download'}</a>
+          <button class="btn btn-primary btn-sm" onclick="downloadVideo('${v.video_url}', ${v.lesson_number})">${state.lang === 'fa' ? 'دانلود' : 'Download'}</button>
         </div>
       </div>
     </article>
   `;
 }
 
-// 6. PAGES
+// 7. PAGES
 const pages = {
   home() {
     let videosHTML = '';
@@ -544,20 +606,26 @@ const pages = {
   }
 };
 
-// 7. LOGIC & EVENTS
+// 8. LOGIC & EVENTS
+let currentModalVideo = null;
+
 window.openModal = function(src, lesson) {
+  currentModalVideo = { src, lesson };
+  
   const modal = document.getElementById('modal');
   const videoBox = document.getElementById('modalVideo');
   document.getElementById('modalTitle').textContent = state.lang === 'fa' ? `دوره ${lesson}` : `Course ${lesson}`;
   document.getElementById('modalDesc').textContent = state.lang === 'fa' ? `آموزش گام به گام دیلی فشن` : `Daily Fashion step-by-step`;
   
-  let dlUrl = src;
-  if(dlUrl.includes('supabase.co') && !dlUrl.includes('?download')) dlUrl += '?download';
-  document.getElementById('modalDownload').href = dlUrl;
-
   videoBox.innerHTML = `<video src="${src}" controls autoplay playsinline></video>`;
   modal.classList.add('open');
 }
+
+document.getElementById('modalDownloadBtn').addEventListener('click', function() {
+  if (currentModalVideo) {
+    downloadVideo(currentModalVideo.src, currentModalVideo.lesson);
+  }
+});
 
 document.querySelectorAll('[data-close]').forEach(el => {
   el.addEventListener('click', () => {
@@ -581,7 +649,7 @@ window.logoutAdmin = function() {
   pages.admin();
 };
 
-// 8. UPLOAD TO GITHUB (بدون نقص)
+// 9. UPLOAD TO GITHUB
 window.uploadToGitHub = async function() {
   const lesson = document.getElementById('ghLesson').value;
   const token = document.getElementById('ghToken').value;
@@ -601,14 +669,13 @@ window.uploadToGitHub = async function() {
   status.style.color = 'var(--primary)';
 
   try {
-    // 1. خواندن فایل به صورت Base64
     const reader = new FileReader();
     reader.readAsDataURL(file);
     
     reader.onload = async () => {
       const base64Content = reader.result.split(',')[1];
 
-      // 2. چک کردن وجود فایل ویدیو (برای گرفتن SHA در صورت آپدیت)
+      // چک کردن وجود فایل ویدیو برای آپدیت
       let videoSha = null;
       const checkVideoRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${videoPath}`, {
         headers: { Authorization: `Bearer ${token}` }
@@ -618,7 +685,7 @@ window.uploadToGitHub = async function() {
         videoSha = checkData.sha;
       }
 
-      // 3. آپلود فایل ویدیو به گیت‌هاب
+      // آپلود ویدیو به گیت‌هاب
       const uploadVideoRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${videoPath}`, {
         method: 'PUT',
         headers: {
@@ -633,67 +700,15 @@ window.uploadToGitHub = async function() {
         })
       });
 
-      const videoData = await uploadVideoRes.json();
-      if(!uploadVideoRes.ok) throw new Error(videoData.message || 'خطا در آپلود ویدیو');
-
-      const downloadUrl = videoData.content.download_url;
-
-      // 4. خواندن فایل videos.json برای آپدیت
-      status.textContent = state.lang === 'fa' ? 'در حال بروزرسانی لیست ویدیوها...' : 'Updating video list...';
-
-      let jsonSha = null;
-      let currentJson = [];
-      const checkJsonRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${JSON_FILE_PATH}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      if(checkJsonRes.ok) {
-        const checkJsonData = await checkJsonRes.json();
-        jsonSha = checkJsonData.sha;
-        // دیکد کردن محتوای Base64 با پشتیبانی از کاراکترهای فارسی
-        const decoded = decodeURIComponent(escape(atob(checkJsonData.content)));
-        currentJson = JSON.parse(decoded);
+      if(!uploadVideoRes.ok) {
+        const errorData = await uploadVideoRes.json();
+        throw new Error(errorData.message || 'خطا در آپلود ویدیو');
       }
 
-      // 5. آپدیت لیست (افزودن یا جایگزینی)
-      const existingIndex = currentJson.findIndex(v => parseInt(v.lesson_number) === parseInt(lesson));
-      if(existingIndex !== -1) {
-        currentJson[existingIndex].video_url = downloadUrl;
-      } else {
-        currentJson.push({ lesson_number: parseInt(lesson), video_url: downloadUrl });
-      }
-
-      // مرتب‌سازی
-      currentJson.sort((a,b) => parseInt(a.lesson_number) - parseInt(b.lesson_number));
-
-      // 6. آپلود فایل videos.json جدید
-      const jsonString = JSON.stringify(currentJson, null, 2);
-      // اینکد کردن به Base64 با پشتیبانی از کاراکترهای فارسی
-      const base64Json = btoa(unescape(encodeURIComponent(jsonString)));
-
-      const uploadJsonRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${JSON_FILE_PATH}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/vnd.github.v3+json'
-        },
-        body: JSON.stringify({
-          message: `Update video list with lesson ${lesson}`,
-          content: base64Json,
-          sha: jsonSha || undefined
-        })
-      });
-
-      if(!uploadJsonRes.ok) {
-        const errorData = await uploadJsonRes.json();
-        throw new Error(errorData.message || 'خطا در بروزرسانی فایل videos.json');
-      }
-
-      status.textContent = state.lang === 'fa' ? '✅ ویدیو با موفقیت آپلود و ثبت شد!' : '✅ Video uploaded and saved!';
+      status.textContent = state.lang === 'fa' ? '✅ ویدیو با موفقیت آپلود شد! (سایت به‌زودی آپدیت می‌شود)' : '✅ Video uploaded! (Site will update shortly)';
       status.style.color = 'green';
       
-      // رفرش کردن داده‌ها بعد از ۱.۵ ثانیه
+      // رفرش خودکار بعد از ۱.۵ ثانیه
       setTimeout(() => fetchVideos(), 1500);
     };
   } catch(err) {
@@ -703,7 +718,7 @@ window.uploadToGitHub = async function() {
   }
 };
 
-// 9. ROUTER
+// 10. ROUTER
 function router() {
   const hash = window.location.hash.replace('#/', '') || 'home';
   const route = hash.split('/')[0];
@@ -722,7 +737,7 @@ function router() {
   window.scrollTo(0, 0);
 }
 
-// 10. INIT
+// 11. INIT
 document.querySelectorAll('.lang-switch button').forEach(btn => {
   btn.addEventListener('click', () => {
     state.lang = btn.dataset.lang;
