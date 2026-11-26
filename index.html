@@ -9,16 +9,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <script>
 (function(){
-  var t = localStorage.getItem('df-theme') || 'light';
-  document.documentElement.setAttribute('data-theme', t);
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('df-theme') || 'light');
   var l = localStorage.getItem('df-lang') || 'fa';
   document.documentElement.lang = l;
   document.documentElement.dir = l === 'fa' ? 'rtl' : 'ltr';
 })();
 </script>
+
 <style>
+/* ═══════════════════════════════════════════════════════════════
+   §1 TOKENS & RESET
+   ═══════════════════════════════════════════════════════════════ */
 :root{
   --primary:#D46986; --primary-dark:#A9425D; --primary-light:#FDF2F5;
   --bg:#FCFBF9; --surface:#FFFFFF; --text:#2B282C; --muted:#7A757B;
@@ -30,7 +34,8 @@
 [data-theme="dark"]{
   --bg:#141416; --surface:#1E1E22; --text:#F5F5F5; --muted:#A0A0A5;
   --border:#2D2B30; --primary-light:#2A1B20;
-  --shadow-sm:0 4px 12px rgba(0,0,0,.3); --shadow-lg:0 24px 48px -12px rgba(0,0,0,.6);
+  --shadow-sm:0 4px 12px rgba(0,0,0,.3);
+  --shadow-lg:0 24px 48px -12px rgba(0,0,0,.6);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;transition:background-color .4s var(--ease),color .4s var(--ease);padding-bottom:var(--nav-h)}
@@ -42,8 +47,10 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 [lang="en"] h1,[lang="en"] h2,[lang="en"] h3,[lang="en"] .brand-name{font-family:'Playfair Display',serif}
 .container{width:min(100% - 2rem,1200px);margin-inline:auto}
 
-/* ═══ HEADER ═══ */
-.site-header{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--header-h);background:rgba(252,251,249,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all .3s var(--ease)}
+/* ═══════════════════════════════════════════════════════════════
+   §2 HEADER & NAV
+   ═══════════════════════════════════════════════════════════════ */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--header-h);background:rgba(252,251,249,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 [data-theme="dark"] .site-header{background:rgba(20,20,22,.85)}
 .nav-wrap{display:flex;align-items:center;justify-content:space-between;height:100%}
 .brand{display:flex;align-items:center;gap:.75rem}
@@ -57,24 +64,26 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 .desktop-nav a{padding:.6rem 1.2rem;border-radius:999px;font-size:.9rem;font-weight:600;color:var(--muted);transition:all .3s}
 .desktop-nav a:hover,.desktop-nav a.active{background:var(--primary-light);color:var(--primary)}
 .nav-actions{display:flex;align-items:center;gap:.5rem}
-.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--text);transition:all .3s var(--ease)}
+.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--text);transition:all .3s}
 .icon-btn:hover{background:var(--primary-light);color:var(--primary)}
 .icon-btn svg{width:20px;height:20px}
 .lang-switch{display:flex;background:var(--surface);border-radius:999px;padding:.25rem;border:1px solid var(--border)}
-.lang-switch button{padding:.3rem .8rem;border-radius:999px;font-size:.8rem;font-weight:700;color:var(--muted);transition:all .3s}
+.lang-switch button{padding:.3rem .8rem;border-radius:999px;font-size:.8rem;font-weight:700;color:var(--muted);transition:.3s}
 .lang-switch button.active{background:var(--primary);color:#fff}
 
-/* ═══ BOTTOM NAV ═══ */
+/* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom)}
 [data-theme="dark"] .bottom-nav{background:rgba(30,30,34,.95)}
 @media(min-width:900px){.bottom-nav{display:none}}
-.bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;color:var(--muted);font-size:.68rem;font-weight:600;transition:all .3s var(--ease);flex:1;height:100%;position:relative}
-.bottom-nav a .icon-box{display:flex;align-items:center;justify-content:center;width:24px;height:24px}
+.bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;color:var(--muted);font-size:.68rem;font-weight:600;transition:all .3s;flex:1;height:100%;position:relative}
+.bottom-nav a .icon-box{width:24px;height:24px;display:flex;align-items:center;justify-content:center}
 .bottom-nav a svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2}
 .bottom-nav a.active{color:var(--primary)}
 .bottom-nav a.active::before{content:'';position:absolute;top:0;width:30%;height:3px;background:var(--primary);border-radius:0 0 3px 3px}
 
-/* ═══ BUTTONS ═══ */
+/* ═══════════════════════════════════════════════════════════════
+   §3 GENERAL UI
+   ═══════════════════════════════════════════════════════════════ */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 1.8rem;border-radius:999px;font-weight:700;font-size:.95rem;transition:all .3s var(--ease);border:1px solid transparent;white-space:nowrap}
 .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:var(--shadow-sm)}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
@@ -87,9 +96,8 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 .section-header{text-align:center;margin-bottom:2.5rem}
 .section-header h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.5rem}
 .section-header p{color:var(--muted);font-size:1rem}
-.section-header .view-all{display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;color:var(--primary);font-weight:700;font-size:.9rem}
+.view-all-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;color:var(--primary);font-weight:700;font-size:.9rem}
 
-/* ═══ HERO ═══ */
 .hero{position:relative;padding-top:calc(var(--header-h) + 4rem);padding-bottom:5rem;text-align:center;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1920&q=80') center/cover;opacity:.08;z-index:-1}
 .hero-badge{display:inline-flex;padding:.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;font-size:.8rem;font-weight:700;color:var(--primary);margin-bottom:1.5rem;box-shadow:var(--shadow-sm)}
@@ -97,76 +105,74 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 .hero p{font-size:clamp(1rem,2vw,1.1rem);color:var(--muted);margin-bottom:2.5rem;max-width:600px;margin-inline:auto}
 .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 
-/* ═══ GRIDS ═══ */
 .grid-4{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem}
 .grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
 
-/* ═══ CARD BASE ═══ */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:all .4s var(--ease);display:flex;flex-direction:column}
 .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--primary-light)}
 
-/* ═══ PRODUCT CARD ═══ */
-.product-card .product-img{aspect-ratio:1;background-size:cover;background-position:center;position:relative}
-.product-card .badge-new{position:absolute;top:1rem;right:1rem;background:var(--primary);color:#fff;padding:.2rem .7rem;border-radius:999px;font-size:.7rem;font-weight:800}
-[dir="rtl"] .product-card .badge-new{right:auto;left:1rem}
-.product-card .product-info{padding:1.2rem}
-.product-card h3{font-size:1.05rem;margin-bottom:.25rem}
-.product-card .brand-name-small{color:var(--muted);font-size:.85rem}
+/* ═══════════════════════════════════════════════════════════════
+   §4 CARDS
+   ═══════════════════════════════════════════════════════════════ */
+.product-img{aspect-ratio:1;background-size:cover;background-position:center;position:relative}
+.product-info{padding:1.1rem}
+.product-info h3{font-size:1rem;margin-bottom:.25rem}
+.product-info .brand{color:var(--muted);font-size:.82rem}
+.badge-new{position:absolute;top:.8rem;right:.8rem;background:var(--primary);color:#fff;padding:.2rem .6rem;border-radius:999px;font-size:.68rem;font-weight:800}
+[dir="rtl"] .badge-new{right:auto;left:.8rem}
 
-/* ═══ LIFESTYLE CARD ═══ */
-.life-card .life-img{aspect-ratio:4/3;background-size:cover;background-position:center}
-.life-card .life-info{padding:1.2rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
-.life-card h3{font-size:1.05rem}
-.life-card p{color:var(--muted);font-size:.85rem;flex:1}
+.life-img{aspect-ratio:4/3;background-size:cover;background-position:center}
+.life-info{padding:1.1rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+.life-info h3{font-size:1.02rem}
+.life-info p{color:var(--muted);font-size:.83rem;flex:1;line-height:1.7}
 .life-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.4rem}
-.life-tag{background:var(--primary-light);color:var(--primary);font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:999px}
+.life-tag{background:var(--primary-light);color:var(--primary);font-size:.68rem;font-weight:700;padding:.15rem .55rem;border-radius:999px}
 
-/* ═══ POST CARD ═══ */
-.post-card .post-img{aspect-ratio:16/10;background-size:cover;background-position:center}
-.post-card .post-info{padding:1.2rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
-.post-card h3{font-size:1.05rem}
-.post-card p{color:var(--muted);font-size:.85rem;flex:1;line-height:1.7}
+.post-img{aspect-ratio:16/10;background-size:cover;background-position:center}
+.post-info{padding:1.1rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+.post-info h3{font-size:1.02rem}
+.post-info p{color:var(--muted);font-size:.83rem;flex:1;line-height:1.75}
 
-/* ═══ REEL PREVIEW CARD ═══ */
 .reel-preview{position:relative;aspect-ratio:9/16;border-radius:var(--radius);overflow:hidden;background:#222;cursor:pointer}
 .reel-preview video{width:100%;height:100%;object-fit:cover;opacity:.85}
-.reel-preview .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;color:#fff}
+.reel-preview .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.1rem;color:#fff}
 .reel-preview .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;color:var(--primary)}
-.reel-preview h3{font-size:1rem;margin-bottom:.25rem}
-.reel-preview p{font-size:.8rem;opacity:.9}
+.reel-preview h3{font-size:.95rem;margin-bottom:.2rem}
+.reel-preview p{font-size:.78rem;opacity:.9}
 
-/* ═══ REELS PAGE (TikTok style) ═══ */
+/* ═══════════════════════════════════════════════════════════════
+   §5 REELS PAGE (TikTok Style)
+   ═══════════════════════════════════════════════════════════════ */
 body.reels-mode{overflow:hidden;padding-bottom:0}
 body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-footer{display:none!important}
 .reels-page{position:fixed;inset:0;z-index:150;background:#000;overflow:hidden}
-.reels-top{position:absolute;top:0;left:0;right:0;z-index:10;padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(0,0,0,.6),transparent);color:#fff}
-.reels-back,.reels-sound{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);color:#fff;display:grid;place-items:center;font-size:1.2rem}
+.reels-top{position:absolute;top:0;left:0;right:0;z-index:10;padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(0,0,0,.5),transparent);color:#fff}
+.reels-top button{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);color:#fff;display:grid;place-items:center;font-size:1.2rem}
 .reels-title{font-size:1.1rem;font-weight:800}
-.reels-feed{width:100%;height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:none}
+.reels-feed{width:100%;height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
 .reels-feed::-webkit-scrollbar{display:none}
 .reel-item{width:100%;height:100vh;height:100dvh;scroll-snap-align:start;position:relative;display:flex;align-items:center;justify-content:center;background:#000}
 .reel-item video{width:100%;height:100%;object-fit:cover}
-.reel-item .reel-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 40%,transparent 70%,rgba(0,0,0,.3) 100%);pointer-events:none}
-.reel-side-actions{position:absolute;right:1rem;bottom:5.5rem;z-index:5;display:flex;flex-direction:column;gap:1.5rem;align-items:center}
-[dir="rtl"] .reel-side-actions{right:auto;left:1rem}
-.reel-action{display:flex;flex-direction:column;align-items:center;gap:.3rem;color:#fff;font-size:.7rem;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,.6);transition:transform .3s}
+.reel-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 45%,transparent 75%,rgba(0,0,0,.3) 100%);pointer-events:none}
+.reel-side-actions{position:absolute;right:.8rem;bottom:5.5rem;z-index:5;display:flex;flex-direction:column;gap:1.3rem;align-items:center}
+[dir="rtl"] .reel-side-actions{right:auto;left:.8rem}
+.reel-action{display:flex;flex-direction:column;align-items:center;gap:.25rem;color:#fff;font-size:.68rem;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,.6);transition:transform .3s}
 .reel-action:active{transform:scale(.9)}
-.reel-action .icon{font-size:2rem;line-height:1;transition:color .3s}
+.reel-action .icon{font-size:1.9rem;line-height:1;transition:color .3s}
 .reel-action.liked .icon{color:#ff2d55}
-.reel-info{position:absolute;left:1.2rem;right:5rem;bottom:1.5rem;z-index:5;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.6)}
-[dir="rtl"] .reel-info{left:5rem;right:1.2rem}
-.reel-info h3{font-size:1.1rem;margin-bottom:.4rem;font-weight:800}
-.reel-info p{font-size:.85rem;opacity:.9;margin-bottom:.5rem}
-.reel-info .reel-number{display:inline-flex;background:rgba(255,255,255,.2);backdrop-filter:blur(10px);padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:700}
-.reel-play-pause{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:rgba(0,0,0,.4);color:#fff;display:grid;place-items:center;font-size:2rem;opacity:0;pointer-events:none;transition:opacity .3s;z-index:4}
-.reel-play-pause.show{opacity:1}
+.reel-info{position:absolute;left:1rem;right:5rem;bottom:1.5rem;z-index:5;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.6)}
+[dir="rtl"] .reel-info{left:5rem;right:1rem}
+.reel-info h3{font-size:1rem;margin-bottom:.3rem;font-weight:800}
+.reel-info p{font-size:.82rem;opacity:.92;margin-bottom:.5rem}
+.reel-number{display:inline-flex;background:rgba(255,255,255,.2);backdrop-filter:blur(10px);padding:.2rem .65rem;border-radius:999px;font-size:.72rem;font-weight:700}
 
-/* ═══ MODAL ═══ */
+/* ═══════════════════════════════════════════════════════════════
+   §6 MODAL & ADMIN
+   ═══════════════════════════════════════════════════════════════ */
 .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
 .modal.open{display:flex}
 .modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px)}
-.modal-box{position:relative;background:var(--surface);border-radius:var(--radius);width:100%;max-width:500px;overflow:hidden;box-shadow:var(--shadow-lg);z-index:1;animation:modalIn .3s var(--ease)}
-@keyframes modalIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-box{position:relative;background:var(--surface);border-radius:var(--radius);width:100%;max-width:500px;overflow:hidden;box-shadow:var(--shadow-lg);z-index:1}
 .modal-close{position:absolute;top:1rem;right:1rem;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center}
 .modal-video{aspect-ratio:16/9;background:#000}
 .modal-video video{width:100%;height:100%;object-fit:contain}
@@ -174,43 +180,38 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 .modal-info h3{font-size:1.3rem;margin-bottom:.5rem}
 .modal-info p{color:var(--muted);font-size:.95rem;margin-bottom:1.5rem}
 
-/* ═══ ADMIN PANEL ═══ */
 .admin-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:calc(var(--header-h) + 2rem) 1rem 2rem}
 .admin-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;width:100%;max-width:520px;box-shadow:var(--shadow-lg)}
 .admin-card h2{text-align:center;color:var(--primary);margin-bottom:1.5rem}
-.form-group{margin-bottom:1.2rem}
-.form-group label{display:block;font-size:.9rem;font-weight:700;margin-bottom:.5rem}
-.form-input,.form-textarea{width:100%;padding:.9rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:1rem;transition:border-color .3s}
-.form-textarea{min-height:90px;resize:vertical}
+.form-group{margin-bottom:1.1rem}
+.form-group label{display:block;font-size:.88rem;font-weight:700;margin-bottom:.4rem}
+.form-input,.form-textarea{width:100%;padding:.85rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:.95rem;transition:border-color .3s}
+.form-textarea{min-height:80px;resize:vertical}
 .form-input:focus,.form-textarea:focus{outline:none;border-color:var(--primary)}
-.admin-status{text-align:center;font-size:.9rem;margin-top:1rem;font-weight:600;min-height:1.3rem}
-.tabs{display:flex;gap:.4rem;margin-bottom:1.5rem;background:var(--bg);padding:.4rem;border-radius:var(--radius-sm)}
-.tab-btn{flex:1;padding:.7rem .4rem;text-align:center;font-weight:700;font-size:.85rem;border-radius:8px;color:var(--muted);transition:all .3s}
+.admin-status{text-align:center;font-size:.85rem;margin-top:.8rem;font-weight:600;min-height:1.2rem}
+.tabs{display:flex;gap:.3rem;margin-bottom:1.3rem;background:var(--bg);padding:.3rem;border-radius:var(--radius-sm)}
+.tab-btn{flex:1;padding:.65rem .3rem;text-align:center;font-weight:700;font-size:.82rem;border-radius:8px;color:var(--muted);transition:all .3s}
 .tab-btn.active{background:var(--surface);color:var(--primary);box-shadow:var(--shadow-sm)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 
-/* ═══ TOAST ═══ */
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#2B282C;color:#fff;padding:.8rem 1.5rem;border-radius:999px;font-size:.9rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:all .3s var(--ease);z-index:300;max-width:calc(100vw - 2rem)}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#2B282C;color:#fff;padding:.75rem 1.4rem;border-radius:999px;font-size:.88rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:all .3s;z-index:300;max-width:calc(100vw - 2rem);text-align:center}
 .toast.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .toast.success{background:#1eb955}
 .toast.error{background:#e74c3c}
 
-/* ═══ FOOTER ═══ */
 .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:3rem 0 1.5rem;margin-top:3rem;text-align:center}
 .footer-content{display:flex;flex-direction:column;align-items:center;gap:1rem}
 .footer-content p{color:var(--muted);font-size:.9rem}
 .social-links{display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap;justify-content:center}
 .social-links a{color:var(--primary);font-weight:700;font-size:.9rem}
 
-/* ═══ EMPTY / LOADING ═══ */
 .empty-box{text-align:center;padding:3rem;background:var(--surface);border-radius:var(--radius);grid-column:1/-1}
-.empty-box h3{color:var(--muted);font-weight:600;margin-bottom:.5rem}
+.empty-box h3{color:var(--muted);font-weight:600}
 .loading-box{text-align:center;padding:3rem;grid-column:1/-1;color:var(--muted)}
 .spinner{display:inline-block;width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ═══ RESPONSIVE ═══ */
 @media(max-width:600px){
   .hero{padding-top:calc(var(--header-h) + 3rem);padding-bottom:3.5rem}
   .section{padding:2.5rem 0}
@@ -222,6 +223,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="site-header">
   <div class="container nav-wrap">
     <a href="#/home" class="brand">
@@ -249,9 +251,10 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 
 <main id="app"></main>
 
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <a href="#/home" data-nav="home">
-    <span class="icon-box"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>
+    <span class="icon-box"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
     <span data-i18n="nav.home">خانه</span>
   </a>
   <a href="#/reels" data-nav="reels">
@@ -272,6 +275,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
   </a>
 </nav>
 
+<!-- MODAL -->
 <div class="modal" id="videoModal">
   <div class="modal-backdrop" data-close></div>
   <div class="modal-box">
@@ -287,6 +291,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 
 <div class="toast" id="toast"></div>
 
+<!-- FOOTER -->
 <footer class="site-footer">
   <div class="container footer-content">
     <a href="#/home" class="brand"><div class="logo-holder"><img src="image/logo.jpg" alt="Logo"></div><span class="brand-name">Daily Fashion <em>AF</em></span></a>
@@ -302,23 +307,30 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 <script>
 "use strict";
 
-/* ═══════════ CONFIG ═══════════ */
-const GH_USER = "hammmmmad";
-const GH_REPO = "fishone";
-const FOLDERS = { videos: "videos", reels: "reels" };
-const POSTS_FILE = "posts.json";
+/* ═══════════════════════════════════════════════════════════════
+   §1 CONFIG (تنها این بخش را ویرایش کنید)
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  GH_USER  : "hammmmmad",
+  GH_REPO  : "fishone",
+  GH_TOKEN : "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",
+  FOLDERS  : { course: "videos", reels: "reels" },
+  POSTS_FILE: "posts.json",
+  ADMIN_PASS: "admin123"
+};
 
-/* ═══════════ STATIC PRODUCTS ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §2 STATIC DATA
+   ═══════════════════════════════════════════════════════════════ */
 const PRODUCTS = [
   { id:1, name:{fa:"رژ لب مات",en:"Matte Lipstick"}, brand:{fa:"مجیک کالر",en:"Magic Color"}, img:"https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80" },
-  { id:2, name:{fa:"کرم پودر SPF 50",en:"Liquid Foundation SPF 50"}, brand:{fa:"لورآل",en:"L'Oréal"}, img:"https://images.unsplash.com/photo-1631214540242-3cd8c4b0b0c5?w=500&q=80" },
+  { id:2, name:{fa:"کرم پودر SPF 50",en:"Foundation SPF 50"}, brand:{fa:"لورآل",en:"L'Oréal"}, img:"https://images.unsplash.com/photo-1631214540242-3cd8c4b0b0c5?w=500&q=80" },
   { id:3, name:{fa:"پالت سایه چشم",en:"Eyeshadow Palette"}, brand:{fa:"میبلین",en:"Maybelline"}, img:"https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&q=80" },
   { id:4, name:{fa:"عطر گلی",en:"Floral Perfume"}, brand:{fa:"دیور",en:"Dior"}, img:"https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&q=80" },
-  { id:5, name:{fa:"ماسک صورت آبرسان",en:"Hydrating Face Mask"}, brand:{fa:"گارنیر",en:"Garnier"}, img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80" },
+  { id:5, name:{fa:"ماسک آبرسان",en:"Hydrating Face Mask"}, brand:{fa:"گارنیر",en:"Garnier"}, img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80" },
   { id:6, name:{fa:"ریمل حجم‌دهنده",en:"Volumizing Mascara"}, brand:{fa:"میبلین",en:"Maybelline"}, img:"https://images.unsplash.com/photo-1631730486572-226d1f595e65?w=500&q=80" }
 ];
 
-/* ═══════════ STATIC LIFESTYLE ═══════════ */
 const LIFESTYLE = [
   { id:1, title:{fa:"استایل خیابانی مدرن",en:"Modern Street Style"}, img:"https://images.unsplash.com/photo-1521119989659-a83eee488004?w=600&q=80", desc:{fa:"ترکیب جین، هودی و کتانی برای روزمره",en:"Jeans, hoodie and sneakers for everyday"}, tags:{fa:["جوان","روزمره"],en:["Youth","Casual"]} },
   { id:2, title:{fa:"لباس سنتی افغانی",en:"Afghan Traditional"}, img:"https://images.unsplash.com/photo-1618453292459-53424b66bb6a?w=600&q=80", desc:{fa:"پیراهن‌تنبان با طراحی مدرن",en:"Perahan-tunban with modern design"}, tags:{fa:["سنتی","افغانی"],en:["Traditional","Afghan"]} },
@@ -326,7 +338,9 @@ const LIFESTYLE = [
   { id:4, title:{fa:"مینیمال روزمره",en:"Minimal Everyday"}, img:"https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80", desc:{fa:"شیک و راحت با رنگ‌های خنثی",en:"Elegant and comfortable with neutral colors"}, tags:{fa:["مینیمال","راحت"],en:["Minimal","Comfort"]} }
 ];
 
-/* ═══════════ STATE ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §3 STATE
+   ═══════════════════════════════════════════════════════════════ */
 const app = document.getElementById("app");
 const state = {
   lang: localStorage.getItem("df-lang") || "fa",
@@ -335,10 +349,13 @@ const state = {
   videos: [], reels: [], posts: [],
   loading: { videos: true, reels: true, posts: true },
   errors: {},
-  modalVideo: null
+  reelObserver: null,
+  modal: null
 };
 
-/* ═══════════ I18N ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §4 I18N
+   ═══════════════════════════════════════════════════════════════ */
 const I18N = {
   fa: {
     "nav.home":"خانه","nav.reels":"ریلز","nav.course":"دوره","nav.about":"درباره","nav.contact":"تماس",
@@ -352,13 +369,13 @@ const I18N = {
     "sec.course":"دوره ۴۵ روزه","sec.course.sub":"درس‌های گام به گام دوره دیلی فشن",
     "reels.empty":"هنوز ریلی آپلود نشده است","course.empty":"هنوز ویدیوی درسی آپلود نشده است",
     "reels.like":"لایک","reels.share":"شیر","reels.download":"دانلود","reels.new":"جدید",
-    "btn.download":"دانلود","btn.watch":"تماشا","btn.loadMore":"مشاهده همه",
+    "btn.download":"دانلود","btn.watch":"تماشا",
     "about.title":"درباره دیلی فشن","about.body":"دیلی فیشن یک پلتفرم آنلاین آموزشی و سرگرمی است که با هدف فراهم‌سازی فرصت‌های رایگان یادگیری، آموزش آرایش و زیبایی، مد و فیشن و محتوای خلاقانه فعالیت می‌کند. هدف ما فراهم‌سازی فرصت آموزش و رشد برای همه است.",
     "about.founder":"عرش نیکزاد","about.founderRole":"بنیان‌گذار و برنامه‌نویس",
     "contact.title":"با ما در تماس باشید","contact.email":"ایمیل","contact.wa":"واتس‌اپ","contact.channel":"کانال واتس‌اپ",
     "admin.title":"پنل مدیریت","admin.pass":"رمز عبور","admin.login":"ورود","admin.logout":"خروج",
     "admin.tab.course":"ویدیوهای دوره","admin.tab.reels":"ویدیوهای ریل","admin.tab.posts":"پست‌های خانه",
-    "admin.num":"شماره (۱-۴۵)","admin.token":"GitHub Token","admin.file":"فایل ویدیو","admin.upload":"آپلود و ذخیره",
+    "admin.num":"شماره (۱-۴۵)","admin.file":"انتخاب فایل","admin.upload":"آپلود و ذخیره",
     "admin.post.title_fa":"عنوان (دری)","admin.post.title_en":"Title (English)",
     "admin.post.desc_fa":"توضیحات (دری)","admin.post.desc_en":"Description (English)",
     "admin.post.img":"آدرس تصویر (URL)","admin.post.save":"ذخیره پست",
@@ -366,7 +383,8 @@ const I18N = {
     "footer.rights":"© ۲۰۲۶ دیلی فشن افغانستان. تمام حقوق محفوظ است.",
     "toast.loading":"⏳ در حال آماده‌سازی...","toast.downloaded":"✅ دانلود شد","toast.error":"❌ خطا",
     "toast.copied":"✅ لینک کپی شد","toast.shareFail":"اشتراک‌گذاری پشتیبانی نمی‌شود",
-    "toast.uploaded":"✅ با موفقیت ذخیره شد!","toast.fill":"لطفاً همه فیلدها را پر کنید"
+    "toast.uploaded":"✅ با موفقیت ذخیره شد!","toast.fill":"لطفاً همه فیلدها را پر کنید",
+    "toast.wrongPass":"رمز عبور اشتباه است"
   },
   en: {
     "nav.home":"Home","nav.reels":"Reels","nav.course":"Course","nav.about":"About","nav.contact":"Contact",
@@ -380,13 +398,13 @@ const I18N = {
     "sec.course":"45-Day Course","sec.course.sub":"Step-by-step Daily Fashion lessons",
     "reels.empty":"No reels uploaded yet","course.empty":"No course videos uploaded yet",
     "reels.like":"Like","reels.share":"Share","reels.download":"Download","reels.new":"NEW",
-    "btn.download":"Download","btn.watch":"Watch","btn.loadMore":"View All",
+    "btn.download":"Download","btn.watch":"Watch",
     "about.title":"About Daily Fashion","about.body":"Daily Fashion AF is an online educational and entertainment platform dedicated to providing free learning opportunities, beauty tutorials, fashion education and creative content. Our goal is to help everyone learn new skills and grow through accessible online education.",
     "about.founder":"Arash Nikzad","about.founderRole":"Founder & Developer",
     "contact.title":"Get in Touch","contact.email":"Email","contact.wa":"WhatsApp","contact.channel":"WhatsApp Channel",
     "admin.title":"Admin Panel","admin.pass":"Password","admin.login":"Login","admin.logout":"Logout",
     "admin.tab.course":"Course Videos","admin.tab.reels":"Reels","admin.tab.posts":"Home Posts",
-    "admin.num":"Number (1-45)","admin.token":"GitHub Token","admin.file":"Video File","admin.upload":"Upload & Save",
+    "admin.num":"Number (1-45)","admin.file":"Choose File","admin.upload":"Upload & Save",
     "admin.post.title_fa":"Title (Dari)","admin.post.title_en":"Title (English)",
     "admin.post.desc_fa":"Description (Dari)","admin.post.desc_en":"Description (English)",
     "admin.post.img":"Image URL","admin.post.save":"Save Post",
@@ -394,12 +412,15 @@ const I18N = {
     "footer.rights":"© 2026 Daily Fashion AF. All Rights Reserved.",
     "toast.loading":"⏳ Preparing...","toast.downloaded":"✅ Downloaded","toast.error":"❌ Error",
     "toast.copied":"✅ Link copied","toast.shareFail":"Sharing not supported",
-    "toast.uploaded":"✅ Saved successfully!","toast.fill":"Please fill all fields"
+    "toast.uploaded":"✅ Saved successfully!","toast.fill":"Please fill all fields",
+    "toast.wrongPass":"Incorrect password"
   }
 };
 const t = k => I18N[state.lang][k] || k;
 
-/* ═══════════ UTILS ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §5 UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
 function updateLanguage() {
   document.documentElement.lang = state.lang;
   document.documentElement.dir = state.lang === 'fa' ? 'rtl' : 'ltr';
@@ -426,26 +447,32 @@ function showToast(msg, type = 'success') {
   toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
 }
 
-/* ═══════════ GITHUB API ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §6 GITHUB API
+   ═══════════════════════════════════════════════════════════════ */
 async function fetchFolder(folder) {
-  const res = await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${folder}?t=${Date.now()}`);
-  if (res.status === 404) return [];
-  if (!res.ok) throw new Error('GitHub API error');
-  const files = await res.json();
-  if (!Array.isArray(files)) return [];
-  return files
-    .filter(f => f.type === 'file' && /\.(mp4|webm|mov)$/i.test(f.name))
-    .map(f => {
-      const num = parseInt((f.name.match(/(\d+)/) || ['0'])[0]) || 0;
-      return { num, url: f.download_url, name: f.name };
-    })
-    .filter(v => v.num > 0)
-    .sort((a, b) => a.num - b.num);
+  try {
+    const res = await fetch(`https://api.github.com/repos/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/contents/${folder}?t=${Date.now()}`, {
+      headers: { Authorization: `Bearer ${CONFIG.GH_TOKEN}` }
+    });
+    if (res.status === 404) return [];
+    if (!res.ok) throw new Error('GitHub API error');
+    const files = await res.json();
+    if (!Array.isArray(files)) return [];
+    return files
+      .filter(f => f.type === 'file' && /\.(mp4|webm|mov)$/i.test(f.name))
+      .map(f => {
+        const num = parseInt((f.name.match(/(\d+)/) || ['0'])[0]) || 0;
+        return { num, url: f.download_url, name: f.name };
+      })
+      .filter(v => v.num > 0)
+      .sort((a, b) => a.num - b.num);
+  } catch(e) { return []; }
 }
 
 async function fetchPosts() {
   try {
-    const res = await fetch(`https://raw.githubusercontent.com/${GH_USER}/${GH_REPO}/main/${POSTS_FILE}?t=${Date.now()}`);
+    const res = await fetch(`https://raw.githubusercontent.com/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/main/${CONFIG.POSTS_FILE}?t=${Date.now()}`);
     if (!res.ok) return [];
     const data = await res.json();
     return Array.isArray(data) ? data : [];
@@ -453,16 +480,35 @@ async function fetchPosts() {
 }
 
 async function loadAll() {
-  try { state.videos = await fetchFolder(FOLDERS.videos); } catch(e) { state.errors.videos = e.message; }
+  state.videos = await fetchFolder(CONFIG.FOLDERS.course);
   state.loading.videos = false;
-  try { state.reels = await fetchFolder(FOLDERS.reels); } catch(e) { state.errors.reels = e.message; }
+  state.reels = await fetchFolder(CONFIG.FOLDERS.reels);
   state.loading.reels = false;
-  try { state.posts = await fetchPosts(); } catch(e) { state.errors.posts = e.message; }
+  state.posts = await fetchPosts();
   state.loading.posts = false;
   router();
 }
 
-/* ═══════════ LIKES (localStorage) ═══════════ */
+async function ghPutFile(path, content, token, message) {
+  let sha = null;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/contents/${path}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (res.ok) { const d = await res.json(); sha = d.sha; }
+  } catch {}
+  const res = await fetch(`https://api.github.com/repos/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+    body: JSON.stringify({ message, content, sha: sha || undefined })
+  });
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message || 'Upload failed'); }
+  return res.json();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   §7 LIKES & SHARE & DOWNLOAD
+   ═══════════════════════════════════════════════════════════════ */
 function getLikedState(num) {
   const likes = JSON.parse(localStorage.getItem('df-liked') || '{}');
   return !!likes[num];
@@ -490,7 +536,6 @@ function toggleLike(num) {
   return { liked: !currentlyLiked, count };
 }
 
-/* ═══════════ DOWNLOAD ═══════════ */
 async function downloadVideo(url, filename) {
   showToast(t('toast.loading'));
   try {
@@ -509,7 +554,6 @@ async function downloadVideo(url, filename) {
   }
 }
 
-/* ═══════════ SHARE ═══════════ */
 async function shareReel(reel) {
   const data = {
     title: `Daily Fashion - ${reel.num}`,
@@ -525,13 +569,15 @@ async function shareReel(reel) {
   } catch { showToast(t('toast.shareFail'), 'error'); }
 }
 
-/* ═══════════ COMPONENTS ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §8 UI COMPONENTS
+   ═══════════════════════════════════════════════════════════════ */
 function productCard(p) {
   return `<div class="card product-card">
     <div class="product-img" style="background-image:url('${p.img}')"><span class="badge-new">${t('reels.new')}</span></div>
     <div class="product-info">
       <h3>${p.name[state.lang]}</h3>
-      <p class="brand-name-small">${p.brand[state.lang]}</p>
+      <p class="brand">${p.brand[state.lang]}</p>
     </div>
   </div>`;
 }
@@ -567,7 +613,7 @@ function reelPreviewCard(r) {
 
 function courseCard(v) {
   return `<div class="card">
-    <div class="product-img" style="background-image:url('${v.url}#t=0.5');aspect-ratio:16/9;position:relative">
+    <div class="product-img" style="aspect-ratio:16/9;position:relative">
       <video src="${v.url}#t=0.5" muted preload="metadata" playsinline style="width:100%;height:100%;object-fit:cover;opacity:.85"></video>
       <button onclick="openVideoModal('${v.url}',${v.num})" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--primary);display:grid;place-items:center">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></svg>
@@ -581,28 +627,29 @@ function courseCard(v) {
   </div>`;
 }
 
-function emptyBox(msg) {
-  return `<div class="empty-box"><h3>${msg}</h3></div>`;
-}
-function loadingBox() {
-  return `<div class="loading-box"><div class="spinner"></div><p style="margin-top:.8rem">Loading...</p></div>`;
-}
+function emptyBox(msg) { return `<div class="empty-box"><h3>${msg}</h3></div>`; }
+function loadingBox() { return `<div class="loading-box"><div class="spinner"></div><p style="margin-top:.8rem">Loading...</p></div>`; }
 
-/* ═══════════ MODAL ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §9 MODAL LOGIC
+   ═══════════════════════════════════════════════════════════════ */
 window.openVideoModal = function(url, num) {
-  state.modalVideo = { url, num };
+  state.modal = { url, num };
   document.getElementById('modalTitle').textContent = (state.lang === 'fa' ? 'دوره ' : 'Course ') + num;
   document.getElementById('modalDesc').textContent = 'Daily Fashion AF';
   document.getElementById('modalVideo').innerHTML = `<video src="${url}" controls autoplay playsinline></video>`;
   document.getElementById('modalDownloadBtn').onclick = () => downloadVideo(url, `lesson-${num}.mp4`);
   document.getElementById('videoModal').classList.add('open');
 };
+
 document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', () => {
   document.getElementById('videoModal').classList.remove('open');
   document.getElementById('modalVideo').innerHTML = '';
 }));
 
-/* ═══════════ PAGES ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §10 PAGES
+   ═══════════════════════════════════════════════════════════════ */
 const pages = {
   home() {
     document.body.classList.remove('reels-mode');
@@ -627,7 +674,7 @@ const pages = {
       
       <section class="section">
         <div class="container">
-          <div class="section-header"><h2>${t('sec.reels')}</h2><p>${t('sec.reels.sub')}</p><a href="#/reels" class="view-all">${t('sec.reels.all')} ←</a></div>
+          <div class="section-header"><h2>${t('sec.reels')}</h2><p>${t('sec.reels.sub')}</p><a href="#/reels" class="view-all-link">${t('sec.reels.all')} ←</a></div>
           <div class="grid-4">${reelsHTML}</div>
         </div>
       </section>
@@ -676,7 +723,6 @@ const pages = {
       return `<div class="reel-item" data-num="${r.num}">
         <video src="${r.url}" loop muted playsinline preload="none"></video>
         <div class="reel-gradient"></div>
-        <div class="reel-play-pause"><span>▶</span></div>
         <div class="reel-side-actions">
           <button class="reel-action like-btn ${liked ? 'liked' : ''}" data-num="${r.num}" onclick="handleLike(${r.num}, this)">
             <span class="icon">${liked ? '❤️' : '🤍'}</span>
@@ -701,39 +747,32 @@ const pages = {
     
     app.innerHTML = `<div class="reels-page">
       <div class="reels-top">
-        <button class="reels-back" onclick="location.hash='#/home'">←</button>
+        <button onclick="location.hash='#/home'">←</button>
         <span class="reels-title">${t('nav.reels')}</span>
-        <button class="reels-sound" id="soundToggle">🔇</button>
+        <button id="soundToggle">🔇</button>
       </div>
       <div class="reels-feed" id="reelsFeed">${reelsHTML}</div>
     </div>`;
     
-    // Setup reel player
-    const observer = new IntersectionObserver((entries) => {
+    if (state.reelObserver) state.reelObserver.disconnect();
+    state.reelObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const video = entry.target.querySelector('video');
         if (!video) return;
-        if (entry.isIntersecting) {
-          video.preload = 'auto';
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
+        if (entry.isIntersecting) { video.preload = 'auto'; video.play().catch(() => {}); }
+        else { video.pause(); }
       });
     }, { threshold: 0.6 });
     
     document.querySelectorAll('.reel-item').forEach(el => {
-      observer.observe(el);
+      state.reelObserver.observe(el);
       el.querySelector('video').addEventListener('click', (e) => {
         e.stopPropagation();
         const v = e.target;
-        const overlay = el.querySelector('.reel-play-pause');
-        if (v.paused) { v.play(); overlay.classList.add('show'); setTimeout(() => overlay.classList.remove('show'), 500); }
-        else { v.pause(); overlay.classList.add('show'); setTimeout(() => overlay.classList.remove('show'), 500); }
+        if (v.paused) v.play(); else v.pause();
       });
     });
     
-    // Scroll to specific reel if in URL
     if (startNum) {
       setTimeout(() => {
         const target = document.querySelector(`.reel-item[data-num="${startNum}"]`);
@@ -741,7 +780,6 @@ const pages = {
       }, 100);
     }
     
-    // Sound toggle
     let muted = true;
     document.getElementById('soundToggle').addEventListener('click', function() {
       muted = !muted;
@@ -753,14 +791,11 @@ const pages = {
   course() {
     document.body.classList.remove('reels-mode');
     const html = state.loading.videos ? loadingBox() : state.videos.length === 0 ? emptyBox(t('course.empty')) : state.videos.map(courseCard).join('');
-    
     app.innerHTML = `
       <header style="padding:calc(var(--header-h) + 2rem) 0 2rem;text-align:center;background:var(--primary-light)">
         <div class="container"><h1 style="font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:.5rem">${t('sec.course')}</h1><p style="color:var(--muted)">${t('sec.course.sub')}</p></div>
       </header>
-      <section class="section">
-        <div class="container"><div class="grid-3">${html}</div></div>
-      </section>
+      <section class="section"><div class="container"><div class="grid-3">${html}</div></div></section>
     `;
   },
 
@@ -825,7 +860,6 @@ const pages = {
             
             <div class="tab-panel active" id="panel-course">
               <div class="form-group"><label>${t('admin.num')}</label><input type="number" id="courseNum" class="form-input" placeholder="1" min="1" max="45"></div>
-              <div class="form-group"><label>${t('admin.token')}</label><input type="password" id="courseToken" class="form-input" placeholder="github_pat_..."></div>
               <div class="form-group"><label>${t('admin.file')}</label><input type="file" id="courseFile" class="form-input" accept="video/*" style="padding-top:.5rem"></div>
               <button class="btn btn-primary btn-block" id="courseBtn" onclick="uploadCourse()">${t('admin.upload')}</button>
               <div class="admin-status" id="courseStatus"></div>
@@ -833,7 +867,6 @@ const pages = {
             
             <div class="tab-panel" id="panel-reels">
               <div class="form-group"><label>${t('admin.num')}</label><input type="number" id="reelNum" class="form-input" placeholder="1" min="1" max="999"></div>
-              <div class="form-group"><label>${t('admin.token')}</label><input type="password" id="reelToken" class="form-input" placeholder="github_pat_..."></div>
               <div class="form-group"><label>${t('admin.file')}</label><input type="file" id="reelFile" class="form-input" accept="video/*" style="padding-top:.5rem"></div>
               <button class="btn btn-primary btn-block" id="reelBtn" onclick="uploadReel()">${t('admin.upload')}</button>
               <div class="admin-status" id="reelStatus"></div>
@@ -845,7 +878,6 @@ const pages = {
               <div class="form-group"><label>${t('admin.post.desc_fa')}</label><textarea id="postDescFa" class="form-textarea"></textarea></div>
               <div class="form-group"><label>${t('admin.post.desc_en')}</label><textarea id="postDescEn" class="form-textarea"></textarea></div>
               <div class="form-group"><label>${t('admin.post.img')}</label><input type="url" id="postImg" class="form-input" placeholder="https://..."></div>
-              <div class="form-group"><label>${t('admin.token')}</label><input type="password" id="postToken" class="form-input" placeholder="github_pat_..."></div>
               <button class="btn btn-primary btn-block" id="postBtn" onclick="uploadPost()">${t('admin.post.save')}</button>
               <div class="admin-status" id="postStatus"></div>
             </div>
@@ -857,7 +889,9 @@ const pages = {
   }
 };
 
-/* ═══════════ REEL HANDLERS ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §11 REEL HANDLERS
+   ═══════════════════════════════════════════════════════════════ */
 window.handleLike = function(num, btn) {
   const result = toggleLike(num);
   btn.querySelector('.icon').textContent = result.liked ? '❤️' : '🤍';
@@ -870,11 +904,13 @@ window.handleShare = function(num) {
   if (reel) shareReel(reel);
 };
 
-/* ═══════════ ADMIN LOGIC ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §12 ADMIN LOGIC
+   ═══════════════════════════════════════════════════════════════ */
 window.loginAdmin = function() {
   const pass = document.getElementById('adminPass').value;
-  if (pass === 'admin123') { sessionStorage.setItem('df-admin-auth', 'true'); pages.admin(); }
-  else alert(t('toast.error'));
+  if (pass === CONFIG.ADMIN_PASS) { sessionStorage.setItem('df-admin-auth', 'true'); pages.admin(); }
+  else alert(t('toast.wrongPass'));
 };
 window.logoutAdmin = function() { sessionStorage.removeItem('df-admin-auth'); pages.admin(); };
 window.switchTab = function(tab) {
@@ -882,35 +918,19 @@ window.switchTab = function(tab) {
   document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', ['course','reels','posts'][i] === tab));
 };
 
-async function ghPutFile(path, content, token, message) {
-  let sha = null;
-  try {
-    const res = await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${path}`, { headers: { Authorization: `Bearer ${token}` } });
-    if (res.ok) { const d = await res.json(); sha = d.sha; }
-  } catch {}
-  const res = await fetch(`https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${path}`, {
-    method: 'PUT',
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
-    body: JSON.stringify({ message, content, sha: sha || undefined })
-  });
-  if (!res.ok) { const e = await res.json(); throw new Error(e.message || 'Upload failed'); }
-  return res.json();
-}
-
 window.uploadCourse = async function() {
   const num = document.getElementById('courseNum').value;
-  const token = document.getElementById('courseToken').value;
   const file = document.getElementById('courseFile').files[0];
   const btn = document.getElementById('courseBtn');
   const status = document.getElementById('courseStatus');
-  if (!num || !token || !file) return alert(t('toast.fill'));
-  btn.disabled = true; status.textContent = '...'; status.style.color = 'var(--primary)';
+  if (!num || !file) return alert(t('toast.fill'));
+  btn.disabled = true; status.textContent = t('toast.loading'); status.style.color = 'var(--primary)';
   try {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
       const b64 = reader.result.split(',')[1];
-      await ghPutFile(`videos/${num}.mp4`, b64, token, `Upload course ${num}`);
+      await ghPutFile(`${CONFIG.FOLDERS.course}/${num}.mp4`, b64, CONFIG.GH_TOKEN, `Upload course ${num}`);
       status.textContent = t('toast.uploaded'); status.style.color = 'green';
       await loadAll();
     };
@@ -919,18 +939,17 @@ window.uploadCourse = async function() {
 
 window.uploadReel = async function() {
   const num = document.getElementById('reelNum').value;
-  const token = document.getElementById('reelToken').value;
   const file = document.getElementById('reelFile').files[0];
   const btn = document.getElementById('reelBtn');
   const status = document.getElementById('reelStatus');
-  if (!num || !token || !file) return alert(t('toast.fill'));
-  btn.disabled = true; status.textContent = '...'; status.style.color = 'var(--primary)';
+  if (!num || !file) return alert(t('toast.fill'));
+  btn.disabled = true; status.textContent = t('toast.loading'); status.style.color = 'var(--primary)';
   try {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
       const b64 = reader.result.split(',')[1];
-      await ghPutFile(`reels/${num}.mp4`, b64, token, `Upload reel ${num}`);
+      await ghPutFile(`${CONFIG.FOLDERS.reels}/${num}.mp4`, b64, CONFIG.GH_TOKEN, `Upload reel ${num}`);
       status.textContent = t('toast.uploaded'); status.style.color = 'green';
       await loadAll();
     };
@@ -943,39 +962,41 @@ window.uploadPost = async function() {
   const descFa = document.getElementById('postDescFa').value;
   const descEn = document.getElementById('postDescEn').value;
   const img = document.getElementById('postImg').value;
-  const token = document.getElementById('postToken').value;
   const btn = document.getElementById('postBtn');
   const status = document.getElementById('postStatus');
-  if (!titleFa || !titleEn || !token) return alert(t('toast.fill'));
-  btn.disabled = true; status.textContent = '...'; status.style.color = 'var(--primary)';
+  if (!titleFa || !titleEn) return alert(t('toast.fill'));
+  btn.disabled = true; status.textContent = t('toast.loading'); status.style.color = 'var(--primary)';
   try {
     const currentPosts = await fetchPosts();
     const newPost = { id: Date.now(), title_fa: titleFa, title_en: titleEn, desc_fa: descFa, desc_en: descEn, image_url: img };
     currentPosts.unshift(newPost);
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(currentPosts, null, 2))));
-    await ghPutFile(POSTS_FILE, content, token, `Add post: ${titleEn}`);
+    await ghPutFile(CONFIG.POSTS_FILE, content, CONFIG.GH_TOKEN, `Add post: ${titleEn}`);
     status.textContent = t('toast.uploaded'); status.style.color = 'green';
     ['postTitleFa','postTitleEn','postDescFa','postDescEn','postImg'].forEach(id => document.getElementById(id).value = '');
     await loadAll();
   } catch(e) { status.textContent = '❌ ' + e.message; status.style.color = 'red'; btn.disabled = false; }
 };
 
-/* ═══════════ ROUTER ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   §13 ROUTER & INIT
+   ═══════════════════════════════════════════════════════════════ */
 function router() {
   const hash = window.location.hash.replace('#/', '') || 'home';
   const route = hash.split('/')[0];
   state.route = route;
   document.querySelectorAll('[data-nav]').forEach(el => el.classList.toggle('active', el.dataset.nav === route));
+  
   if (route === 'reels') pages.reels();
   else if (route === 'course') pages.course();
   else if (route === 'about') pages.about();
   else if (route === 'contact') pages.contact();
   else if (route === 'admin') pages.admin();
   else pages.home();
+  
   if (route !== 'reels') window.scrollTo(0, 0);
 }
 
-/* ═══════════ INIT ═══════════ */
 document.querySelectorAll('.lang-switch button').forEach(btn => btn.addEventListener('click', () => {
   state.lang = btn.dataset.lang; updateLanguage(); router();
 }));
@@ -988,4 +1009,4 @@ window.addEventListener('hashchange', router);
 })();
 </script>
 </body>
-</html>
+  </html>
