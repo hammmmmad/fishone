@@ -282,7 +282,7 @@ const CONFIG = {
   GH_USER  : "hammmmmad",
   GH_REPO  : "fishone",
   BRANCH   : "main",
-  FOLDERS  : { course: "videos", reels: "reels" },
+  FOLDERS  : { course: "videos", reels: "reels", images: "image" },
   POSTS_FILE: "posts.json"
 };
 
@@ -372,7 +372,10 @@ const I18N = {
     "admin.test":"تست اتصال به گیت‌هاب",
     "admin.post.title_fa":"عنوان (دری)","admin.post.title_en":"Title (English)",
     "admin.post.desc_fa":"توضیحات (دری)","admin.post.desc_en":"Description (English)",
-    "admin.post.img":"آدرس تصویر (URL)","admin.post.save":"ذخیره پست",
+    "admin.post.img":"آدرس تصویر (URL)","admin.post.imgUpload":"آپلود عکس از دستگاه",
+    "admin.post.imgOrUpload":"یا آدرس عکس را وارد کنید یا فایل انتخاب کنید — فایل اولویت دارد",
+    "admin.post.imgHint":"حداکثر ۱۵ مگابایت — فرمت‌ها: JPG، PNG، WebP، GIF",
+    "admin.post.save":"ذخیره پست",
     "admin.sizeHint":"حداکثر حجم: ۲۵ مگابایت. برای ویدیوهای بزرگ‌تر از طریق وب‌سایت گیت‌هاب آپلود کنید.",
     "footer.tagline":"آموزش رایگان آرایش، زیبایی و فشن برای همه.","footer.channel":"کانال واتس‌اپ",
     "footer.rights":"© ۲۰۲۶ دیلی فشن افغانستان. تمام حقوق محفوظ است.",
@@ -384,7 +387,11 @@ const I18N = {
     "toast.tokenRequired":"توکن را وارد کنید","toast.tokenInvalid":"توکن نامعتبر یا منقضی شده",
     "toast.postsReadFail":"خواندن پست‌های موجود ناموفق — برای جلوگیری از پاک شدن، آپلود متوقف شد",
     "toast.tokenExpired":"توکن منقضی شده — از پنل خارج و دوباره وارد شوید",
-    "toast.downloadFail":"دانلود خودکار ناموفق — لینک باز می‌شود"
+    "toast.downloadFail":"دانلود خودکار ناموفق — لینک باز می‌شود",
+    "toast.imageUploading":"⏳ آپلود تصویر...",
+    "toast.imageTooBig":"عکس بزرگ‌تر از ۱۵ مگابایت است",
+    "toast.imageUploaded":"✅ تصویر آپلود شد",
+    "toast.imageInvalid":"❌ فرمت فایل باید عکس باشد"
   },
   en: {
     "nav.home":"Home","nav.reels":"Reels","nav.course":"Course","nav.about":"About","nav.contact":"Contact",
@@ -410,7 +417,10 @@ const I18N = {
     "admin.test":"Test GitHub Connection",
     "admin.post.title_fa":"Title (Dari)","admin.post.title_en":"Title (English)",
     "admin.post.desc_fa":"Description (Dari)","admin.post.desc_en":"Description (English)",
-    "admin.post.img":"Image URL","admin.post.save":"Save Post",
+    "admin.post.img":"Image URL","admin.post.imgUpload":"Upload Image from Device",
+    "admin.post.imgOrUpload":"Enter image URL or choose a file — file takes priority",
+    "admin.post.imgHint":"Max 15MB — Formats: JPG, PNG, WebP, GIF",
+    "admin.post.save":"Save Post",
     "admin.sizeHint":"Max size: 25MB. For larger videos, upload via GitHub website.",
     "footer.tagline":"Free beauty, makeup and fashion education for everyone.","footer.channel":"WhatsApp Channel",
     "footer.rights":"© 2026 Daily Fashion AF. All Rights Reserved.",
@@ -422,7 +432,11 @@ const I18N = {
     "toast.tokenRequired":"Please enter the token","toast.tokenInvalid":"Invalid or expired token",
     "toast.postsReadFail":"Failed to read existing posts — upload aborted to prevent data loss",
     "toast.tokenExpired":"Token expired — please logout and login again",
-    "toast.downloadFail":"Auto download failed — opening link"
+    "toast.downloadFail":"Auto download failed — opening link",
+    "toast.imageUploading":"⏳ Uploading image...",
+    "toast.imageTooBig":"Image larger than 15MB",
+    "toast.imageUploaded":"✅ Image uploaded",
+    "toast.imageInvalid":"❌ File must be an image"
   }
 };
 const t = k => I18N[state.lang][k] || k;
@@ -609,7 +623,6 @@ function toggleLike(id) {
   return { liked: !wasLiked, count };
 }
 
-/* ── DOWNLOAD: real, with CORS blob + fallback ── */
 async function downloadVideo(url, filename) {
   if (!url) { showToast(t('toast.error'), 'error'); return; }
   filename = filename || 'video.mp4';
@@ -633,7 +646,6 @@ async function downloadVideo(url, filename) {
   } catch (e) {
     console.warn('Blob download failed, fallback:', e);
   }
-  // Fallback: direct anchor with target=_blank (browsers will open & user can save)
   try {
     const a = document.createElement('a');
     a.href = url;
@@ -650,7 +662,6 @@ async function downloadVideo(url, filename) {
   }
 }
 
-/* ── SHARE: native + clipboard + prompt fallback ── */
 async function shareContent({ title, text, url }) {
   if (!url) url = window.location.href;
   if (navigator.share) {
@@ -658,10 +669,9 @@ async function shareContent({ title, text, url }) {
       await navigator.share({ title, text, url });
       return;
     } catch (e) {
-      if (e.name === 'AbortError') return; // user cancelled
+      if (e.name === 'AbortError') return;
     }
   }
-  // Fallback: clipboard
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       await navigator.clipboard.writeText(url);
@@ -670,7 +680,6 @@ async function shareContent({ title, text, url }) {
     }
     throw new Error('no clipboard');
   } catch {
-    // Final fallback: execCommand
     try {
       const ta = document.createElement('textarea');
       ta.value = url;
@@ -685,7 +694,6 @@ async function shareContent({ title, text, url }) {
       if (ok) { showToast(t('toast.copied')); return; }
       throw new Error('execCommand failed');
     } catch {
-      // Last resort: prompt
       window.prompt(t('reels.share'), url);
     }
   }
@@ -1049,7 +1057,16 @@ const pages = {
               <div class="form-group"><label>${t('admin.post.title_en')}</label><input type="text" id="postTitleEn" class="form-input ltr"></div>
               <div class="form-group"><label>${t('admin.post.desc_fa')}</label><textarea id="postDescFa" class="form-textarea"></textarea></div>
               <div class="form-group"><label>${t('admin.post.desc_en')}</label><textarea id="postDescEn" class="form-textarea ltr"></textarea></div>
-              <div class="form-group"><label>${t('admin.post.img')}</label><input type="url" id="postImg" class="form-input ltr" placeholder="https://..."></div>
+              <div class="form-group">
+                <label>${t('admin.post.img')}</label>
+                <input type="url" id="postImg" class="form-input ltr" placeholder="https://...">
+                <p class="hint">${t('admin.post.imgOrUpload')}</p>
+              </div>
+              <div class="form-group">
+                <label>${t('admin.post.imgUpload')}</label>
+                <input type="file" id="postImgFile" class="form-input" accept="image/*" style="padding-top:.5rem">
+                <p class="hint">${t('admin.post.imgHint')}</p>
+              </div>
               <button class="btn btn-primary btn-block" id="postBtn" onclick="uploadPost()">${t('admin.post.save')}</button>
               <div class="admin-status" id="postStatus"></div>
             </div>
@@ -1207,23 +1224,59 @@ window.uploadPost = async function() {
   const titleEn = document.getElementById('postTitleEn').value.trim();
   const descFa = document.getElementById('postDescFa').value.trim();
   const descEn = document.getElementById('postDescEn').value.trim();
-  const img = document.getElementById('postImg').value.trim();
+  const imgUrl = document.getElementById('postImg').value.trim();
+  const imgFile = document.getElementById('postImgFile').files[0];
   const btn = document.getElementById('postBtn');
   const status = document.getElementById('postStatus');
 
   if (!titleFa || !titleEn) { status.textContent = t('toast.fill'); status.style.color = 'red'; return; }
 
   btn.disabled = true;
-  status.textContent = t('toast.loading');
-  status.style.color = 'var(--primary)';
 
   try {
+    let finalImageUrl = imgUrl;
+
+    /* ── اگر فایل انتخاب شده، اول آپلود کن ── */
+    if (imgFile) {
+      if (imgFile.size > 15 * 1024 * 1024) {
+        status.textContent = t('toast.imageTooBig');
+        status.style.color = 'red';
+        btn.disabled = false;
+        return;
+      }
+      if (!imgFile.type.startsWith('image/')) {
+        status.textContent = t('toast.imageInvalid');
+        status.style.color = 'red';
+        btn.disabled = false;
+        return;
+      }
+
+      status.textContent = t('toast.imageUploading');
+      status.style.color = 'var(--primary)';
+
+      const m = imgFile.name.match(/\.([a-z0-9]+)$/i);
+      const ext = m ? m[1].toLowerCase() : 'jpg';
+      const fileName = `post-${Date.now()}.${ext}`;
+      const imgPath = `${CONFIG.FOLDERS.images}/${fileName}`;
+      const imgB64 = await fileToBase64(imgFile);
+      const putResp = await ghPutFile(imgPath, imgB64, `Upload post image ${fileName}`);
+
+      finalImageUrl = putResp?.content?.download_url
+        || `https://raw.githubusercontent.com/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/${CONFIG.BRANCH}/${imgPath}`;
+
+      showToast(t('toast.imageUploaded'));
+    }
+
+    /* ── ذخیره پست ── */
+    status.textContent = t('toast.loading');
+    status.style.color = 'var(--primary)';
+
     const { posts: currentPosts, sha } = await loadPostsForWrite();
     const newPost = {
       id: Date.now(),
       title_fa: titleFa, title_en: titleEn,
       desc_fa: descFa, desc_en: descEn,
-      image_url: img
+      image_url: finalImageUrl
     };
     currentPosts.unshift(newPost);
     const b64 = utf8ToBase64(JSON.stringify(currentPosts, null, 2));
@@ -1233,8 +1286,8 @@ window.uploadPost = async function() {
     status.style.color = 'green';
     showToast(t('toast.uploaded'));
 
-    ['postTitleFa','postTitleEn','postDescFa','postDescEn','postImg']
-      .forEach(id => document.getElementById(id).value = '');
+    ['postTitleFa','postTitleEn','postDescFa','postDescEn','postImg','postImgFile']
+      .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 
     state.posts = currentPosts;
   } catch (e) {
