@@ -740,17 +740,31 @@ async function fetchFolder(folder, sortDesc = false) {
 }
 
 async function fetchPosts() {
+  const token = getToken();
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
   try {
+    // استفاده از API به جای لینک Raw برای جلوگیری از مشکل کش گیت‌هاب
     const res = await fetch(
-      `https://raw.githubusercontent.com/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/${CONFIG.BRANCH}/${CONFIG.POSTS_FILE}?t=${Date.now()}`
+      `https://api.github.com/repos/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/contents/${CONFIG.POSTS_FILE}?t=${Date.now()}`,
+      { headers }
     );
     if (res.status === 404) return [];
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
+    const meta = await res.json();
+    const data = JSON.parse(base64ToUtf8(meta.content));
     return Array.isArray(data) ? data : [];
   } catch (e) {
-    console.warn('fetchPosts error:', e);
-    return null;
+    console.warn('fetchPosts API error, falling back to raw:', e);
+    try {
+      const res = await fetch(
+        `https://raw.githubusercontent.com/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/${CONFIG.BRANCH}/${CONFIG.POSTS_FILE}?t=${Date.now()}`
+      );
+      if (!res.ok) return null;
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch(e2) {
+      return null;
+    }
   }
 }
 
@@ -1048,7 +1062,7 @@ document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('cli
 
 /* ═══ Post Modal Logic (Magazine Style) ═══ */
 window.openPostModal = function(id) {
-  const post = state.posts.find(p => p.id === id);
+  const post = state.posts.find(p => String(p.id) === String(id));
   if (!post) return;
 
   const img = post.image_url || 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&q=80';
@@ -1580,8 +1594,12 @@ window.uploadPost = async function() {
     ['postTitleFa','postTitleEn','postDescFa','postDescEn','postImgFile']
       .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 
-    state.posts = currentPosts;
-    renderAdminPostList(); // آپدیت لیست حذف
+    // بارگذاری مجدد دیتا از سرور برای همگام‌سازی کامل
+    setTimeout(async () => {
+      await loadAll();
+      pages.admin();
+    }, 1000);
+
   } catch (e) {
     const msg = e.message.includes('HTTP') || e.message.includes('توکن') || e.message.includes('Token')
       ? e.message
@@ -1598,13 +1616,29 @@ window.deletePost = async function(id) {
   if(!confirm('آیا از حذف این پست مطمئن هستید؟ این عمل قابل بازگشت نیست.')) return;
   try {
     const { posts: currentPosts, sha } = await loadPostsForWrite();
-    const updatedPosts = currentPosts.filter(p => p.id !== id);
+    if (!currentPosts) throw new Error('خطا در خواندن اطلاعات');
+    
+    // تبدیل id به رشته برای مقایسه مطمئن
+    const updatedPosts = currentPosts.filter(p => String(p.id) !== String(id));
+    
+    if (currentPosts.length === updatedPosts.length) {
+      showToast('پست در سرور یافت نشد. در حال بروزرسانی...', 'error');
+      await loadAll();
+      pages.admin();
+      return;
+    }
+
     const b64 = utf8ToBase64(JSON.stringify(updatedPosts, null, 2));
     await ghPutFile(CONFIG.POSTS_FILE, b64, `Delete post ID: ${id}`, sha);
     
     showToast(t('toast.deleted'));
-    state.posts = updatedPosts;
-    renderAdminPostList();
+    
+    // صبر کوتاه برای آپدیت گیت‌هاب و سپس بارگذاری مجدد
+    setTimeout(async () => {
+      await loadAll();
+      pages.admin();
+    }, 1000);
+
   } catch(e) {
     showToast('❌ خطا در حذف پست: ' + e.message, 'error');
   }
@@ -1727,4 +1761,4 @@ window.addEventListener('hashchange', router);
 })();
 </script>
 </body>
-</html>
+  </html>
