@@ -181,10 +181,78 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 .life-tags{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.4rem}
 .life-tag{background:var(--primary-light);color:var(--primary);font-size:.68rem;font-weight:700;padding:.15rem .55rem;border-radius:999px}
 
+/* ═══ Magazine Style for Posts ═══ */
+.post-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+}
 .post-img{aspect-ratio:16/10;background-size:cover;background-position:center}
 .post-info{padding:1.1rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
-.post-info h3{font-size:1.02rem}
-.post-info p{color:var(--muted);font-size:.83rem;flex:1;line-height:1.75}
+.post-info h3{font-size:1.02rem; margin-bottom: 0.2rem;}
+.post-info p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* فقط ۳ خط اول را نشان بده */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: justify; /* تراز کردن متن */
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+}
+.post-read-more {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ═══ Post Detail Modal (Magazine Style) ═══ */
+.post-modal-box {
+  max-width: 800px !important; /* عریض‌تر برای حالت مجله */
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.post-modal-box::-webkit-scrollbar {
+  display: none;
+}
+.post-modal-img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 24px 24px 0 0;
+  flex-shrink: 0;
+}
+.post-modal-body {
+  padding: 2rem;
+}
+.post-modal-title {
+  font-size: 1.8rem;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+.post-modal-text {
+  font-size: 1.05rem;
+  line-height: 2.2;
+  color: var(--text);
+  text-align: justify;
+  white-space: pre-wrap; /* این خط باعث می‌شود Enterهایی که در ادمین زدی حفظ شوند */
+  word-break: break-word;
+}
+[data-theme="dark"] .post-modal-text {
+  color: #E0E0E0;
+}
 
 .course-thumb{aspect-ratio:16/9;position:relative;background:#000;overflow:hidden}
 .course-thumb video{width:100%;height:100%;object-fit:cover;opacity:.85}
@@ -236,7 +304,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 .form-group label{display:block;font-size:.88rem;font-weight:700;margin-bottom:.4rem}
 .form-input,.form-textarea{width:100%;padding:.85rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:.95rem;transition:border-color .3s}
 .form-input.ltr{direction:ltr;text-align:left}
-.form-textarea{min-height:80px;resize:vertical}
+.form-textarea{min-height:120px;resize:vertical}
 .form-input:focus,.form-textarea:focus{outline:none;border-color:var(--primary)}
 .checkbox-row{display:flex;align-items:center;gap:.5rem;font-size:.88rem;margin-bottom:1rem;cursor:pointer;user-select:none}
 .hint{font-size:.78rem;color:var(--muted);margin-top:.3rem;line-height:1.6}
@@ -270,6 +338,10 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
   .section-header{margin-bottom:1.8rem}
   .grid-4,.grid-3{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
   .admin-card{padding:1.5rem}
+  .post-modal-img { height: 200px; }
+  .post-modal-body { padding: 1.5rem; }
+  .post-modal-title { font-size: 1.4rem; }
+  .post-modal-text { font-size: 0.95rem; }
 }
 </style>
 </head>
@@ -329,6 +401,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
   <a href="#/contact" data-nav="contact"><span class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><span data-i18n="nav.contact">تماس</span></a>
 </nav>
 
+<!-- ═══ Video Modal ═══ -->
 <div class="modal" id="videoModal">
   <div class="modal-backdrop" data-close></div>
   <div class="modal-box">
@@ -341,6 +414,19 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
         <button id="modalDownloadBtn" class="btn btn-primary">⬇ <span data-i18n="btn.download">دانلود</span></button>
         <button id="modalShareBtn" class="btn btn-outline">↗ <span data-i18n="reels.share">اشتراک</span></button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Post Detail Modal (Magazine Style) ═══ -->
+<div class="modal" id="postDetailModal">
+  <div class="modal-backdrop" data-close-post></div>
+  <div class="modal-box post-modal-box">
+    <button class="modal-close" data-close-post style="background:rgba(0,0,0,0.5); top:1rem; right:1rem; z-index:10;">✕</button>
+    <img id="postModalImg" class="post-modal-img" src="" alt="Post Image">
+    <div class="post-modal-body">
+      <h1 id="postModalTitle" class="post-modal-title"></h1>
+      <div id="postModalText" class="post-modal-text"></div>
     </div>
   </div>
 </div>
@@ -442,6 +528,7 @@ const I18N = {
     "sec.lifeWomen":"سبک زندگی برای خانم‌ها","sec.lifeWomen.sub":"ایده‌های استایل زنانه",
     "sec.lifeMen":"سبک زندگی برای آقایان","sec.lifeMen.sub":"ایده‌های استایل مردانه",
     "sec.posts":"تازه‌ترین مطالب","sec.posts.sub":"جدیدترین پست‌های دیلی فشن","sec.posts.empty":"هنوز پستی منتشر نشده است",
+    "post.readMore":"ادامه مطلب ←",
     "sec.course":"دوره ۴۵ روزه","sec.course.sub":"درس‌های گام به گام دوره دیلی فشن",
     "reels.empty":"هنوز ریلی آپلود نشده است","course.empty":"هنوز ویدیوی درسی آپلود نشده است",
     "reels.like":"لایک","reels.share":"اشتراک","reels.download":"دانلود","reels.new":"جدید",
@@ -494,6 +581,7 @@ const I18N = {
     "sec.lifeWomen":"Lifestyle for Women","sec.lifeWomen.sub":"Women's style ideas",
     "sec.lifeMen":"Lifestyle for Men","sec.lifeMen.sub":"Men's style ideas",
     "sec.posts":"Latest Posts","sec.posts.sub":"Fresh content from Daily Fashion","sec.posts.empty":"No posts yet",
+    "post.readMore":"Read more →",
     "sec.course":"45-Day Course","sec.course.sub":"Step-by-step Daily Fashion lessons",
     "reels.empty":"No reels uploaded yet","course.empty":"No course videos uploaded yet",
     "reels.like":"Like","reels.share":"Share","reels.download":"Download","reels.new":"NEW",
@@ -856,11 +944,15 @@ function lifestyleCard(l) {
 
 function postCard(p) {
   const img = p.image_url || 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80';
-  return `<div class="card post-card">
+  const title = p['title_' + state.lang] || p.title_fa || '';
+  const desc = p['desc_' + state.lang] || p.desc_fa || '';
+  
+  return `<div class="card post-card" onclick="openPostModal(${p.id})">
     <div class="post-img" style="background-image:url('${img}')"></div>
     <div class="post-info">
-      <h3>${p['title_' + state.lang] || p.title_fa || ''}</h3>
-      <p>${p['desc_' + state.lang] || p.desc_fa || ''}</p>
+      <h3>${title}</h3>
+      <p>${desc}</p>
+      <span class="post-read-more">${t('post.readMore')}</span>
     </div>
   </div>`;
 }
@@ -888,7 +980,7 @@ function courseCard(v, i) {
 function emptyBox(msg) { return `<div class="empty-box"><h3>${msg}</h3></div>`; }
 function loadingBox() { return `<div class="loading-box"><div class="spinner"></div></div>`; }
 
-/* ═══════════════════ §11 MODAL ═══════════════════ */
+/* ═══════════════════ §11 MODALS ═══════════════════ */
 window.openVideoModal = function(url, name) {
   state.currentModal = { url, name };
   document.getElementById('modalTitle').textContent = (name || '').replace(/\.(mp4|webm|mov)$/i, '') || 'Daily Fashion';
@@ -916,6 +1008,30 @@ document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('cli
   document.getElementById('videoModal').classList.remove('open');
   document.getElementById('modalVideo').innerHTML = '';
   state.currentModal = null;
+}));
+
+/* ═══ Post Modal Logic (Magazine Style) ═══ */
+window.openPostModal = function(id) {
+  const post = state.posts.find(p => p.id === id);
+  if (!post) return;
+
+  const img = post.image_url || 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&q=80';
+  const title = post['title_' + state.lang] || post.title_fa || '';
+  const desc = post['desc_' + state.lang] || post.desc_fa || '';
+
+  document.getElementById('postModalImg').src = img;
+  document.getElementById('postModalTitle').textContent = title;
+  
+  // متن را با حفظ Enterها (پاراگراف‌ها) نمایش بده
+  document.getElementById('postModalText').innerHTML = desc;
+
+  document.getElementById('postDetailModal').classList.add('open');
+  document.body.style.overflow = 'hidden'; // قفل کردن اسکرول پس‌زمینه
+};
+
+document.querySelectorAll('[data-close-post]').forEach(el => el.addEventListener('click', () => {
+  document.getElementById('postDetailModal').classList.remove('open');
+  document.body.style.overflow = ''; // باز کردن اسکرول
 }));
 
 /* ═══════════════════ §12 PAGES ═══════════════════ */
@@ -1521,4 +1637,4 @@ window.addEventListener('hashchange', router);
 })();
 </script>
 </body>
-  </html>
+</html>
