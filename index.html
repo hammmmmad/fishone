@@ -327,7 +327,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 const CONFIG = {
   GH_USER  : "hammmmmad",
   GH_REPO  : "fishone",
-  GH_TOKEN : "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", // توکن شما
+  GH_TOKEN : "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", 
   FOLDERS  : { course: "videos", reels: "reels" },
   POSTS_FILE: "posts.json",
   ADMIN_PASS: "admin123"
@@ -526,13 +526,11 @@ async function fetchFolder(folder, sortDesc = false) {
 
 async function fetchPosts() {
   try {
-    // استفاده از API به جای raw برای پشتیبانی از ریپازیتوری خصوصی
     const res = await fetch(`https://api.github.com/repos/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/contents/${CONFIG.POSTS_FILE}?t=${Date.now()}`, {
       headers: { Authorization: `Bearer ${CONFIG.GH_TOKEN}` }
     });
     if (!res.ok) return [];
     const data = await res.json();
-    // گیت‌هاب محتوا را به صورت Base64 برمی‌گرداند
     const content = atob(data.content.replace(/\s/g, ''));
     return JSON.parse(content);
   } catch { return []; }
