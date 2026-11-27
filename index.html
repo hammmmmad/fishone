@@ -145,6 +145,8 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 .btn-sm{padding:.55rem 1rem;font-size:.82rem}
 .btn-block{width:100%}
 .btn:disabled{opacity:.6;cursor:not-allowed;transform:none!important}
+.btn-danger{background:#e74c3c;color:#fff;border:none;}
+.btn-danger:hover{background:#c0392b;}
 
 .section{padding:4rem 0}
 .section-alt{background:var(--primary-light)}
@@ -242,26 +244,26 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 .post-modal-box {
   max-width: 800px !important;
   max-height: 90vh;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   padding: 0 !important;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-.post-modal-box::-webkit-scrollbar {
-  display: none;
+  border-radius: var(--radius) !important;
+  background: var(--surface);
+  overflow: hidden; /* جلوگیری از اسکرول کل کادر */
 }
 .post-modal-img {
   width: 100%;
   height: 350px;
   object-fit: cover;
-  border-radius: 24px 24px 0 0;
   flex-shrink: 0;
+  border-radius: 24px 24px 0 0;
 }
 .post-modal-body {
   padding: 2rem;
+  overflow-y: auto; /* اسکرول فقط برای متن */
+  -webkit-overflow-scrolling: touch; /* اسکرول نرم در iOS */
 }
+.post-modal-body::-webkit-scrollbar { display: none; }
 .post-modal-title {
   font-size: 1.8rem;
   color: var(--text);
@@ -275,12 +277,10 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
   line-height: 2.2;
   color: var(--text);
   text-align: justify;
-  white-space: pre-wrap; /* حفظ Enterهای زده شده در ادمین */
+  white-space: pre-wrap;
   word-break: break-word;
 }
-[data-theme="dark"] .post-modal-text {
-  color: #E0E0E0;
-}
+[data-theme="dark"] .post-modal-text { color: #E0E0E0; }
 
 .course-thumb{aspect-ratio:16/9;position:relative;background:#000;overflow:hidden}
 .course-thumb video{width:100%;height:100%;object-fit:cover;opacity:.85}
@@ -366,7 +366,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
   .section-header{margin-bottom:1.8rem}
   .grid-4,.grid-3{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
   .admin-card{padding:1.5rem}
-  .post-modal-img { height: 200px; }
+  .post-modal-img { height: 220px; }
   .post-modal-body { padding: 1.5rem; }
   .post-modal-title { font-size: 1.4rem; }
   .post-modal-text { font-size: 0.95rem; }
@@ -452,7 +452,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
   <div class="modal-box post-modal-box">
     <button class="modal-close" data-close-post style="background:rgba(0,0,0,0.5); top:1rem; right:1rem; z-index:10;">✕</button>
     <img id="postModalImg" class="post-modal-img" src="" alt="Post Image">
-    <div class="post-modal-body">
+    <div class="post-modal-body" id="postModalBody">
       <h1 id="postModalTitle" class="post-modal-title"></h1>
       <div id="postModalText" class="post-modal-text"></div>
     </div>
@@ -576,6 +576,7 @@ const I18N = {
     "admin.post.imgOrUpload":"لطفاً یک عکس برای پست انتخاب کنید",
     "admin.post.imgHint":"حداکثر ۱۵ مگابایت — فرمت‌ها: JPG، PNG، WebP، GIF",
     "admin.post.save":"ذخیره پست",
+    "admin.post.deleteList":"مدیریت و حذف پست‌های موجود:",
     "admin.sizeHint":"حداکثر حجم: ۲۵ مگابایت. برای ویدیوهای بزرگ‌تر از طریق وب‌سایت گیت‌هاب آپلود کنید.",
     "footer.tagline":"آموزش رایگان آرایش، زیبایی و فشن برای همه.","footer.channel":"کانال واتس‌اپ",
     "footer.rights":"© ۲۰۲۶ دیلی فشن افغانستان. تمام حقوق محفوظ است.",
@@ -593,6 +594,7 @@ const I18N = {
     "toast.imageUploaded":"✅ تصویر آپلود شد",
     "toast.imageInvalid":"❌ فرمت فایل باید عکس باشد",
     "toast.duplicate":"❌ این پست با همین عنوان قبلاً ذخیره شده است!",
+    "toast.deleted":"✅ پست با موفقیت حذف شد",
     "pwa.installTitle":"اپ را نصب کنید",
     "pwa.installDesc":"دسترسی سریع‌تر، حتی آفلاین",
     "pwa.installBtn":"نصب",
@@ -630,6 +632,7 @@ const I18N = {
     "admin.post.imgOrUpload":"Please select an image for the post",
     "admin.post.imgHint":"Max 15MB — Formats: JPG, PNG, WebP, GIF",
     "admin.post.save":"Save Post",
+    "admin.post.deleteList":"Manage & Delete Existing Posts:",
     "admin.sizeHint":"Max size: 25MB. For larger videos, upload via GitHub website.",
     "footer.tagline":"Free beauty, makeup and fashion education for everyone.","footer.channel":"WhatsApp Channel",
     "footer.rights":"© 2026 Daily Fashion AF. All Rights Reserved.",
@@ -647,6 +650,7 @@ const I18N = {
     "toast.imageUploaded":"✅ Image uploaded",
     "toast.imageInvalid":"❌ File must be an image",
     "toast.duplicate":"❌ A post with this title already exists!",
+    "toast.deleted":"✅ Post deleted successfully",
     "pwa.installTitle":"Install the App",
     "pwa.installDesc":"Faster access, even offline",
     "pwa.installBtn":"Install",
@@ -1053,17 +1057,18 @@ window.openPostModal = function(id) {
 
   document.getElementById('postModalImg').src = img;
   document.getElementById('postModalTitle').textContent = title;
-  
-  // متن را با حفظ Enterها (پاراگراف‌ها) نمایش بده
   document.getElementById('postModalText').innerHTML = desc;
 
+  // Reset scroll position to top when opened
+  document.getElementById('postModalBody').scrollTop = 0;
+
   document.getElementById('postDetailModal').classList.add('open');
-  document.body.style.overflow = 'hidden'; // قفل کردن اسکرول پس‌زمینه
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
 };
 
 document.querySelectorAll('[data-close-post]').forEach(el => el.addEventListener('click', () => {
   document.getElementById('postDetailModal').classList.remove('open');
-  document.body.style.overflow = ''; // باز کردن اسکرول
+  document.body.style.overflow = ''; 
 }));
 
 /* ═══════════════════ §12 PAGES ═══════════════════ */
@@ -1311,7 +1316,6 @@ const pages = {
               <div class="form-group"><label>${t('admin.post.desc_fa')}</label><textarea id="postDescFa" class="form-textarea" placeholder="متن خود را وارد کنید. برای ایجاد پاراگراف جدید، Enter بزنید."></textarea></div>
               <div class="form-group"><label>${t('admin.post.desc_en')}</label><textarea id="postDescEn" class="form-textarea ltr" placeholder="Enter description. Press Enter for a new paragraph."></textarea></div>
               
-              <!-- فقط فیلد آپلود عکس باقی مانده است -->
               <div class="form-group">
                 <label>${t('admin.post.imgUpload')}</label>
                 <input type="file" id="postImgFile" class="form-input" accept="image/*" style="padding-top:.5rem">
@@ -1319,14 +1323,39 @@ const pages = {
               </div>
               <button class="btn btn-primary btn-block" id="postBtn" onclick="uploadPost()">${t('admin.post.save')}</button>
               <div class="admin-status" id="postStatus"></div>
+
+              <!-- بخش مدیریت و حذف پست‌ها -->
+              <div style="margin-top:2rem; border-top:1px solid var(--border); padding-top:1rem;">
+                <h3 style="font-size:.95rem; margin-bottom:1rem; color:var(--primary)">${t('admin.post.deleteList')}</h3>
+                <div id="adminPostList" style="display:flex; flex-direction:column; gap:0.5rem;">
+                  <!-- با جاوااسکریپت پر می‌شود -->
+                </div>
+              </div>
+
             </div>
 
             <button class="btn btn-outline btn-block" style="margin-top:1.5rem" onclick="logoutAdmin()">${t('admin.logout')}</button>
           </div>
         </div>`;
+      renderAdminPostList();
     }
   }
 };
+
+function renderAdminPostList() {
+  const list = document.getElementById('adminPostList');
+  if(!list) return;
+  if (!state.posts || state.posts.length === 0) {
+    list.innerHTML = '<p style="font-size:.85rem;color:var(--muted)">هیچ پستی یافت نشد.</p>';
+    return;
+  }
+  list.innerHTML = state.posts.map(p => `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg); padding:.6rem .8rem; border-radius:8px; border:1px solid var(--border)">
+      <span style="font-size:.85rem; font-weight:600; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:70%;">${p.title_fa}</span>
+      <button onclick="deletePost(${p.id})" style="color:#fff; background:#e74c3c; padding:.3rem .6rem; border-radius:6px; font-size:.75rem; font-weight:bold;">حذف 🗑️</button>
+    </div>
+  `).join('');
+}
 
 /* ═══════════════════ §13 HANDLERS ═══════════════════ */
 window.handleLikeByIndex = function(i, btn) {
@@ -1485,7 +1514,6 @@ window.uploadPost = async function() {
   try {
     let finalImageUrl = '';
 
-    // آپلود عکس اجباری است چون فیلد URL حذف شده
     if (!imgFile) {
         status.textContent = '❌ لطفاً یک عکس برای پست انتخاب کنید.';
         status.style.color = 'red';
@@ -1553,6 +1581,7 @@ window.uploadPost = async function() {
       .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 
     state.posts = currentPosts;
+    renderAdminPostList(); // آپدیت لیست حذف
   } catch (e) {
     const msg = e.message.includes('HTTP') || e.message.includes('توکن') || e.message.includes('Token')
       ? e.message
@@ -1561,6 +1590,23 @@ window.uploadPost = async function() {
     status.style.color = 'red';
   } finally {
     btn.disabled = false;
+  }
+};
+
+/* ── حذف پست ── */
+window.deletePost = async function(id) {
+  if(!confirm('آیا از حذف این پست مطمئن هستید؟ این عمل قابل بازگشت نیست.')) return;
+  try {
+    const { posts: currentPosts, sha } = await loadPostsForWrite();
+    const updatedPosts = currentPosts.filter(p => p.id !== id);
+    const b64 = utf8ToBase64(JSON.stringify(updatedPosts, null, 2));
+    await ghPutFile(CONFIG.POSTS_FILE, b64, `Delete post ID: ${id}`, sha);
+    
+    showToast(t('toast.deleted'));
+    state.posts = updatedPosts;
+    renderAdminPostList();
+  } catch(e) {
+    showToast('❌ خطا در حذف پست: ' + e.message, 'error');
   }
 };
 
