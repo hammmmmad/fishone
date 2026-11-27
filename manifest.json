@@ -1,0 +1,48 @@
+{
+  "name": "Daily Fashion AF",
+  "short_name": "Daily Fashion",
+  "description": "آموزش رایگان آرایش، زیبایی و فشن برای همه",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FCFBF9",
+  "theme_color": "#D46986",
+  "categories": ["education", "lifestyle", "beauty"],
+  "icons": [
+    {
+      "src": "image/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "image/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "image/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "ریلز",
+      "short_name": "ریلز",
+      "url": "./index.html#/reels",
+      "icons": [{ "src": "image/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "دوره ۴۵ روزه",
+      "short_name": "دوره",
+      "url": "./index.html#/course",
+      "icons": [{ "src": "image/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
