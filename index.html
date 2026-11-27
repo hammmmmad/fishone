@@ -96,13 +96,23 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 .btn-block{width:100%}
 
 /* ═══════════════════════════════════════════════════════════════
-   §6 SECTIONS
+   §6 SECTIONS & PAGE HEADS
    ═══════════════════════════════════════════════════════════════ */
 .section{padding:4rem 0}
 .section-alt{background:var(--primary-light)}
 .section-header{text-align:center;margin-bottom:2.5rem}
 .section-header h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.5rem}
 .section-header p{color:var(--muted);font-size:1rem}
+
+.page-head {
+  padding-top: calc(var(--header-h) + 3rem);
+  padding-bottom: 2rem;
+  text-align: center;
+  background: var(--primary-light);
+  border-bottom: 1px solid var(--border);
+}
+.page-head h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--primary); margin-bottom: 0.5rem;}
+.page-head p { color: var(--muted); font-size: 1rem; }
 
 /* ═══════════════════════════════════════════════════════════════
    §7 HERO
@@ -156,7 +166,8 @@ h1,h2,h3,h4{font-weight:800;line-height:1.3}
 /* Course card */
 .course-thumb{aspect-ratio:16/9;position:relative;background:#000;overflow:hidden}
 .course-thumb video{width:100%;height:100%;object-fit:cover;opacity:.85}
-.course-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--primary);display:grid;place-items:center}
+.course-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--primary);display:grid;place-items:center;cursor:pointer;border:none;transition:transform 0.3s;}
+.course-play-btn:hover{transform:translate(-50%,-50%) scale(1.1);}
 .course-num{position:absolute;top:.8rem;right:.8rem;background:var(--primary);color:#fff;padding:.2rem .6rem;border-radius:999px;font-size:.68rem;font-weight:800}
 [dir="rtl"] .course-num{right:auto;left:.8rem}
 
@@ -176,7 +187,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 .reel-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 45%,transparent 75%,rgba(0,0,0,.3) 100%);pointer-events:none}
 .reel-side-actions{position:absolute;right:.8rem;bottom:5.5rem;z-index:5;display:flex;flex-direction:column;gap:1.3rem;align-items:center}
 [dir="rtl"] .reel-side-actions{right:auto;left:.8rem}
-.reel-action{display:flex;flex-direction:column;align-items:center;gap:.25rem;color:#fff;font-size:.68rem;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,.6);transition:transform .3s}
+.reel-action{display:flex;flex-direction:column;align-items:center;gap:.25rem;color:#fff;font-size:.68rem;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,.6);transition:transform .3s;cursor:pointer;}
 .reel-action:active{transform:scale(.9)}
 .reel-action .icon{font-size:1.9rem;line-height:1;transition:color .3s}
 .reel-action.liked .icon{color:#ff2d55}
@@ -192,7 +203,7 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 .modal.open{display:flex}
 .modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px)}
 .modal-box{position:relative;background:var(--surface);border-radius:var(--radius);width:100%;max-width:500px;overflow:hidden;box-shadow:var(--shadow-lg);z-index:1}
-.modal-close{position:absolute;top:1rem;right:1rem;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center}
+.modal-close{position:absolute;top:1rem;right:1rem;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center;border:none;cursor:pointer;}
 .modal-video{aspect-ratio:16/9;background:#000}
 .modal-video video{width:100%;height:100%;object-fit:contain}
 .modal-info{padding:1.5rem}
@@ -213,11 +224,11 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 .hint{font-size:.78rem;color:var(--muted);margin-top:.3rem}
 .admin-status{text-align:center;font-size:.85rem;margin-top:.8rem;font-weight:600;min-height:1.4rem}
 .tabs{display:flex;gap:.3rem;margin-bottom:1.3rem;background:var(--bg);padding:.3rem;border-radius:var(--radius-sm)}
-.tab-btn{flex:1;padding:.65rem .3rem;text-align:center;font-weight:700;font-size:.82rem;border-radius:8px;color:var(--muted);transition:all .3s}
+.tab-btn{flex:1;padding:.65rem .3rem;text-align:center;font-weight:700;font-size:.82rem;border-radius:8px;color:var(--muted);transition:all .3s;cursor:pointer;border:none;background:none;}
 .tab-btn.active{background:var(--surface);color:var(--primary);box-shadow:var(--shadow-sm)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
-.test-btn{background:var(--primary-light);color:var(--primary);border:1px solid var(--primary-line);padding:.5rem 1rem;border-radius:999px;font-size:.8rem;font-weight:700;margin-bottom:1rem}
+.test-btn{background:var(--primary-light);color:var(--primary);border:1px solid var(--primary-line);padding:.5rem 1rem;border-radius:999px;font-size:.8rem;font-weight:700;margin-bottom:1rem;cursor:pointer;}
 
 /* ═══════════════════════════════════════════════════════════════
    §12 TOAST
@@ -340,19 +351,19 @@ body.reels-mode .site-header,body.reels-mode .bottom-nav,body.reels-mode .site-f
 "use strict";
 
 /* ═══════════════════════════════════════════════════════════════
-   §1 CONFIG — تغییرات را فقط اینجا بدهید
+   §1 CONFIG
    ═══════════════════════════════════════════════════════════════ */
 const CONFIG = {
   GH_USER  : "hammmmmad",
   GH_REPO  : "fishone",
-  GH_TOKEN : "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",
+  GH_TOKEN : "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", // ⚠️ توکن خود را محرمانه نگه دارید
   FOLDERS  : { course: "videos", reels: "reels" },
   POSTS_FILE: "posts.json",
   ADMIN_PASS: "admin123"
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   §2 STATIC DATA — محصولات آرایشی جدید
+   §2 STATIC DATA
    ═══════════════════════════════════════════════════════════════ */
 const PRODUCTS = [
   { id:1, name:{fa:"رژ لب مات",en:"Matte Lipstick"}, brand:{fa:"مجیک کالر",en:"Magic Color"}, img:"https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80" },
@@ -363,9 +374,6 @@ const PRODUCTS = [
   { id:6, name:{fa:"ریمل حجم‌دهنده",en:"Volumizing Mascara"}, brand:{fa:"میبلین",en:"Maybelline"}, img:"https://images.unsplash.com/photo-1631730486572-226d1f595e65?w=500&q=80" }
 ];
 
-/* ═══════════════════════════════════════════════════════════════
-   §3 LIFESTYLE — جداگانه برای خانم‌ها و آقایان
-   ═══════════════════════════════════════════════════════════════ */
 const LIFESTYLE = {
   women: [
     { title:{fa:"شیک روزمره",en:"Everyday Chic"}, img:"https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&q=80", desc:{fa:"ترکیب رنگ‌های خنثی و برش‌های ساده برای روزمره؛ راحت و شیک.",en:"Neutral tones and simple cuts for everyday comfort and elegance."}, tags:{fa:["روزمره","راحت"],en:["Everyday","Comfort"]} },
@@ -382,7 +390,7 @@ const LIFESTYLE = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   §4 STATE
+   §3 STATE
    ═══════════════════════════════════════════════════════════════ */
 const app = document.getElementById("app");
 const state = {
@@ -392,11 +400,12 @@ const state = {
   videos: [], reels: [], posts: [],
   loading: { videos: true, reels: true, posts: true },
   reelObserver: null,
-  modal: null
+  modal: null,
+  isMuted: true // 🌟 وضعیت صدای ریلز
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   §5 I18N
+   §4 I18N
    ═══════════════════════════════════════════════════════════════ */
 const I18N = {
   fa: {
@@ -469,7 +478,7 @@ const I18N = {
 const t = k => I18N[state.lang][k] || k;
 
 /* ═══════════════════════════════════════════════════════════════
-   §6 UTILITIES
+   §5 UTILITIES
    ═══════════════════════════════════════════════════════════════ */
 function updateLanguage() {
   document.documentElement.lang = state.lang;
@@ -486,6 +495,18 @@ function initTheme() {
     document.documentElement.setAttribute('data-theme', state.theme);
     localStorage.setItem('df-theme', state.theme);
   });
+}
+
+// 🌟 تابع کامل تبدیل اعداد به ترتیب فارسی تا 45
+function getPersianOrdinal(num) {
+  const ordinals = {
+    1:"اول", 2:"دوم", 3:"سوم", 4:"چهارم", 5:"پنجم", 6:"ششم", 7:"هفتم", 8:"هشتم", 9:"نهم", 10:"دهم",
+    11:"یازدهم", 12:"دوازدهم", 13:"سیزدهم", 14:"چهاردهم", 15:"پانزدهم", 16:"شانزدهم", 17:"هفدهم", 18:"هجدهم", 19:"نوزدهم", 20:"بیستم",
+    21:"بیست و یکم", 22:"بیست و دوم", 23:"بیست و سوم", 24:"بیست و چهارم", 25:"بیست و پنجم", 26:"بیست و ششم", 27:"بیست و هفتم", 28:"بیست و هشتم", 29:"بیست و نهم", 30:"سی‌ام",
+    31:"سی و یکم", 32:"سی و دوم", 33:"سی و سوم", 34:"سی و چهارم", 35:"سی و پنجم", 36:"سی و ششم", 37:"سی و هفتم", 38:"سی و هشتم", 39:"سی و نهم", 40:"چهلم",
+    41:"چهل و یکم", 42:"چهل و دوم", 43:"چهل و سوم", 44:"چهل و چهارم", 45:"چهل و پنجم"
+  };
+  return ordinals[num] || num;
 }
 
 let toastTimer;
@@ -507,7 +528,7 @@ function fileToBase64(file) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   §7 GITHUB API
+   §6 GITHUB API
    ═══════════════════════════════════════════════════════════════ */
 async function fetchFolder(folder, sortDesc = false) {
   try {
@@ -521,7 +542,13 @@ async function fetchFolder(folder, sortDesc = false) {
     const items = files
       .filter(f => f.type === 'file' && /\.(mp4|webm|mov)$/i.test(f.name))
       .map(f => ({ name: f.name, url: f.download_url }));
-    return items.sort((a, b) => sortDesc ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name));
+      
+    // 🌟 مرتب‌سازی هوشمند بر اساس شماره فایل (1, 2, 3...) نه حروف الفبا
+    return items.sort((a, b) => {
+      const numA = parseInt(a.name.match(/\d+/)) || 0;
+      const numB = parseInt(b.name.match(/\d+/)) || 0;
+      return sortDesc ? numB - numA : numA - numB;
+    });
   } catch(e) {
     console.warn('fetchFolder error:', e);
     return [];
@@ -547,9 +574,7 @@ async function loadAll() {
   router();
 }
 
-/* ── GitHub PUT with SHA handling ── */
 async function ghPutFile(path, content, message) {
-  // Get SHA if exists
   let sha = null;
   try {
     const r = await fetch(`https://api.github.com/repos/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/contents/${path}`, {
@@ -558,7 +583,6 @@ async function ghPutFile(path, content, message) {
     if (r.ok) { const d = await r.json(); sha = d.sha; }
   } catch {}
 
-  // PUT
   const res = await fetch(`https://api.github.com/repos/${CONFIG.GH_USER}/${CONFIG.GH_REPO}/contents/${path}`, {
     method: 'PUT',
     headers: {
@@ -582,7 +606,7 @@ async function ghPutFile(path, content, message) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   §8 LIKE / SHARE / DOWNLOAD
+   §7 LIKE / SHARE / DOWNLOAD
    ═══════════════════════════════════════════════════════════════ */
 function getLikedState(id) {
   const likes = JSON.parse(localStorage.getItem('df-liked') || '{}');
@@ -643,7 +667,7 @@ async function shareReel(reel) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   §9 UI COMPONENTS
+   §8 UI COMPONENTS
    ═══════════════════════════════════════════════════════════════ */
 function productCard(p) {
   return `<div class="card product-card">
@@ -684,17 +708,32 @@ function reelPreviewCard(r, i) {
   </div>`;
 }
 
-function courseCard(v, i) {
+// 🌟 تابع اصلاح شده برای تشخیص درست شماره از نام فایل
+function courseCard(v) {
+  // استخراج عدد از نام فایل (حتی اگر پسوند MP4 با حروف بزرگ باشد)
+  const match = v.name.match(/\d+/); 
+  const num = match ? parseInt(match[0]) : null;
+  
+  let title = v.name;
+  if (num) {
+      if (state.lang === 'fa') {
+          title = `دوره ${getPersianOrdinal(num)}`;
+      } else {
+          const enOrdinals = {1:"First", 2:"Second", 3:"Third", 4:"Fourth", 5:"Fifth", 6:"Sixth", 7:"Seventh", 8:"Eighth", 9:"Ninth", 10:"Tenth"};
+          title = `${enOrdinals[num] || num} Course`;
+      }
+  }
+
   return `<div class="card">
     <div class="course-thumb">
       <video src="${v.url}#t=0.5" muted preload="metadata" playsinline></video>
-      <button onclick="openVideoModal('${v.url}','${v.name}')" class="course-play-btn">
+      <button onclick="openVideoModal('${v.url}','${title}')" class="course-play-btn">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></svg>
       </button>
-      <span class="course-num">${state.lang === 'fa' ? 'دوره' : 'Course'} ${i + 1}</span>
+      <span class="course-num">${title}</span>
     </div>
     <div class="product-info">
-      <h3>${state.lang === 'fa' ? 'دوره' : 'Course'} ${i + 1}</h3>
+      <h3>${title}</h3>
       <button class="btn btn-primary btn-sm btn-block" style="margin-top:.6rem" onclick="downloadVideo('${v.url}','${v.name}')">${t('btn.download')}</button>
     </div>
   </div>`;
@@ -704,11 +743,11 @@ function emptyBox(msg) { return `<div class="empty-box"><h3>${msg}</h3></div>`; 
 function loadingBox() { return `<div class="loading-box"><div class="spinner"></div></div>`; }
 
 /* ═══════════════════════════════════════════════════════════════
-   §10 MODAL
+   §9 MODAL
    ═══════════════════════════════════════════════════════════════ */
 window.openVideoModal = function(url, name) {
   state.modal = { url, name };
-  document.getElementById('modalTitle').textContent = name.replace('.mp4', '');
+  document.getElementById('modalTitle').textContent = name;
   document.getElementById('modalDesc').textContent = 'Daily Fashion AF';
   document.getElementById('modalVideo').innerHTML = `<video src="${url}" controls autoplay playsinline></video>`;
   document.getElementById('modalDownloadBtn').onclick = () => downloadVideo(url, name);
@@ -721,7 +760,7 @@ document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('cli
 }));
 
 /* ═══════════════════════════════════════════════════════════════
-   §11 PAGES
+   §10 PAGES
    ═══════════════════════════════════════════════════════════════ */
 const pages = {
   home() {
@@ -831,7 +870,7 @@ const pages = {
       <div class="reels-top">
         <button onclick="location.hash='#/home'">←</button>
         <span class="reels-title">${t('nav.reels')}</span>
-        <button id="soundToggle">🔇</button>
+        <button id="soundToggle">${state.isMuted ? '🔇' : '🔊'}</button>
       </div>
       <div class="reels-feed" id="reelsFeed">${html}</div>
     </div>`;
@@ -841,7 +880,11 @@ const pages = {
       entries.forEach(entry => {
         const video = entry.target.querySelector('video');
         if (!video) return;
-        if (entry.isIntersecting) { video.preload = 'auto'; video.play().catch(() => {}); }
+        if (entry.isIntersecting) { 
+          video.preload = 'auto'; 
+          video.muted = state.isMuted; // 🌟 اعمال وضعیت صدا
+          video.play().catch(() => {}); 
+        }
         else { video.pause(); }
       });
     }, { threshold: 0.6 });
@@ -862,24 +905,34 @@ const pages = {
       }, 100);
     }
 
-    let muted = true;
     document.getElementById('soundToggle').addEventListener('click', function() {
-      muted = !muted;
-      document.querySelectorAll('.reel-item video').forEach(v => v.muted = muted);
-      this.textContent = muted ? '🔇' : '🔊';
+      state.isMuted = !state.isMuted; // 🌟 برعکس کردن وضعیت کلی
+      document.querySelectorAll('.reel-item video').forEach(v => v.muted = state.isMuted);
+      this.textContent = state.isMuted ? '🔇' : '🔊';
     });
   },
 
   course() {
     document.body.classList.remove('reels-mode');
+    const sortedVideos = [...state.videos].sort((a, b) => {
+      const numA = parseInt(a.name.match(/\d+/)) || 0;
+      const numB = parseInt(b.name.match(/\d+/)) || 0;
+      return numA - numB;
+    });
+
     const html = state.loading.videos ? loadingBox() :
-      state.videos.length === 0 ? emptyBox(t('course.empty')) :
-      state.videos.map((v, i) => courseCard(v, i)).join('');
+      sortedVideos.length === 0 ? emptyBox(t('course.empty')) :
+      sortedVideos.map(v => courseCard(v)).join('');
+
     app.innerHTML = `
       <header class="page-head">
         <div class="container"><h1>${t('sec.course')}</h1><p>${t('sec.course.sub')}</p></div>
       </header>
-      <section class="section"><div class="container"><div class="grid-3">${html}</div></div></section>
+      <section class="section">
+        <div class="container">
+          <div class="grid-3">${html}</div>
+        </div>
+      </section>
     `;
   },
 
@@ -934,9 +987,10 @@ const pages = {
             <h2>${t('admin.title')}</h2>
             <button class="test-btn" onclick="testConnection()">🔌 ${t('admin.test')}</button>
             <div class="tabs">
-              <button class="tab-btn active" onclick="switchTab('course')">${t('admin.tab.course')}</button>
-              <button class="tab-btn" onclick="switchTab('reels')">${t('admin.tab.reels')}</button>
-              <button class="tab-btn" onclick="switchTab('posts')">${t('admin.tab.posts')}</button>
+              <!-- 🌟 استفاده از data-tab برای پایداری بیشتر -->
+              <button class="tab-btn active" data-tab="course" onclick="switchTab('course')">${t('admin.tab.course')}</button>
+              <button class="tab-btn" data-tab="reels" onclick="switchTab('reels')">${t('admin.tab.reels')}</button>
+              <button class="tab-btn" data-tab="posts" onclick="switchTab('posts')">${t('admin.tab.posts')}</button>
             </div>
 
             <div class="tab-panel active" id="panel-course">
@@ -978,7 +1032,7 @@ const pages = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   §12 HANDLERS
+   §11 HANDLERS
    ═══════════════════════════════════════════════════════════════ */
 window.handleLike = function(name, btn) {
   const result = toggleLike(name);
@@ -993,7 +1047,7 @@ window.handleShare = function(name) {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   §13 ADMIN LOGIC
+   §12 ADMIN LOGIC
    ═══════════════════════════════════════════════════════════════ */
 window.loginAdmin = function() {
   const pass = document.getElementById('adminPass').value;
@@ -1002,11 +1056,14 @@ window.loginAdmin = function() {
 };
 window.logoutAdmin = function() { sessionStorage.removeItem('df-admin-auth'); pages.admin(); };
 
+// 🌟 تابع اصلاح شده برای سوئیچ تب‌ها
 window.switchTab = function(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b, i) =>
-    b.classList.toggle('active', ['course','reels','posts'][i] === tab));
-  document.querySelectorAll('.tab-panel').forEach((p, i) =>
-    p.classList.toggle('active', ['course','reels','posts'][i] === tab));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tab);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.toggle('active', p.id === `panel-${tab}`);
+  });
 };
 
 window.testConnection = async function() {
@@ -1021,7 +1078,6 @@ window.testConnection = async function() {
   }
 };
 
-/* ── Upload Course ── */
 window.uploadCourse = async function() {
   const num = document.getElementById('courseNum').value;
   const file = document.getElementById('courseFile').files[0];
@@ -1052,7 +1108,6 @@ window.uploadCourse = async function() {
   }
 };
 
-/* ── Upload Reel (no number) ── */
 window.uploadReel = async function() {
   const file = document.getElementById('reelFile').files[0];
   const btn = document.getElementById('reelBtn');
@@ -1082,7 +1137,6 @@ window.uploadReel = async function() {
   }
 };
 
-/* ── Upload Post ── */
 window.uploadPost = async function() {
   const titleFa = document.getElementById('postTitleFa').value;
   const titleEn = document.getElementById('postTitleEn').value;
@@ -1117,7 +1171,7 @@ window.uploadPost = async function() {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   §14 ROUTER & INIT
+   §13 ROUTER & INIT
    ═══════════════════════════════════════════════════════════════ */
 function router() {
   const hash = window.location.hash.replace('#/', '') || 'home';
